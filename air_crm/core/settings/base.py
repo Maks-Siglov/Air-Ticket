@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     # Internal apps
     "users.apps.UsersConfig",
     "main.apps.MainConfig",
+    "flight.apps.FlightConfig",
 ]
 
 MIDDLEWARE = [
