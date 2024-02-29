@@ -9,10 +9,10 @@ def search_flights(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
         form = FlightForm(request.POST)
         if form.is_valid():
-            departure_airport = form.cleaned_data['departure_airport']
-            destination_airport = form.cleaned_data['destination_airport']
-            departure_date = form.cleaned_data['departure_date']
-            passenger_amount = form.cleaned_data['passenger_amount']
+            departure_airport = form.cleaned_data["departure_airport"]
+            destination_airport = form.cleaned_data["destination_airport"]
+            departure_date = form.cleaned_data["departure_date"]
+            passenger_amount = form.cleaned_data["passenger_amount"]
 
             flights = get_searched_flights(
                 departure_airport, destination_airport, departure_date
@@ -28,5 +28,5 @@ def search_flights(request: HttpRequest) -> HttpResponse:
                     "destination_airport": destination_airport,
                     "departure_date": departure_date,
                     "passenger_amount": passenger_amount,
-                }
+                },
             )

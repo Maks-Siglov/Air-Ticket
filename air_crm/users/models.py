@@ -7,7 +7,7 @@ from django.db import models
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, password=None, **kwargs) -> 'User':
+    def create_user(self, email, password=None, **kwargs) -> "User":
         if email is None:
             raise ValueError("Users must have an email address.")
 
@@ -18,13 +18,11 @@ class UserManager(BaseUserManager):
 
         return user
 
-    def create_superuser(self, email, password=None, **kwargs) -> 'User':
+    def create_superuser(self, email, password=None, **kwargs) -> "User":
         if password is None:
             raise ValueError("Superusers must have a password.")
 
-        user = self.create_user(
-            email=email, password=password, **kwargs
-        )
+        user = self.create_user(email=email, password=password, **kwargs)
         user.is_superuser = True
         user.is_staff = True
         user.save()

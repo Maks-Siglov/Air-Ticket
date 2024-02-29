@@ -8,7 +8,7 @@ from users.forms import RegisterForm
 
 
 def register(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
-    if request.method == 'POST':
+    if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
             form.save()
@@ -17,13 +17,11 @@ def register(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
     else:
         form = RegisterForm()
 
-    return render(
-        request, "users/register.html", {"form": form}
-    )
+    return render(request, "users/register.html", {"form": form})
 
 
 def login(request: HttpRequest) -> HttpResponseRedirect:
-    if request.method == 'POST':
+    if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
             email = form.cleaned_data["username"]
@@ -39,6 +37,4 @@ def login(request: HttpRequest) -> HttpResponseRedirect:
     else:
         form = AuthenticationForm()
 
-    return render(
-        request, "users/login.html", {"form": form}
-    )
+    return render(request, "users/login.html", {"form": form})

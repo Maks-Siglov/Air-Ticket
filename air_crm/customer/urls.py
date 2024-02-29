@@ -4,6 +4,4 @@ from main import views
 
 app_name = "customer"
 
-urlpatterns = [
-
-]
+urlpatterns = []

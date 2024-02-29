@@ -12,5 +12,5 @@ class FlightForm(forms.ModelForm):
             "departure_airport",
             "destination_airport",
             "departure_date",
-            "passenger_amount"
+            "passenger_amount",
         )
