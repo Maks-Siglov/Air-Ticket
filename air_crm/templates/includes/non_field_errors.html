@@ -1,0 +1,11 @@
+{% if form.non_field_errors %}
+    <div class="container mt-4">
+        <div class="alert alert-danger alert-dismissible fade show custom-shadow" role="alert">
+            <ul>
+                {% for error in form.non_field_errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endif %}

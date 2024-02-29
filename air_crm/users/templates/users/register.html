@@ -12,6 +12,9 @@
                     <hr>
                     <form action="{% url 'users:register' %}" method="POST">
                         {% csrf_token %}
+
+                        {% include 'includes/non_field_errors.html' %}
+
                         <div class="form-group m-2">
                             <label for="id_email">Email:</label>
                         <input type="email" name="email" maxlength="100" required id="id_email" class="form-control" placeholder="Your email">
