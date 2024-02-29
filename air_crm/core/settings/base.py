@@ -128,3 +128,8 @@ STATICFILES_DIRS = (BASE_DIR / "static",)
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+# Flight list paginator settings
+DEFAULT_PAGE = 1
+FLIGHTS_PER_PAGE = 10

@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpRequest
 from django.shortcuts import render
 
@@ -14,15 +16,20 @@ def search_flights(request: HttpRequest) -> HttpResponse:
             departure_date = form.cleaned_data["departure_date"]
             passenger_amount = form.cleaned_data["passenger_amount"]
 
+            page = request.GET.get("page", settings.DEFAULT_PAGE)
+
             flights = get_searched_flights(
                 departure_airport, destination_airport, departure_date
             )
+
+            paginator = Paginator(flights, settings.FLIGHTS_PER_PAGE)
+            current_page = paginator.page(int(page))
 
             return render(
                 request,
                 "flight/flight_list.html",
                 {
-                    "flights": flights,
+                    "flights": current_page,
                     "flights_count": flights.count(),
                     "departure_airport": departure_airport,
                     "destination_airport": destination_airport,
