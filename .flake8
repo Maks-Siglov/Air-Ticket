@@ -1,0 +1,6 @@
+[flake8]
+exclude =
+    */migrations/*
+    */settings/*
+per-file-ignores =
+    */__init__.py: F401
