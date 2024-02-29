@@ -15,4 +15,4 @@ def get_searched_flights(
         Q(departure_airport=departure_airport) &
         Q(destination_airport=destination_airport) &
         Q(departure_date__range=(departure_date_min, departure_date_max))
-    )
+    ).order_by('departure_date')

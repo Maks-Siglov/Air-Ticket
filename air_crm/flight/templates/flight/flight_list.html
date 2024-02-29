@@ -1,7 +1,45 @@
 {% extends 'base.html' %}
 
-{% block title %}Searhced Flights{% endblock %}
+{% block title %}Searched Flights{% endblock %}
 
 {% block content %}
+<div class="container container-form">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            {% if not flights %}
+                <h4>There are no flights available for the selected criteria.</h4>
+            {% else %}
+                <h2>
+                    {{ passenger_amount }} passenger{% if passenger_amount > 1 %}s{% endif %}
+                    From {{ departure_airport }} to {{ destination_airport }} in {{ departure_date }}
+                </h2>
+                <br>
+                <h4>{{ flights_count }} Flights Found</h4>
+                <hr>
+                {% for flight in flights %}
 
+                    <div class="card mb-3">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="card-title">{{ flight.departure_airport }} to {{ flight.destination_airport }}</h5>
+                            <div>
+                                <p class="m-0">Airplane: {{ flight.airplane.name }}</p>
+                                <p class="m-0">Seats: {{ flight.airplane.places_amount }}</p>
+                            </div>
+                        </div>
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <div>
+                                <p class="card-text">Departure Date: {{ flight.departure_date }}</p>
+                                <p class="card-text">Destination Date: {{ flight.destination_date }}</p>
+                            </div>
+                            <div class="ml-auto">
+                                <a href="#" class="btn btn-primary">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
 {% endblock %}
