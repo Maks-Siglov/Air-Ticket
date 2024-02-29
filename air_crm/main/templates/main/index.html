@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="container search-ticket-form">
+<div class="container container-form">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
+                    <h3>Find Your Tickets</h3>
+                    <hr>
                     <form action="#" method="GET">
+                        {% csrf_token %}
                         <div class="form-group m-2">
                             <label for="destination">Destination:</label>
                             <select class="form-control" id="destination" name="destination">
