@@ -1,9 +1,13 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static "css/styles.css" %}">
+
 <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
-  <div class="container-fluid">
-    <a class="navbar-brand m-2" href="{% url 'main:index' %}">Navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+  <div class="container-fluid nav-container">
+  <a class="navbar-brand" href="{% url 'main:index' %}">
+      <img src="{% static 'logo/airplane-ticket.png' %}" width="80" alt="AirTicket">
+  </a>
+    <a class="navbar-brand m-2" href="{% url 'main:index' %}">AirTicket</a>
     <div class="collapse navbar-collapse" id="navbarColor01">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
