@@ -1,0 +1,2602 @@
+[
+  {
+    "model": "flight.place",
+    "pk": 1,
+    "fields": {
+      "airport": "Francisco Bangoy International",
+      "timezone": "Asia/Manila",
+      "iata": "DVO",
+      "icao": "RPMD",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T01:10:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 2,
+    "fields": {
+      "airport": "Nelson",
+      "timezone": "Pacific/Auckland",
+      "iata": "NSN",
+      "icao": "NZNS",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T08:00:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 3,
+    "fields": {
+      "airport": "Nelson",
+      "timezone": "Pacific/Auckland",
+      "iata": "NSN",
+      "icao": "NZNS",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T07:40:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 4,
+    "fields": {
+      "airport": "Indira Gandhi International",
+      "timezone": "Asia/Kolkata",
+      "iata": "DEL",
+      "icao": "VIDP",
+      "terminal": "3",
+      "gate": null,
+      "scheduled": "2024-03-03T00:30:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 5,
+    "fields": {
+      "airport": "Indira Gandhi International",
+      "timezone": "Asia/Kolkata",
+      "iata": "DEL",
+      "icao": "VIDP",
+      "terminal": "3",
+      "gate": null,
+      "scheduled": "2024-03-03T00:20:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 6,
+    "fields": {
+      "airport": "Indira Gandhi International",
+      "timezone": "Asia/Kolkata",
+      "iata": "DEL",
+      "icao": "VIDP",
+      "terminal": "3",
+      "gate": null,
+      "scheduled": "2024-03-03T00:20:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 7,
+    "fields": {
+      "airport": "Indira Gandhi International",
+      "timezone": "Asia/Kolkata",
+      "iata": "DEL",
+      "icao": "VIDP",
+      "terminal": "3",
+      "gate": "26",
+      "scheduled": "2024-03-03T00:20:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 8,
+    "fields": {
+      "airport": "Indira Gandhi International",
+      "timezone": "Asia/Kolkata",
+      "iata": "DEL",
+      "icao": "VIDP",
+      "terminal": "T3",
+      "gate": null,
+      "scheduled": "2024-03-03T00:15:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 9,
+    "fields": {
+      "airport": "Indira Gandhi International",
+      "timezone": "Asia/Kolkata",
+      "iata": "DEL",
+      "icao": "VIDP",
+      "terminal": "3",
+      "gate": null,
+      "scheduled": "2024-03-03T00:10:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 10,
+    "fields": {
+      "airport": "Indira Gandhi International",
+      "timezone": "Asia/Kolkata",
+      "iata": "DEL",
+      "icao": "VIDP",
+      "terminal": "3",
+      "gate": null,
+      "scheduled": "2024-03-03T00:05:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 11,
+    "fields": {
+      "airport": "Indira Gandhi International",
+      "timezone": "Asia/Kolkata",
+      "iata": "DEL",
+      "icao": "VIDP",
+      "terminal": "3",
+      "gate": null,
+      "scheduled": "2024-03-03T00:05:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 12,
+    "fields": {
+      "airport": "Brisbane International",
+      "timezone": "Australia/Brisbane",
+      "iata": "BNE",
+      "icao": "YBBN",
+      "terminal": "I",
+      "gate": "79",
+      "scheduled": "2024-03-03T06:30:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 13,
+    "fields": {
+      "airport": "Auckland International",
+      "timezone": "Pacific/Auckland",
+      "iata": "AKL",
+      "icao": "NZAA",
+      "terminal": "I",
+      "gate": null,
+      "scheduled": "2024-03-03T08:00:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 14,
+    "fields": {
+      "airport": "Sydney Kingsford Smith Airport",
+      "timezone": "Australia/Sydney",
+      "iata": "SYD",
+      "icao": "YSSY",
+      "terminal": "3",
+      "gate": "9",
+      "scheduled": "2024-03-03T08:00:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 15,
+    "fields": {
+      "airport": "Perth International",
+      "timezone": "Australia/Perth",
+      "iata": "PER",
+      "icao": "YPPH",
+      "terminal": "1",
+      "gate": null,
+      "scheduled": "2024-03-03T02:25:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 16,
+    "fields": {
+      "airport": "Singapore Changi",
+      "timezone": "Asia/Singapore",
+      "iata": "SIN",
+      "icao": "WSSS",
+      "terminal": "1",
+      "gate": "C18",
+      "scheduled": "2024-03-03T00:20:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 17,
+    "fields": {
+      "airport": "Singapore Changi",
+      "timezone": "Asia/Singapore",
+      "iata": "SIN",
+      "icao": "WSSS",
+      "terminal": "3",
+      "gate": null,
+      "scheduled": "2024-03-03T01:30:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 18,
+    "fields": {
+      "airport": "Tauranga",
+      "timezone": "Pacific/Auckland",
+      "iata": "TRG",
+      "icao": "NZTG",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T07:05:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 19,
+    "fields": {
+      "airport": "Kuala Lumpur International Airport (klia)",
+      "timezone": "Asia/Kuala_Lumpur",
+      "iata": "KUL",
+      "icao": "WMKK",
+      "terminal": "1",
+      "gate": null,
+      "scheduled": "2024-03-03T01:45:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 20,
+    "fields": {
+      "airport": "Hong Kong International",
+      "timezone": "Asia/Hong_Kong",
+      "iata": "HKG",
+      "icao": "VHHH",
+      "terminal": "1",
+      "gate": null,
+      "scheduled": "2024-03-03T03:20:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 21,
+    "fields": {
+      "airport": "Tan Son Nhat International",
+      "timezone": "Asia/Ho_Chi_Minh",
+      "iata": "SGN",
+      "icao": "VVTS",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T00:35:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 22,
+    "fields": {
+      "airport": "Tagbilaran",
+      "timezone": "Asia/Manila",
+      "iata": "TAG",
+      "icao": "RPSP",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T01:45:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 23,
+    "fields": {
+      "airport": "Singapore Changi",
+      "timezone": "Asia/Singapore",
+      "iata": "SIN",
+      "icao": "WSSS",
+      "terminal": "3",
+      "gate": "A21",
+      "scheduled": "2024-03-03T00:25:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 24,
+    "fields": {
+      "airport": "Singapore Changi",
+      "timezone": "Asia/Singapore",
+      "iata": "SIN",
+      "icao": "WSSS",
+      "terminal": "3",
+      "gate": "A17",
+      "scheduled": "2024-03-03T00:25:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 25,
+    "fields": {
+      "airport": "Brisbane International",
+      "timezone": "Australia/Brisbane",
+      "iata": "BNE",
+      "icao": "YBBN",
+      "terminal": "D",
+      "gate": "30",
+      "scheduled": "2024-03-03T06:40:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 26,
+    "fields": {
+      "airport": "Melbourne - Tullamarine Airport",
+      "timezone": "Australia/Melbourne",
+      "iata": "MEL",
+      "icao": "YMML",
+      "terminal": "4",
+      "gate": "47",
+      "scheduled": "2024-03-03T06:20:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 27,
+    "fields": {
+      "airport": "Melbourne - Tullamarine Airport",
+      "timezone": "Australia/Melbourne",
+      "iata": "MEL",
+      "icao": "YMML",
+      "terminal": "2",
+      "gate": null,
+      "scheduled": "2024-03-03T01:00:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 28,
+    "fields": {
+      "airport": "Melbourne - Tullamarine Airport",
+      "timezone": "Australia/Melbourne",
+      "iata": "MEL",
+      "icao": "YMML",
+      "terminal": "2",
+      "gate": null,
+      "scheduled": "2024-03-03T01:00:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 29,
+    "fields": {
+      "airport": "Hawkes Bay",
+      "timezone": "Pacific/Auckland",
+      "iata": "NPE",
+      "icao": "NZNR",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T06:55:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 30,
+    "fields": {
+      "airport": "Singapore Changi",
+      "timezone": "Asia/Singapore",
+      "iata": "SIN",
+      "icao": "WSSS",
+      "terminal": "1",
+      "gate": "D36",
+      "scheduled": "2024-03-03T01:00:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 31,
+    "fields": {
+      "airport": "Tan Son Nhat International",
+      "timezone": "Asia/Ho_Chi_Minh",
+      "iata": "SGN",
+      "icao": "VVTS",
+      "terminal": "2",
+      "gate": "C",
+      "scheduled": "2024-03-03T02:10:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 32,
+    "fields": {
+      "airport": "Kansai International",
+      "timezone": "Asia/Tokyo",
+      "iata": "KIX",
+      "icao": "RJBB",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T04:50:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 33,
+    "fields": {
+      "airport": "Noibai International",
+      "timezone": "Asia/Ho_Chi_Minh",
+      "iata": "HAN",
+      "icao": "VVNB",
+      "terminal": "2",
+      "gate": null,
+      "scheduled": "2024-03-03T02:00:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 34,
+    "fields": {
+      "airport": "Chhatrapati Shivaji International (Sahar International)",
+      "timezone": "Asia/Kolkata",
+      "iata": "BOM",
+      "icao": "VABB",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T02:25:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 35,
+    "fields": {
+      "airport": "Haneda Airport",
+      "timezone": "Asia/Tokyo",
+      "iata": "HND",
+      "icao": "RJTT",
+      "terminal": "3",
+      "gate": "142",
+      "scheduled": "2024-03-03T01:00:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 36,
+    "fields": {
+      "airport": "Haneda Airport",
+      "timezone": "Asia/Tokyo",
+      "iata": "HND",
+      "icao": "RJTT",
+      "terminal": "3",
+      "gate": "110",
+      "scheduled": "2024-03-03T00:50:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 37,
+    "fields": {
+      "airport": "Haneda Airport",
+      "timezone": "Asia/Tokyo",
+      "iata": "HND",
+      "icao": "RJTT",
+      "terminal": "2",
+      "gate": "73",
+      "scheduled": "2024-03-03T00:35:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 38,
+    "fields": {
+      "airport": "Haneda Airport",
+      "timezone": "Asia/Tokyo",
+      "iata": "HND",
+      "icao": "RJTT",
+      "terminal": "3",
+      "gate": "144",
+      "scheduled": "2024-03-03T00:20:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 39,
+    "fields": {
+      "airport": "Haneda Airport",
+      "timezone": "Asia/Tokyo",
+      "iata": "HND",
+      "icao": "RJTT",
+      "terminal": "3",
+      "gate": "106A",
+      "scheduled": "2024-03-03T00:15:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 40,
+    "fields": {
+      "airport": "Haneda Airport",
+      "timezone": "Asia/Tokyo",
+      "iata": "HND",
+      "icao": "RJTT",
+      "terminal": "3",
+      "gate": "113",
+      "scheduled": "2024-03-03T00:10:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 41,
+    "fields": {
+      "airport": "Haneda Airport",
+      "timezone": "Asia/Tokyo",
+      "iata": "HND",
+      "icao": "RJTT",
+      "terminal": "3",
+      "gate": "114",
+      "scheduled": "2024-03-03T00:10:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 42,
+    "fields": {
+      "airport": "Christchurch International",
+      "timezone": "Pacific/Auckland",
+      "iata": "CHC",
+      "icao": "NZCH",
+      "terminal": null,
+      "gate": "I30",
+      "scheduled": "2024-03-03T06:05:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 43,
+    "fields": {
+      "airport": "Chongqing Jiangbei International",
+      "timezone": "Asia/Shanghai",
+      "iata": "CKG",
+      "icao": "ZUCK",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T02:10:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 44,
+    "fields": {
+      "airport": "Haneda Airport",
+      "timezone": "Asia/Tokyo",
+      "iata": "HND",
+      "icao": "RJTT",
+      "terminal": "3",
+      "gate": null,
+      "scheduled": "2024-03-03T01:00:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 45,
+    "fields": {
+      "airport": "Suvarnabhumi International",
+      "timezone": "Asia/Bangkok",
+      "iata": "BKK",
+      "icao": "VTBS",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T04:00:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 46,
+    "fields": {
+      "airport": "Suvarnabhumi International",
+      "timezone": "Asia/Bangkok",
+      "iata": "BKK",
+      "icao": "VTBS",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T04:00:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 47,
+    "fields": {
+      "airport": "Chhatrapati Shivaji International (Sahar International)",
+      "timezone": "Asia/Kolkata",
+      "iata": "BOM",
+      "icao": "VABB",
+      "terminal": "2",
+      "gate": null,
+      "scheduled": "2024-03-03T00:55:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 48,
+    "fields": {
+      "airport": "Singapore Changi",
+      "timezone": "Asia/Singapore",
+      "iata": "SIN",
+      "icao": "WSSS",
+      "terminal": "1",
+      "gate": "3",
+      "scheduled": "2024-03-03T03:55:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 49,
+    "fields": {
+      "airport": "Auckland International",
+      "timezone": "Pacific/Auckland",
+      "iata": "AKL",
+      "icao": "NZAA",
+      "terminal": "I",
+      "gate": "7",
+      "scheduled": "2024-03-03T01:40:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 50,
+    "fields": {
+      "airport": "Sydney Kingsford Smith Airport",
+      "timezone": "Australia/Sydney",
+      "iata": "SYD",
+      "icao": "YSSY",
+      "terminal": "1",
+      "gate": "55",
+      "scheduled": "2024-03-03T07:55:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 51,
+    "fields": {
+      "airport": "Melbourne - Tullamarine Airport",
+      "timezone": "Australia/Melbourne",
+      "iata": "MEL",
+      "icao": "YMML",
+      "terminal": "2",
+      "gate": "12",
+      "scheduled": "2024-03-03T00:30:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 52,
+    "fields": {
+      "airport": "Ninoy Aquino International",
+      "timezone": "Asia/Manila",
+      "iata": "MNL",
+      "icao": "RPLL",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T01:20:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 53,
+    "fields": {
+      "airport": "Christchurch International",
+      "timezone": "Pacific/Auckland",
+      "iata": "CHC",
+      "icao": "NZCH",
+      "terminal": null,
+      "gate": "D22",
+      "scheduled": "2024-03-03T06:15:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 54,
+    "fields": {
+      "airport": "Kunming",
+      "timezone": "Asia/Shanghai",
+      "iata": "KMG",
+      "icao": "ZPPP",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T02:00:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 55,
+    "fields": {
+      "airport": "Gold Coast (coolangatta)",
+      "timezone": "Australia/Brisbane",
+      "iata": "OOL",
+      "icao": "YBCG",
+      "terminal": "1",
+      "gate": "11",
+      "scheduled": "2024-03-03T06:00:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 56,
+    "fields": {
+      "airport": "Gold Coast (coolangatta)",
+      "timezone": "Australia/Brisbane",
+      "iata": "OOL",
+      "icao": "YBCG",
+      "terminal": "1",
+      "gate": "11",
+      "scheduled": "2024-03-03T06:00:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 57,
+    "fields": {
+      "airport": "Gold Coast (coolangatta)",
+      "timezone": "Australia/Brisbane",
+      "iata": "OOL",
+      "icao": "YBCG",
+      "terminal": "1",
+      "gate": "11",
+      "scheduled": "2024-03-03T06:00:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 58,
+    "fields": {
+      "airport": "Gold Coast (coolangatta)",
+      "timezone": "Australia/Brisbane",
+      "iata": "OOL",
+      "icao": "YBCG",
+      "terminal": "1",
+      "gate": "11",
+      "scheduled": "2024-03-03T06:00:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 59,
+    "fields": {
+      "airport": "Tan Son Nhat International",
+      "timezone": "Asia/Ho_Chi_Minh",
+      "iata": "SGN",
+      "icao": "VVTS",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T01:45:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 60,
+    "fields": {
+      "airport": "Adelaide International Airport",
+      "timezone": "Australia/Adelaide",
+      "iata": "ADL",
+      "icao": "YPAD",
+      "terminal": "1",
+      "gate": "26",
+      "scheduled": "2024-03-03T06:00:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 61,
+    "fields": {
+      "airport": "Kansai International",
+      "timezone": "Asia/Tokyo",
+      "iata": "KIX",
+      "icao": "RJBB",
+      "terminal": "1",
+      "gate": "29",
+      "scheduled": "2024-03-03T00:45:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 62,
+    "fields": {
+      "airport": "Singapore Changi",
+      "timezone": "Asia/Singapore",
+      "iata": "SIN",
+      "icao": "WSSS",
+      "terminal": "1",
+      "gate": null,
+      "scheduled": "2024-03-03T02:40:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 63,
+    "fields": {
+      "airport": "Canberra",
+      "timezone": "Australia/Sydney",
+      "iata": "CBR",
+      "icao": "YSCB",
+      "terminal": null,
+      "gate": "14",
+      "scheduled": "2024-03-03T06:05:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 64,
+    "fields": {
+      "airport": "Hyderabad Airport",
+      "timezone": "Asia/Kolkata",
+      "iata": "HYD",
+      "icao": "VOHS",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T01:30:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 65,
+    "fields": {
+      "airport": "Haneda Airport",
+      "timezone": "Asia/Tokyo",
+      "iata": "HND",
+      "icao": "RJTT",
+      "terminal": "3",
+      "gate": "107",
+      "scheduled": "2024-03-03T01:55:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 66,
+    "fields": {
+      "airport": "Haneda Airport",
+      "timezone": "Asia/Tokyo",
+      "iata": "HND",
+      "icao": "RJTT",
+      "terminal": "3",
+      "gate": "113",
+      "scheduled": "2024-03-03T01:50:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 67,
+    "fields": {
+      "airport": "Haneda Airport",
+      "timezone": "Asia/Tokyo",
+      "iata": "HND",
+      "icao": "RJTT",
+      "terminal": "3",
+      "gate": null,
+      "scheduled": "2024-03-03T01:40:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 68,
+    "fields": {
+      "airport": "Haneda Airport",
+      "timezone": "Asia/Tokyo",
+      "iata": "HND",
+      "icao": "RJTT",
+      "terminal": "3",
+      "gate": "109",
+      "scheduled": "2024-03-03T01:40:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 69,
+    "fields": {
+      "airport": "Haneda Airport",
+      "timezone": "Asia/Tokyo",
+      "iata": "HND",
+      "icao": "RJTT",
+      "terminal": "3",
+      "gate": "148",
+      "scheduled": "2024-03-03T02:00:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 70,
+    "fields": {
+      "airport": "Singapore Changi",
+      "timezone": "Asia/Singapore",
+      "iata": "SIN",
+      "icao": "WSSS",
+      "terminal": "3",
+      "gate": "A15",
+      "scheduled": "2024-03-03T00:40:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 71,
+    "fields": {
+      "airport": "Soekarno-Hatta International",
+      "timezone": "Asia/Jakarta",
+      "iata": "CGK",
+      "icao": "WIII",
+      "terminal": "1",
+      "gate": null,
+      "scheduled": "2024-03-03T01:30:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 72,
+    "fields": {
+      "airport": "Melbourne - Tullamarine Airport",
+      "timezone": "Australia/Melbourne",
+      "iata": "MEL",
+      "icao": "YMML",
+      "terminal": "4",
+      "gate": "41",
+      "scheduled": "2024-03-03T06:20:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 73,
+    "fields": {
+      "airport": "Melbourne - Tullamarine Airport",
+      "timezone": "Australia/Melbourne",
+      "iata": "MEL",
+      "icao": "YMML",
+      "terminal": "2",
+      "gate": "20",
+      "scheduled": "2024-03-03T08:00:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 74,
+    "fields": {
+      "airport": "Taiwan Taoyuan International (Chiang Kai Shek International)",
+      "timezone": "Asia/Taipei",
+      "iata": "TPE",
+      "icao": "RCTP",
+      "terminal": "2",
+      "gate": "C3",
+      "scheduled": "2024-03-03T00:05:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 75,
+    "fields": {
+      "airport": "Singapore Changi",
+      "timezone": "Asia/Singapore",
+      "iata": "SIN",
+      "icao": "WSSS",
+      "terminal": "1",
+      "gate": null,
+      "scheduled": "2024-03-03T01:40:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 76,
+    "fields": {
+      "airport": "Singapore Changi",
+      "timezone": "Asia/Singapore",
+      "iata": "SIN",
+      "icao": "WSSS",
+      "terminal": "3",
+      "gate": null,
+      "scheduled": "2024-03-03T01:45:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 77,
+    "fields": {
+      "airport": "Singapore Changi",
+      "timezone": "Asia/Singapore",
+      "iata": "SIN",
+      "icao": "WSSS",
+      "terminal": "3",
+      "gate": null,
+      "scheduled": "2024-03-03T01:50:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 78,
+    "fields": {
+      "airport": "Singapore Changi",
+      "timezone": "Asia/Singapore",
+      "iata": "SIN",
+      "icao": "WSSS",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T01:50:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 79,
+    "fields": {
+      "airport": "Singapore Changi",
+      "timezone": "Asia/Singapore",
+      "iata": "SIN",
+      "icao": "WSSS",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T01:50:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 80,
+    "fields": {
+      "airport": "Singapore Changi",
+      "timezone": "Asia/Singapore",
+      "iata": "SIN",
+      "icao": "WSSS",
+      "terminal": "4",
+      "gate": null,
+      "scheduled": "2024-03-03T02:00:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 81,
+    "fields": {
+      "airport": "Singapore Changi",
+      "timezone": "Asia/Singapore",
+      "iata": "SIN",
+      "icao": "WSSS",
+      "terminal": "3",
+      "gate": null,
+      "scheduled": "2024-03-03T02:00:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 82,
+    "fields": {
+      "airport": "Singapore Changi",
+      "timezone": "Asia/Singapore",
+      "iata": "SIN",
+      "icao": "WSSS",
+      "terminal": "1",
+      "gate": null,
+      "scheduled": "2024-03-03T02:00:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 83,
+    "fields": {
+      "airport": "Singapore Changi",
+      "timezone": "Asia/Singapore",
+      "iata": "SIN",
+      "icao": "WSSS",
+      "terminal": "1",
+      "gate": null,
+      "scheduled": "2024-03-03T02:00:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 84,
+    "fields": {
+      "airport": "Singapore Changi",
+      "timezone": "Asia/Singapore",
+      "iata": "SIN",
+      "icao": "WSSS",
+      "terminal": "4",
+      "gate": null,
+      "scheduled": "2024-03-03T02:00:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 85,
+    "fields": {
+      "airport": "Singapore Changi",
+      "timezone": "Asia/Singapore",
+      "iata": "SIN",
+      "icao": "WSSS",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T02:05:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 86,
+    "fields": {
+      "airport": "Singapore Changi",
+      "timezone": "Asia/Singapore",
+      "iata": "SIN",
+      "icao": "WSSS",
+      "terminal": "3",
+      "gate": null,
+      "scheduled": "2024-03-03T02:05:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 87,
+    "fields": {
+      "airport": "Christchurch International",
+      "timezone": "Pacific/Auckland",
+      "iata": "CHC",
+      "icao": "NZCH",
+      "terminal": null,
+      "gate": "I32",
+      "scheduled": "2024-03-03T06:10:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 88,
+    "fields": {
+      "airport": "Christchurch International",
+      "timezone": "Pacific/Auckland",
+      "iata": "CHC",
+      "icao": "NZCH",
+      "terminal": null,
+      "gate": "I32",
+      "scheduled": "2024-03-03T06:10:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 89,
+    "fields": {
+      "airport": "Christchurch International",
+      "timezone": "Pacific/Auckland",
+      "iata": "CHC",
+      "icao": "NZCH",
+      "terminal": null,
+      "gate": "D22",
+      "scheduled": "2024-03-03T06:15:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 90,
+    "fields": {
+      "airport": "Christchurch International",
+      "timezone": "Pacific/Auckland",
+      "iata": "CHC",
+      "icao": "NZCH",
+      "terminal": null,
+      "gate": "I32",
+      "scheduled": "2024-03-03T06:10:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 91,
+    "fields": {
+      "airport": "Christchurch International",
+      "timezone": "Pacific/Auckland",
+      "iata": "CHC",
+      "icao": "NZCH",
+      "terminal": null,
+      "gate": "D22",
+      "scheduled": "2024-03-03T06:15:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 92,
+    "fields": {
+      "airport": "Perth International",
+      "timezone": "Australia/Perth",
+      "iata": "PER",
+      "icao": "YPPH",
+      "terminal": "1",
+      "gate": "53",
+      "scheduled": "2024-03-03T00:10:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 93,
+    "fields": {
+      "airport": "Dongsheng",
+      "timezone": "Asia/Shanghai",
+      "iata": "DSN",
+      "icao": "ZBDS",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T01:00:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 94,
+    "fields": {
+      "airport": "Singapore Changi",
+      "timezone": "Asia/Singapore",
+      "iata": "SIN",
+      "icao": "WSSS",
+      "terminal": "4",
+      "gate": null,
+      "scheduled": "2024-03-03T03:15:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 95,
+    "fields": {
+      "airport": "Auckland International",
+      "timezone": "Pacific/Auckland",
+      "iata": "AKL",
+      "icao": "NZAA",
+      "terminal": "I",
+      "gate": null,
+      "scheduled": "2024-03-03T06:05:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 96,
+    "fields": {
+      "airport": "Auckland International",
+      "timezone": "Pacific/Auckland",
+      "iata": "AKL",
+      "icao": "NZAA",
+      "terminal": "I",
+      "gate": null,
+      "scheduled": "2024-03-03T06:05:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 97,
+    "fields": {
+      "airport": "Auckland International",
+      "timezone": "Pacific/Auckland",
+      "iata": "AKL",
+      "icao": "NZAA",
+      "terminal": "I",
+      "gate": null,
+      "scheduled": "2024-03-03T06:05:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 98,
+    "fields": {
+      "airport": "Diosdado Macapagal International (Clark International)",
+      "timezone": "Asia/Manila",
+      "iata": "CRK",
+      "icao": "RPLC",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T02:40:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 99,
+    "fields": {
+      "airport": "Soekarno-Hatta International",
+      "timezone": "Asia/Jakarta",
+      "iata": "CGK",
+      "icao": "WIII",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T01:15:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 100,
+    "fields": {
+      "airport": "Perth International",
+      "timezone": "Australia/Perth",
+      "iata": "PER",
+      "icao": "YPPH",
+      "terminal": "1",
+      "gate": null,
+      "scheduled": "2024-03-03T02:25:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 101,
+    "fields": {
+      "airport": "Ninoy Aquino International",
+      "timezone": "Asia/Manila",
+      "iata": "MNL",
+      "icao": "RPLL",
+      "terminal": "3",
+      "gate": null,
+      "scheduled": "2024-03-03T03:10:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 102,
+    "fields": {
+      "airport": "Wellington International",
+      "timezone": "Pacific/Auckland",
+      "iata": "WLG",
+      "icao": "NZWN",
+      "terminal": "D",
+      "gate": "5",
+      "scheduled": "2024-03-03T08:40:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 103,
+    "fields": {
+      "airport": "Wellington International",
+      "timezone": "Pacific/Auckland",
+      "iata": "WLG",
+      "icao": "NZWN",
+      "terminal": "D",
+      "gate": "10",
+      "scheduled": "2024-03-03T08:20:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 104,
+    "fields": {
+      "airport": "Ngurah Rai International",
+      "timezone": "Asia/Makassar",
+      "iata": "DPS",
+      "icao": "WADD",
+      "terminal": "I",
+      "gate": null,
+      "scheduled": "2024-03-03T11:05:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 105,
+    "fields": {
+      "airport": "Suvarnabhumi International",
+      "timezone": "Asia/Bangkok",
+      "iata": "BKK",
+      "icao": "VTBS",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T05:45:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 106,
+    "fields": {
+      "airport": "Suvarnabhumi International",
+      "timezone": "Asia/Bangkok",
+      "iata": "BKK",
+      "icao": "VTBS",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T05:45:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 107,
+    "fields": {
+      "airport": "John F Kennedy International",
+      "timezone": "America/New_York",
+      "iata": "JFK",
+      "icao": "KJFK",
+      "terminal": "8",
+      "gate": "36",
+      "scheduled": "2024-03-03T06:45:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 108,
+    "fields": {
+      "airport": "King Fahd International Airport",
+      "timezone": "Asia/Riyadh",
+      "iata": "DMM",
+      "icao": "OEDF",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T02:35:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 109,
+    "fields": {
+      "airport": "Bangalore International Airport",
+      "timezone": "Asia/Kolkata",
+      "iata": "BLR",
+      "icao": "VOBL",
+      "terminal": "2",
+      "gate": null,
+      "scheduled": "2024-03-03T03:05:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 110,
+    "fields": {
+      "airport": "Noibai International",
+      "timezone": "Asia/Ho_Chi_Minh",
+      "iata": "HAN",
+      "icao": "VVNB",
+      "terminal": "2",
+      "gate": null,
+      "scheduled": "2024-03-03T05:35:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 111,
+    "fields": {
+      "airport": "Seoul (Incheon)",
+      "timezone": "Asia/Seoul",
+      "iata": "ICN",
+      "icao": "RKSI",
+      "terminal": "1",
+      "gate": null,
+      "scheduled": "2024-03-03T10:30:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 112,
+    "fields": {
+      "airport": "Auckland International",
+      "timezone": "Pacific/Auckland",
+      "iata": "AKL",
+      "icao": "NZAA",
+      "terminal": "I",
+      "gate": null,
+      "scheduled": "2024-03-03T12:45:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 113,
+    "fields": {
+      "airport": "Sydney Kingsford Smith Airport",
+      "timezone": "Australia/Sydney",
+      "iata": "SYD",
+      "icao": "YSSY",
+      "terminal": "1",
+      "gate": "1",
+      "scheduled": "2024-03-03T09:35:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 114,
+    "fields": {
+      "airport": "Melbourne - Tullamarine Airport",
+      "timezone": "Australia/Melbourne",
+      "iata": "MEL",
+      "icao": "YMML",
+      "terminal": "1",
+      "gate": null,
+      "scheduled": "2024-03-03T09:35:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 115,
+    "fields": {
+      "airport": "Kuala Lumpur International Airport (klia)",
+      "timezone": "Asia/Kuala_Lumpur",
+      "iata": "KUL",
+      "icao": "WMKK",
+      "terminal": "1",
+      "gate": null,
+      "scheduled": "2024-03-03T07:55:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 116,
+    "fields": {
+      "airport": "Ninoy Aquino International",
+      "timezone": "Asia/Manila",
+      "iata": "MNL",
+      "icao": "RPLL",
+      "terminal": "1",
+      "gate": null,
+      "scheduled": "2024-03-03T04:10:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 117,
+    "fields": {
+      "airport": "Zurich",
+      "timezone": "Europe/Zurich",
+      "iata": "ZRH",
+      "icao": "LSZH",
+      "terminal": "2",
+      "gate": null,
+      "scheduled": "2024-03-03T07:50:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 118,
+    "fields": {
+      "airport": "Auckland International",
+      "timezone": "Pacific/Auckland",
+      "iata": "AKL",
+      "icao": "NZAA",
+      "terminal": "D",
+      "gate": "35",
+      "scheduled": "2024-03-03T07:45:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 119,
+    "fields": {
+      "airport": "Dubai",
+      "timezone": "Asia/Dubai",
+      "iata": "DXB",
+      "icao": "OMDB",
+      "terminal": "3",
+      "gate": null,
+      "scheduled": "2024-03-03T05:05:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 120,
+    "fields": {
+      "airport": "John F Kennedy International",
+      "timezone": "America/New_York",
+      "iata": "JFK",
+      "icao": "KJFK",
+      "terminal": "8",
+      "gate": null,
+      "scheduled": "2024-03-03T06:00:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 121,
+    "fields": {
+      "airport": "Shenzhen",
+      "timezone": "Asia/Shanghai",
+      "iata": "SZX",
+      "icao": "ZGSZ",
+      "terminal": "T3",
+      "gate": null,
+      "scheduled": "2024-03-03T04:30:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 122,
+    "fields": {
+      "airport": "Gimhae",
+      "timezone": "Asia/Seoul",
+      "iata": "PUS",
+      "icao": "RKPK",
+      "terminal": "I",
+      "gate": null,
+      "scheduled": "2024-03-03T07:00:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 123,
+    "fields": {
+      "airport": "Shanghai Pudong International",
+      "timezone": "Asia/Shanghai",
+      "iata": "PVG",
+      "icao": "ZSPD",
+      "terminal": "1",
+      "gate": null,
+      "scheduled": "2024-03-03T05:40:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 124,
+    "fields": {
+      "airport": "Perth International",
+      "timezone": "Australia/Perth",
+      "iata": "PER",
+      "icao": "YPPH",
+      "terminal": "1",
+      "gate": null,
+      "scheduled": "2024-03-03T05:25:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 125,
+    "fields": {
+      "airport": "Townsville International",
+      "timezone": "Australia/Brisbane",
+      "iata": "TSV",
+      "icao": "YBTL",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T08:35:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 126,
+    "fields": {
+      "airport": "Launceston",
+      "timezone": "Australia/Hobart",
+      "iata": "LST",
+      "icao": "YMLT",
+      "terminal": "4",
+      "gate": null,
+      "scheduled": "2024-03-03T07:25:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 127,
+    "fields": {
+      "airport": "Hong Kong International",
+      "timezone": "Asia/Hong_Kong",
+      "iata": "HKG",
+      "icao": "VHHH",
+      "terminal": "1",
+      "gate": null,
+      "scheduled": "2024-03-03T06:55:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 128,
+    "fields": {
+      "airport": "Hong Kong International",
+      "timezone": "Asia/Hong_Kong",
+      "iata": "HKG",
+      "icao": "VHHH",
+      "terminal": "1",
+      "gate": null,
+      "scheduled": "2024-03-03T06:55:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 129,
+    "fields": {
+      "airport": "Auckland International",
+      "timezone": "Pacific/Auckland",
+      "iata": "AKL",
+      "icao": "NZAA",
+      "terminal": "D",
+      "gate": "39",
+      "scheduled": "2024-03-03T08:05:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 130,
+    "fields": {
+      "airport": "Taiwan Taoyuan International (Chiang Kai Shek International)",
+      "timezone": "Asia/Taipei",
+      "iata": "TPE",
+      "icao": "RCTP",
+      "terminal": "1",
+      "gate": null,
+      "scheduled": "2024-03-03T05:35:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 131,
+    "fields": {
+      "airport": "Shanghai Pudong International",
+      "timezone": "Asia/Shanghai",
+      "iata": "PVG",
+      "icao": "ZSPD",
+      "terminal": "1",
+      "gate": null,
+      "scheduled": "2024-03-03T06:55:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 132,
+    "fields": {
+      "airport": "Yancheng",
+      "timezone": "Asia/Shanghai",
+      "iata": "YNZ",
+      "icao": "ZSYN",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T05:50:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 133,
+    "fields": {
+      "airport": "Shenzhen",
+      "timezone": "Asia/Shanghai",
+      "iata": "SZX",
+      "icao": "ZGSZ",
+      "terminal": "T3",
+      "gate": null,
+      "scheduled": "2024-03-03T04:40:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 134,
+    "fields": {
+      "airport": "Ahmedabad",
+      "timezone": "Asia/Kolkata",
+      "iata": "AMD",
+      "icao": "VAAH",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T03:35:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 135,
+    "fields": {
+      "airport": "Charles De Gaulle",
+      "timezone": "Europe/Paris",
+      "iata": "CDG",
+      "icao": "LFPG",
+      "terminal": "2E",
+      "gate": null,
+      "scheduled": "2024-03-03T07:55:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 136,
+    "fields": {
+      "airport": "Los Angeles International",
+      "timezone": "America/Los_Angeles",
+      "iata": "LAX",
+      "icao": "KLAX",
+      "terminal": "TBIT",
+      "gate": null,
+      "scheduled": "2024-03-02T17:50:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 137,
+    "fields": {
+      "airport": "Singapore Changi",
+      "timezone": "Asia/Singapore",
+      "iata": "SIN",
+      "icao": "WSSS",
+      "terminal": "2",
+      "gate": null,
+      "scheduled": "2024-03-03T07:00:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 138,
+    "fields": {
+      "airport": "Suvarnabhumi International",
+      "timezone": "Asia/Bangkok",
+      "iata": "BKK",
+      "icao": "VTBS",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T05:25:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 139,
+    "fields": {
+      "airport": "Suvarnabhumi International",
+      "timezone": "Asia/Bangkok",
+      "iata": "BKK",
+      "icao": "VTBS",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T05:10:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 140,
+    "fields": {
+      "airport": "Singapore Changi",
+      "timezone": "Asia/Singapore",
+      "iata": "SIN",
+      "icao": "WSSS",
+      "terminal": "1",
+      "gate": null,
+      "scheduled": "2024-03-03T06:45:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 141,
+    "fields": {
+      "airport": "Suvarnabhumi International",
+      "timezone": "Asia/Bangkok",
+      "iata": "BKK",
+      "icao": "VTBS",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T05:05:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 142,
+    "fields": {
+      "airport": "Melbourne - Tullamarine Airport",
+      "timezone": "Australia/Melbourne",
+      "iata": "MEL",
+      "icao": "YMML",
+      "terminal": "2",
+      "gate": "16A",
+      "scheduled": "2024-03-03T07:55:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 143,
+    "fields": {
+      "airport": "Changsha",
+      "timezone": "Asia/Shanghai",
+      "iata": "CSX",
+      "icao": "ZGHA",
+      "terminal": "2",
+      "gate": null,
+      "scheduled": "2024-03-03T03:40:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 144,
+    "fields": {
+      "airport": "Heathrow",
+      "timezone": "Europe/London",
+      "iata": "LHR",
+      "icao": "EGLL",
+      "terminal": "3",
+      "gate": null,
+      "scheduled": "2024-03-03T06:25:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 145,
+    "fields": {
+      "airport": "Guangzhou Baiyun International",
+      "timezone": "Asia/Shanghai",
+      "iata": "CAN",
+      "icao": "ZGGG",
+      "terminal": "1",
+      "gate": null,
+      "scheduled": "2024-03-03T07:55:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 146,
+    "fields": {
+      "airport": "Zhengzhou",
+      "timezone": "Asia/Shanghai",
+      "iata": "CGO",
+      "icao": "ZHCC",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T08:55:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 147,
+    "fields": {
+      "airport": "Singapore Changi",
+      "timezone": "Asia/Singapore",
+      "iata": "SIN",
+      "icao": "WSSS",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T08:55:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 148,
+    "fields": {
+      "airport": "Guangzhou Baiyun International",
+      "timezone": "Asia/Shanghai",
+      "iata": "CAN",
+      "icao": "ZGGG",
+      "terminal": "2",
+      "gate": null,
+      "scheduled": "2024-03-03T07:50:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 149,
+    "fields": {
+      "airport": "Kuala Lumpur International Airport (klia)",
+      "timezone": "Asia/Kuala_Lumpur",
+      "iata": "KUL",
+      "icao": "WMKK",
+      "terminal": "1",
+      "gate": null,
+      "scheduled": "2024-03-03T07:50:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 150,
+    "fields": {
+      "airport": "Wellington International",
+      "timezone": "Pacific/Auckland",
+      "iata": "WLG",
+      "icao": "NZWN",
+      "terminal": null,
+      "gate": "45",
+      "scheduled": "2024-03-03T13:10:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 151,
+    "fields": {
+      "airport": "Kuala Lumpur International Airport (klia)",
+      "timezone": "Asia/Kuala_Lumpur",
+      "iata": "KUL",
+      "icao": "WMKK",
+      "terminal": "1",
+      "gate": null,
+      "scheduled": "2024-03-03T05:45:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 152,
+    "fields": {
+      "airport": "Hangzhou",
+      "timezone": "Asia/Shanghai",
+      "iata": "HGH",
+      "icao": "ZSHC",
+      "terminal": "4",
+      "gate": null,
+      "scheduled": "2024-03-03T04:20:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 153,
+    "fields": {
+      "airport": "Auckland International",
+      "timezone": "Pacific/Auckland",
+      "iata": "AKL",
+      "icao": "NZAA",
+      "terminal": "D",
+      "gate": null,
+      "scheduled": "2024-03-03T07:35:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 154,
+    "fields": {
+      "airport": "Hang Nadim",
+      "timezone": "Asia/Jakarta",
+      "iata": "BTH",
+      "icao": "WIDD",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T05:10:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 155,
+    "fields": {
+      "airport": "Sydney Kingsford Smith Airport",
+      "timezone": "Australia/Sydney",
+      "iata": "SYD",
+      "icao": "YSSY",
+      "terminal": "3",
+      "gate": "T3G",
+      "scheduled": "2024-03-03T08:30:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 156,
+    "fields": {
+      "airport": "Sydney Kingsford Smith Airport",
+      "timezone": "Australia/Sydney",
+      "iata": "SYD",
+      "icao": "YSSY",
+      "terminal": "3",
+      "gate": "T3G",
+      "scheduled": "2024-03-03T08:30:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 157,
+    "fields": {
+      "airport": "Sydney Kingsford Smith Airport",
+      "timezone": "Australia/Sydney",
+      "iata": "SYD",
+      "icao": "YSSY",
+      "terminal": "3",
+      "gate": "T3G",
+      "scheduled": "2024-03-03T08:30:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 158,
+    "fields": {
+      "airport": "Sydney Kingsford Smith Airport",
+      "timezone": "Australia/Sydney",
+      "iata": "SYD",
+      "icao": "YSSY",
+      "terminal": "3",
+      "gate": "T3G",
+      "scheduled": "2024-03-03T08:30:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 159,
+    "fields": {
+      "airport": "Hong Kong International",
+      "timezone": "Asia/Hong_Kong",
+      "iata": "HKG",
+      "icao": "VHHH",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T05:35:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 160,
+    "fields": {
+      "airport": "Cairns",
+      "timezone": "Australia/Brisbane",
+      "iata": "CNS",
+      "icao": "YBCS",
+      "terminal": "2",
+      "gate": null,
+      "scheduled": "2024-03-03T08:30:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 161,
+    "fields": {
+      "airport": "Suvarnabhumi International",
+      "timezone": "Asia/Bangkok",
+      "iata": "BKK",
+      "icao": "VTBS",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T05:00:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 162,
+    "fields": {
+      "airport": "Shenyang",
+      "timezone": "Asia/Shanghai",
+      "iata": "SHE",
+      "icao": "ZYTX",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T09:15:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 163,
+    "fields": {
+      "airport": "Melbourne - Tullamarine Airport",
+      "timezone": "Australia/Melbourne",
+      "iata": "MEL",
+      "icao": "YMML",
+      "terminal": "1",
+      "gate": null,
+      "scheduled": "2024-03-03T07:15:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 164,
+    "fields": {
+      "airport": "Suvarnabhumi International",
+      "timezone": "Asia/Bangkok",
+      "iata": "BKK",
+      "icao": "VTBS",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T06:30:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 165,
+    "fields": {
+      "airport": "Seoul (Incheon)",
+      "timezone": "Asia/Seoul",
+      "iata": "ICN",
+      "icao": "RKSI",
+      "terminal": "1",
+      "gate": null,
+      "scheduled": "2024-03-03T04:45:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 166,
+    "fields": {
+      "airport": "Ninoy Aquino International",
+      "timezone": "Asia/Manila",
+      "iata": "MNL",
+      "icao": "RPLL",
+      "terminal": "1",
+      "gate": null,
+      "scheduled": "2024-03-03T05:45:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 167,
+    "fields": {
+      "airport": "Hong Kong International",
+      "timezone": "Asia/Hong_Kong",
+      "iata": "HKG",
+      "icao": "VHHH",
+      "terminal": "1",
+      "gate": null,
+      "scheduled": "2024-03-03T05:55:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 168,
+    "fields": {
+      "airport": "Ninoy Aquino International",
+      "timezone": "Asia/Manila",
+      "iata": "MNL",
+      "icao": "RPLL",
+      "terminal": "1",
+      "gate": null,
+      "scheduled": "2024-03-03T05:25:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 169,
+    "fields": {
+      "airport": "Seoul (Incheon)",
+      "timezone": "Asia/Seoul",
+      "iata": "ICN",
+      "icao": "RKSI",
+      "terminal": "2",
+      "gate": null,
+      "scheduled": "2024-03-03T04:50:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 170,
+    "fields": {
+      "airport": "Newark Liberty International",
+      "timezone": "America/New_York",
+      "iata": "EWR",
+      "icao": "KEWR",
+      "terminal": "B",
+      "gate": "53",
+      "scheduled": "2024-03-03T05:30:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 171,
+    "fields": {
+      "airport": "Hasanudin",
+      "timezone": "Asia/Makassar",
+      "iata": "UPG",
+      "icao": "WAAA",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T05:00:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 172,
+    "fields": {
+      "airport": "Perth International",
+      "timezone": "Australia/Perth",
+      "iata": "PER",
+      "icao": "YPPH",
+      "terminal": "3",
+      "gate": null,
+      "scheduled": "2024-03-03T07:25:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 173,
+    "fields": {
+      "airport": "Singapore Changi",
+      "timezone": "Asia/Singapore",
+      "iata": "SIN",
+      "icao": "WSSS",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T12:40:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 174,
+    "fields": {
+      "airport": "Hong Kong International",
+      "timezone": "Asia/Hong_Kong",
+      "iata": "HKG",
+      "icao": "VHHH",
+      "terminal": "1",
+      "gate": null,
+      "scheduled": "2024-03-03T02:00:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 175,
+    "fields": {
+      "airport": "Qingdao",
+      "timezone": "Asia/Shanghai",
+      "iata": "TAO",
+      "icao": "ZSQD",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T07:30:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 176,
+    "fields": {
+      "airport": "Seoul (Incheon)",
+      "timezone": "Asia/Seoul",
+      "iata": "ICN",
+      "icao": "RKSI",
+      "terminal": "1",
+      "gate": null,
+      "scheduled": "2024-03-03T08:55:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 177,
+    "fields": {
+      "airport": "Istanbul Airport",
+      "timezone": "Europe/Istanbul",
+      "iata": "IST",
+      "icao": "LTFM",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T08:25:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 178,
+    "fields": {
+      "airport": "Shenzhen",
+      "timezone": "Asia/Shanghai",
+      "iata": "SZX",
+      "icao": "ZGSZ",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T05:35:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 179,
+    "fields": {
+      "airport": "Shenzhen",
+      "timezone": "Asia/Shanghai",
+      "iata": "SZX",
+      "icao": "ZGSZ",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T07:25:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 180,
+    "fields": {
+      "airport": "Naha",
+      "timezone": "Asia/Tokyo",
+      "iata": "OKA",
+      "icao": "ROAH",
+      "terminal": "I",
+      "gate": null,
+      "scheduled": "2024-03-03T08:10:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 181,
+    "fields": {
+      "airport": "Taiwan Taoyuan International (Chiang Kai Shek International)",
+      "timezone": "Asia/Taipei",
+      "iata": "TPE",
+      "icao": "RCTP",
+      "terminal": "1",
+      "gate": null,
+      "scheduled": "2024-03-03T06:40:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 182,
+    "fields": {
+      "airport": "Doha International",
+      "timezone": "Asia/Qatar",
+      "iata": "DOH",
+      "icao": "OTHH",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T05:00:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 183,
+    "fields": {
+      "airport": "Sydney Kingsford Smith Airport",
+      "timezone": "Australia/Sydney",
+      "iata": "SYD",
+      "icao": "YSSY",
+      "terminal": "1",
+      "gate": "31",
+      "scheduled": "2024-03-03T13:00:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 184,
+    "fields": {
+      "airport": "Ninoy Aquino International",
+      "timezone": "Asia/Manila",
+      "iata": "MNL",
+      "icao": "RPLL",
+      "terminal": "3",
+      "gate": null,
+      "scheduled": "2024-03-03T05:55:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 185,
+    "fields": {
+      "airport": "Nanning",
+      "timezone": "Asia/Shanghai",
+      "iata": "NNG",
+      "icao": "ZGNN",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T05:50:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 186,
+    "fields": {
+      "airport": "Leonardo Da Vinci (Fiumicino)",
+      "timezone": "Europe/Rome",
+      "iata": "FCO",
+      "icao": "LIRF",
+      "terminal": "3",
+      "gate": null,
+      "scheduled": "2024-03-03T08:10:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 187,
+    "fields": {
+      "airport": "Melbourne - Tullamarine Airport",
+      "timezone": "Australia/Melbourne",
+      "iata": "MEL",
+      "icao": "YMML",
+      "terminal": "2",
+      "gate": "11B",
+      "scheduled": "2024-03-03T07:55:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 188,
+    "fields": {
+      "airport": "Melbourne - Tullamarine Airport",
+      "timezone": "Australia/Melbourne",
+      "iata": "MEL",
+      "icao": "YMML",
+      "terminal": "2",
+      "gate": "11B",
+      "scheduled": "2024-03-03T07:55:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 189,
+    "fields": {
+      "airport": "Auckland International",
+      "timezone": "Pacific/Auckland",
+      "iata": "AKL",
+      "icao": "NZAA",
+      "terminal": "D",
+      "gate": null,
+      "scheduled": "2024-03-03T07:35:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 190,
+    "fields": {
+      "airport": "Melbourne - Tullamarine Airport",
+      "timezone": "Australia/Melbourne",
+      "iata": "MEL",
+      "icao": "YMML",
+      "terminal": "2",
+      "gate": "11B",
+      "scheduled": "2024-03-03T07:55:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 191,
+    "fields": {
+      "airport": "Auckland International",
+      "timezone": "Pacific/Auckland",
+      "iata": "AKL",
+      "icao": "NZAA",
+      "terminal": "D",
+      "gate": null,
+      "scheduled": "2024-03-03T07:35:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 192,
+    "fields": {
+      "airport": "Hong Kong International",
+      "timezone": "Asia/Hong_Kong",
+      "iata": "HKG",
+      "icao": "VHHH",
+      "terminal": "1",
+      "gate": null,
+      "scheduled": "2024-03-03T07:45:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 193,
+    "fields": {
+      "airport": "Taiyuan",
+      "timezone": "Asia/Shanghai",
+      "iata": "TYN",
+      "icao": "ZBYN",
+      "terminal": "T2",
+      "gate": null,
+      "scheduled": "2024-03-03T02:05:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 194,
+    "fields": {
+      "airport": "Shanghai Pudong International",
+      "timezone": "Asia/Shanghai",
+      "iata": "PVG",
+      "icao": "ZSPD",
+      "terminal": "2",
+      "gate": null,
+      "scheduled": "2024-03-03T08:30:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 195,
+    "fields": {
+      "airport": "Melbourne - Tullamarine Airport",
+      "timezone": "Australia/Melbourne",
+      "iata": "MEL",
+      "icao": "YMML",
+      "terminal": "2",
+      "gate": "3",
+      "scheduled": "2024-03-03T08:15:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 196,
+    "fields": {
+      "airport": "Melbourne - Tullamarine Airport",
+      "timezone": "Australia/Melbourne",
+      "iata": "MEL",
+      "icao": "YMML",
+      "terminal": "2",
+      "gate": "3",
+      "scheduled": "2024-03-03T08:15:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 197,
+    "fields": {
+      "airport": "Melbourne - Tullamarine Airport",
+      "timezone": "Australia/Melbourne",
+      "iata": "MEL",
+      "icao": "YMML",
+      "terminal": "2",
+      "gate": "3",
+      "scheduled": "2024-03-03T08:15:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 198,
+    "fields": {
+      "airport": "Seoul (Incheon)",
+      "timezone": "Asia/Seoul",
+      "iata": "ICN",
+      "icao": "RKSI",
+      "terminal": "1",
+      "gate": null,
+      "scheduled": "2024-03-03T08:05:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 199,
+    "fields": {
+      "airport": "Xianyang",
+      "timezone": "Asia/Shanghai",
+      "iata": "XIY",
+      "icao": "ZLXY",
+      "terminal": null,
+      "gate": null,
+      "scheduled": "2024-03-03T08:35:00"
+    }
+  },
+  {
+    "model": "flight.place",
+    "pk": 200,
+    "fields": {
+      "airport": "Kuala Lumpur International Airport (klia)",
+      "timezone": "Asia/Kuala_Lumpur",
+      "iata": "KUL",
+      "icao": "WMKK",
+      "terminal": "1",
+      "gate": null,
+      "scheduled": "2024-03-03T07:55:00"
+    }
+  }
+]

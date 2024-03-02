@@ -1,16 +1,8 @@
 from django import forms
 
-from flight.models import Flight
 
-
-class FlightForm(forms.ModelForm):
+class FlightForm(forms.Form):
     passenger_amount = forms.IntegerField()
-
-    class Meta:
-        model = Flight
-        fields = (
-            "departure_airport",
-            "destination_airport",
-            "departure_date",
-            "passenger_amount",
-        )
+    arrival_airport = forms.CharField()
+    departure_airport = forms.CharField()
+    departure_date = forms.DateTimeField()
