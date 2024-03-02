@@ -9,12 +9,12 @@ class Flight(models.Model):
     arrival = models.ForeignKey(
         "flight.Place",
         on_delete=models.CASCADE,
-        related_name='arriving_flight'
+        related_name="arriving_flight",
     )
     departure = models.ForeignKey(
         "flight.Place",
         on_delete=models.CASCADE,
-        related_name='departure_flight'
+        related_name="departure_flight",
     )
 
     def __str__(self) -> str:

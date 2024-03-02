@@ -15,9 +15,12 @@ def get_searched_flights(
         Flight.objects.filter(
             Q(departure__airport=departure_airport)
             & Q(arrival__airport=arrival_airport)
-            & Q(departure__scheduled__range=(
-                departure_date_min, departure_date_max
-            ))
+            & Q(
+                departure__scheduled__range=(
+                    departure_date_min,
+                    departure_date_max,
+                )
+            )
         )
         .order_by("departure__scheduled")
         .select_related("airplane")

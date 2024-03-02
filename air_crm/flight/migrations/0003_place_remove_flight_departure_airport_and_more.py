@@ -27,8 +27,14 @@ class Migration(migrations.Migration):
                 ("timezone", models.CharField(max_length=255)),
                 ("iata", models.CharField(max_length=255)),
                 ("icao", models.CharField(max_length=255)),
-                ("terminal", models.CharField(blank=True, max_length=255, null=True)),
-                ("gate", models.CharField(blank=True, max_length=255, null=True)),
+                (
+                    "terminal",
+                    models.CharField(blank=True, max_length=255, null=True),
+                ),
+                (
+                    "gate",
+                    models.CharField(blank=True, max_length=255, null=True),
+                ),
                 ("scheduled", models.DateTimeField()),
             ],
         ),
