@@ -33,7 +33,7 @@
                                 <p class="card-text">Destination Date: {{ flight.arrival.scheduled }} T/Z: {{ flight.arrival.timezone }}</p>
                             </div>
                             <div class="ml-auto">
-                                <a href="{% url 'orders:book' flight.pk %}" class="btn btn-primary">Book Now</a>
+                                <a href="{% url 'booking:book' flight.pk %}" class="btn btn-primary">Book Now</a>
                             </div>
                         </div>
                     </div>
