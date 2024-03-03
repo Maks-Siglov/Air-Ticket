@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from flight.models import Airplane, Flight, Seat, Place
+from flight.models import Airplane, Flight, Seat
 
 
 @admin.register(Airplane)

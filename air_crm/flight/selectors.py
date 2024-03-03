@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 
-from django.db.models import QuerySet, Q, Count, F
+from django.db.models import Count, F, Q, QuerySet
 
 from flight.models import Flight
 

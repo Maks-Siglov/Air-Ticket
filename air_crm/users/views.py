@@ -1,8 +1,7 @@
-from django.contrib import auth
-from django.contrib import messages
+from django.contrib import auth, messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
 
 from users.forms import RegisterForm
 

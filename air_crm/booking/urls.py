@@ -9,6 +9,6 @@ urlpatterns = [
     path(
         "create-ticket/<int:flight_pk>",
         views.create_ticket,
-        name="create_ticket"
+        name="create_ticket",
     ),
 ]
