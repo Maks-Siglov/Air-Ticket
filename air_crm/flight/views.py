@@ -37,3 +37,5 @@ def search_flights(request: HttpRequest) -> HttpResponse:
                     "passenger_amount": passenger_amount,
                 },
             )
+
+    return HttpResponse(status=400)

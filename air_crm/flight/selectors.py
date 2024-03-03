@@ -23,7 +23,7 @@ def get_searched_flights(
             )
         )
         .order_by("departure__scheduled")
-        .select_related("airplane")
+        .select_related("airplane", "departure", "arrival")
     )
 
     flights = flights.annotate(
