@@ -4,7 +4,7 @@ from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 
 from booking.models import Ticket
-from booking.selectors import get_seat
+from booking.selectors import get_seat, get_flight
 
 from customer.forms import PassengerForm
 
@@ -13,7 +13,7 @@ from flight.models import Flight
 
 def book(request: HttpRequest, flight_pk: int) -> HttpResponse:
     try:
-        flight = Flight.objects.get(pk=flight_pk)
+        flight = get_flight(flight_pk)
     except ObjectDoesNotExist:
         messages.error(request, "Flight does not exist")
         return redirect("main:index")

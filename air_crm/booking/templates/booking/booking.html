@@ -16,18 +16,18 @@
 
             <div class="card mb-3 col-md-8">
                 <div class="card-header row">
-                    <div class="col-md-8">
+                    <div class="col-md-7">
                         <h5 class="card-title">{{ flight.departure.airport }} to {{ flight.arrival.airport }}</h5>
-                        <p class="card-text">Airplane: {{ flight.airplane.name }}</p>
-                        <p class="card-text">Departure Date: {{ flight.departure.scheduled }} T/Z: {{ flight.departure.timezone }}</p>
-                        <p class="card-text">Destination Date: {{ flight.arrival.scheduled }} T/Z: {{ flight.arrival.timezone }}</p>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         <div>
                             <p class="m-0">Available Seats:</p>
                             <p class="m-0">Economy: {{ flight.airplane_economy_seats }} Business: {{ flight.airplane_business_seats }} First class: {{ flight.airplane_first_class_seats }}</p>
                         </div>
                     </div>
+                    <p class="card-text">Airplane: {{ flight.airplane.name }}</p>
+                    <p class="card-text">Departure Date: {{ flight.departure.scheduled }} T/Z: {{ flight.departure.timezone }}</p>
+                    <p class="card-text">Destination Date: {{ flight.arrival.scheduled }} T/Z: {{ flight.arrival.timezone }}</p>
                 </div>
                 <div class="card-body">
 
