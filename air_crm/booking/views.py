@@ -34,6 +34,8 @@ def create_ticket(request: HttpRequest, flight_pk: int) -> JsonResponse:
 
         passenger_form = PassengerForm(request.POST)
         seat_type = request.POST.get("seat_type")
+        price = request.POST.get("price")
+        print(int(price)*100)
 
         if passenger_form.is_valid() and seat_type:
             passenger = passenger_form.save()
@@ -41,7 +43,7 @@ def create_ticket(request: HttpRequest, flight_pk: int) -> JsonResponse:
             seat = get_seat(flight.airplane, seat_type)
 
             ticket = Ticket.objects.create(
-                passenger=passenger, seat=seat, price=10000
+                passenger=passenger, seat=seat, price=int(price)*100
             )
 
             return JsonResponse(
