@@ -31,70 +31,66 @@
                 </div>
                 <div class="card-body">
 
-{#                        {% for passenger_amount %}#}
+                    <div class="card mb-3">
+                        <div class="card-header">Ticket</div>
+                        <div class="card-body">
+                            <form action="{% url 'booking:create_ticket' flight.pk %}" id="ticketForm" method="post">
+                                {% csrf_token %}
+                                <div class="row">
 
-                        <div class="card mb-3">
-                            <div class="card-header">Ticket</div>
-                            <div class="card-body">
-                                <form action="{% url 'booking:create_ticket' flight.pk %}" id="ticketForm" method="post">
-                                    {% csrf_token %}
-                                    <div class="row">
-
-                                        <div class="form-group col-8">
-                                            <p>Seat Type:</p>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="seat_type" id="economyOption" value="economy" required checked>
-                                                <label class="form-check-label" for="economyOption">Economy</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="seat_type" id="businessOption" value="business">
-                                                <label class="form-check-label" for="businessOption">Business</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="seat_type" id="firstClassOption" value="first_class">
-                                                <label class="form-check-label" for="firstClassOption">First Class</label>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group col-4">
-                                            <label for="id_price">Price:</label>
-                                            <input type="text" class="form-control" id="id_price" name="price"  readonly>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="form-group mt-1 mb-1">
-                                        <label for="id_fist_name">First Name:</label>
-                                        <input type="text" class="form-control" id="id_fist_name" name="first_name" placeholder="Your First Name" required>
-                                    </div>
-                                    <div class="form-group mt-1 mb-1">
-                                        <label for="id_last_name">Last Name:</label>
-                                        <input type="text" class="form-control" id="id_last_name" name="last_name" placeholder="Your Last Name"  required>
-                                    </div>
-                                    <div class="form-group mt-1 mb-1">
-                                        <label for="id_email">Email:</label>
-                                        <input type="email" class="form-control" id="id_email" name="email" placeholder="Your Email"  required>
-                                    </div>
-                                   <div class="form-group">
-                                        <p>Additional Options:</p>
+                                    <div class="form-group col-8">
+                                        <p>Seat Type:</p>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="lunchOption" id="lunchOption" value="lunch">
-                                            <label class="form-check-label" for="lunchOption">Lunch</label>
+                                            <input class="form-check-input" type="radio" name="seat_type" id="economyOption" value="economy" required checked>
+                                            <label class="form-check-label" for="economyOption">Economy</label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="luggageOption" id="luggageOption" value="luggage">
-                                            <label class="form-check-label" for="luggageOption">Luggage</label>
+                                            <input class="form-check-input" type="radio" name="seat_type" id="businessOption" value="business">
+                                            <label class="form-check-label" for="businessOption">Business</label>
                                         </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="seat_type" id="firstClassOption" value="first_class">
+                                            <label class="form-check-label" for="firstClassOption">First Class</label>
+                                        </div>
+                                    </div>
 
+                                    <div class="form-group col-4">
+                                        <label for="id_price">Price:</label>
+                                        <input type="text" class="form-control" id="id_price" name="price"  readonly>
                                     </div>
-                                    <div class="text-center">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
+
+                                </div>
+
+                                <div class="form-group mt-1 mb-1">
+                                    <label for="id_fist_name">First Name:</label>
+                                    <input type="text" class="form-control" id="id_fist_name" name="first_name" placeholder="Your First Name" required>
+                                </div>
+                                <div class="form-group mt-1 mb-1">
+                                    <label for="id_last_name">Last Name:</label>
+                                    <input type="text" class="form-control" id="id_last_name" name="last_name" placeholder="Your Last Name"  required>
+                                </div>
+                                <div class="form-group mt-1 mb-1">
+                                    <label for="id_email">Email:</label>
+                                    <input type="email" class="form-control" id="id_email" name="email" placeholder="Your Email"  required>
+                                </div>
+                               <div class="form-group">
+                                    <p>Additional Options:</p>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="lunchOption" id="lunchOption" value="lunch">
+                                        <label class="form-check-label" for="lunchOption">Lunch</label>
                                     </div>
-                                </form>
-                            </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="luggageOption" id="luggageOption" value="luggage">
+                                        <label class="form-check-label" for="luggageOption">Luggage</label>
+                                    </div>
+
+                                </div>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </form>
                         </div>
-
-{#                        {% endfor %}#}
+                    </div>
 
                 </div>
             </div>

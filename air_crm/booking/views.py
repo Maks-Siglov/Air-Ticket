@@ -17,6 +17,7 @@ def book(request: HttpRequest, flight_pk: int) -> HttpResponse:
     except ObjectDoesNotExist:
         messages.error(request, "Flight does not exist")
         return redirect("main:index")
+
     passenger_amount = request.GET.get("passenger_amount")
 
     return render(
@@ -36,7 +37,6 @@ def create_ticket(request: HttpRequest, flight_pk: int) -> JsonResponse:
         passenger_form = PassengerForm(request.POST)
         seat_type = request.POST.get("seat_type")
         price = request.POST.get("price")
-        print(int(price) * 100)
 
         if passenger_form.is_valid() and seat_type:
             passenger = passenger_form.save()
