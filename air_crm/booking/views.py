@@ -56,7 +56,7 @@ def create_ticket(request: HttpRequest, flight_pk: int) -> JsonResponse:
                         "first_name": passenger.first_name,
                         "last_name": passenger.last_name
                     }
-                }, status=204
+                }, status=201
             )
 
         return JsonResponse({"error": "Not valid form data"}, status=400)

@@ -10,7 +10,8 @@ document.addEventListener('DOMContentLoaded', function() {
         xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
         xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));
         xhr.onload = function() {
-            if (xhr.status === 200) {
+            console.log(xhr.status)
+            if (xhr.status === 201) {
 
                 const response = JSON.parse(xhr.responseText);
                 console.log(response)
