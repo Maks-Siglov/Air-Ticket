@@ -28,14 +28,23 @@ def get_searched_flights(
 
     flights = flights.annotate(
         airplane_economy_seats=Count(
-            "airplane__seats__type", filter=Q(airplane__seats__type="Economy")
+            "airplane__seats__type", filter=Q(
+                airplane__seats__type="Economy",
+                airplane__seats__is_available=True
+            )
         ),
         airplane_business_seats=Count(
-            "airplane__seats__type", filter=Q(airplane__seats__type="Business")
+            "airplane__seats__type", filter=Q(
+                airplane__seats__type="Business",
+                airplane__seats__is_available=True
+            )
         ),
         airplane_first_class_seats=Count(
             "airplane__seats__type",
-            filter=Q(airplane__seats__type="First Class"),
+            filter=Q(
+                airplane__seats__type="First Class",
+                airplane__seats__is_available=True
+            ),
         ),
         airplane_total_seats=(
             F("airplane_economy_seats")
