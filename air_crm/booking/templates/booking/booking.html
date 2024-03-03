@@ -8,7 +8,7 @@
     <div class="container container-form">
         <h2>
             {{ passenger_amount }} passenger{% if passenger_amount > 1 %}s{% endif %}
-            From {{ departure_airport }} to {{ arrival_airport }} in {{ departure_date }}
+            From {{ flight.departure.airport }} to {{ flight.arrival.airport }}
         </h2>
         <hr>
 

@@ -17,8 +17,13 @@ def book(request: HttpRequest, flight_pk: int) -> HttpResponse:
     except ObjectDoesNotExist:
         messages.error(request, "Flight does not exist")
         return redirect("main:index")
+    passenger_amount = request.GET.get("passenger_amount")
 
-    return render(request, "booking/booking.html", {"flight": flight})
+    return render(
+        request,
+        "booking/booking.html",
+        {"flight": flight, "passenger_amount": passenger_amount}
+    )
 
 
 def create_ticket(request: HttpRequest, flight_pk: int) -> JsonResponse:
