@@ -10,9 +10,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
             seatTypeRadios.forEach(radio => {
                 if (radio.checked) {
-                    if (radio.value === 'economy') price += 120;
-                    else if (radio.value === 'business') price += 250;
-                    else if (radio.value === 'first_class') price += 450;
+                    if (radio.value === 'Economy') price += 120;
+                    else if (radio.value === 'Business') price += 250;
+                    else if (radio.value === 'First class') price += 450;
                 }
             });
 

@@ -38,7 +38,7 @@ def get_flight(flight_pk: int) -> Flight:
 
 def get_seat(airplane: Airplane, seat_type: str) -> Seat:
     seat = Seat.objects.filter(
-        airplane=airplane, type=seat_type.capitalize(), is_available=True
+        airplane=airplane, type=seat_type.title(), is_available=True
     ).first()
     seat.is_available = False
     seat.save()

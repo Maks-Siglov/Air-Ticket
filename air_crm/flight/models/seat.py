@@ -5,7 +5,7 @@ class Seat(models.Model):
     TYPE_CHOICES = (
         ("Economy", "economy"),
         ("Business", "business"),
-        ("First Class", "first Class"),
+        ("First Class", "first class"),
     )
     airplane = models.ForeignKey(
         "flight.Airplane", on_delete=models.CASCADE, related_name="seats"
