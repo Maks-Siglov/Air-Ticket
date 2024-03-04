@@ -10,7 +10,7 @@ from django.http import (
 from django.shortcuts import redirect, render
 
 from booking.stripe import stripe
-from booking.models import Ticket, PreOrder
+from booking.models import Ticket, Order
 from booking.selectors import get_seat, get_flight
 
 from customer.forms import PassengerForm
@@ -18,7 +18,7 @@ from customer.forms import PassengerForm
 from flight.models import Flight
 
 
-def create_preorder(
+def create_order(
         request: HttpRequest, flight_pk: int
 ) -> HttpResponseRedirect:
     try:
@@ -29,23 +29,23 @@ def create_preorder(
 
     passenger_amount = request.GET.get("passenger_amount")
 
-    preorder = PreOrder.objects.create(
+    order = Order.objects.create(
         passenger_amount=passenger_amount, flight=flight
     )
 
-    return redirect("booking:book", preorder.pk)
+    return redirect("booking:book", order.pk)
 
 
-def book(request: HttpRequest, preorder_pk: int) -> HttpResponse:
+def book(request: HttpRequest, order_pk: int) -> HttpResponse:
     try:
-        preorder = PreOrder.objects.select_related("flight").get(pk=preorder_pk)
+        order = Order.objects.select_related("flight").get(pk=order_pk)
     except ObjectDoesNotExist:
-        messages.error(request, "Preorder does not exist")
+        messages.error(request, "Order does not exist")
         return redirect("main:index")
 
-    tickets = Ticket.objects.filter(preorder=preorder)
-    flight = get_flight(preorder.flight.pk)
-    passenger_amount = preorder.passenger_amount
+    tickets = Ticket.objects.filter(order=order)
+    flight = get_flight(order.flight.pk)
+    passenger_amount = order.passenger_amount
 
     return render(
         request,
@@ -54,7 +54,7 @@ def book(request: HttpRequest, preorder_pk: int) -> HttpResponse:
             "flight": flight,
             "passenger_amount": passenger_amount,
             "passengers": range(passenger_amount),
-            "preorder_pk": preorder.pk,
+            "order_pk": order.pk,
             "tickets": tickets
         }
     )
@@ -70,13 +70,13 @@ def create_ticket(request: HttpRequest, flight_pk: int) -> JsonResponse:
         passenger_form = PassengerForm(request.POST)
         seat_type = request.POST.get("seat_type")
         price = request.POST.get("price")
-        preorder_pk = request.POST.get("preorder_pk")
+        order_pk = request.POST.get("order_pk")
         if passenger_form.is_valid() and seat_type:
             try:
-                preorder = PreOrder.objects.get(pk=preorder_pk)
+                order = Order.objects.get(pk=order_pk)
             except ObjectDoesNotExist:
                 return JsonResponse(
-                    {"error": "Preorder does not exist"}, status=400
+                    {"error": "Order does not exist"}, status=400
                 )
 
             passenger = passenger_form.save()
@@ -86,7 +86,7 @@ def create_ticket(request: HttpRequest, flight_pk: int) -> JsonResponse:
                 passenger=passenger,
                 seat=seat,
                 price=int(price) * 100,
-                preorder=preorder
+                order=order
             )
             return JsonResponse(
                 {

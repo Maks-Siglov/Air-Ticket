@@ -37,7 +37,7 @@
                             <form action="{% url 'booking:create_ticket' flight.pk %}" id="ticketForm" method="post" class="flight-booking-form">
                                 {% csrf_token %}
                                 <div class="row">
-                                    <input type="hidden" name="preorder_pk" value="{{ preorder_pk }}">
+                                    <input type="hidden" name="order_pk" value="{{ order_pk }}">
                                     <div class="form-group col-8">
                                         <p>Seat Type:</p>
                                         <div class="form-check">
