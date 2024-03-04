@@ -1,32 +1,37 @@
-const priceInput = document.getElementById('id_price');
-const seatTypeRadios = document.querySelectorAll('input[name="seat_type"]');
-const lunchCheckbox = document.getElementById('lunchOption');
-const luggageCheckbox = document.getElementById('luggageOption');
+document.addEventListener("DOMContentLoaded", function () {
+    function updatePriceForForm(form) {
+        const priceInput = form.querySelector('#id_price');
+        const seatTypeRadios = form.querySelectorAll('input[name="seat_type"]');
+        const lunchCheckbox = form.querySelector('#lunchOption');
+        const luggageCheckbox = form.querySelector('#luggageOption');
 
-    function updatePrice() {
-        let price = 0; // Base price
+        function updatePrice() {
+            let price = 0;
 
-        // Seat type price adjustments
+            seatTypeRadios.forEach(radio => {
+                if (radio.checked) {
+                    if (radio.value === 'economy') price += 120;
+                    else if (radio.value === 'business') price += 250;
+                    else if (radio.value === 'first_class') price += 450;
+                }
+            });
+
+            if (lunchCheckbox.checked) price += 10;
+            if (luggageCheckbox.checked) price += 30;
+
+            priceInput.value = price;
+        }
+
         seatTypeRadios.forEach(radio => {
-            if (radio.checked) {
-                if (radio.value === 'economy') price += 120;
-                else if (radio.value === 'business') price += 250;
-                else if (radio.value === 'first_class') price += 450;
-            }
+            radio.addEventListener('change', updatePrice);
         });
+        lunchCheckbox.addEventListener('change', updatePrice);
+        luggageCheckbox.addEventListener('change', updatePrice);
 
-        // Additional options price adjustments
-        if (lunchCheckbox.checked) price += 10;
-        if (luggageCheckbox.checked) price += 30;
-
-        priceInput.value = price ;
+        updatePrice();
     }
 
-    // Update price when selections change
-    seatTypeRadios.forEach(radio => {
-        radio.addEventListener('change', updatePrice);
+    document.querySelectorAll('#ticketForm').forEach(form => {
+        updatePriceForForm(form);
     });
-    lunchCheckbox.addEventListener('change', updatePrice);
-    luggageCheckbox.addEventListener('change', updatePrice);
-
-    updatePrice();
+});

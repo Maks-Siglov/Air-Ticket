@@ -43,6 +43,7 @@ def book(request: HttpRequest, preorder_pk: int) -> HttpResponse:
         messages.error(request, "Preorder does not exist")
         return redirect("main:index")
 
+    tickets = Ticket.objects.filter(preorder=preorder)
     flight = get_flight(preorder.flight.pk)
     passenger_amount = preorder.passenger_amount
 
@@ -53,7 +54,8 @@ def book(request: HttpRequest, preorder_pk: int) -> HttpResponse:
             "flight": flight,
             "passenger_amount": passenger_amount,
             "passengers": range(passenger_amount),
-            "preorder_pk": preorder.pk
+            "preorder_pk": preorder.pk,
+            "tickets": tickets
         }
     )
 

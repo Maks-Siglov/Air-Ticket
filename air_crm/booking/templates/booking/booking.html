@@ -34,7 +34,7 @@
                     <div class="card mb-3">
                         <div class="card-header">Ticket</div>
                         <div class="card-body">
-                            <form action="{% url 'booking:create_ticket' flight.pk %}" id="ticketForm" method="post">
+                            <form action="{% url 'booking:create_ticket' flight.pk %}" id="ticketForm" method="post" class="flight-booking-form">
                                 {% csrf_token %}
                                 <div class="row">
                                     <input type="hidden" name="preorder_pk" value="{{ preorder_pk }}">
@@ -100,8 +100,17 @@
 
             <div class="col-md-4">
                 <div class="card mb-3">
-                    <div class="card-body text-center" id="checkout-card-body">
+                    <div class="card-body text-center">
+                        {% for ticket in tickets %}
 
+                            <div class="card mb-1">
+                                <div class="card-body text-center">
+                                    {{ ticket.price }}
+                                    {{ ticket.passenger.first_name }} {{ ticket.passenger.last_name }}
+                                </div>
+                            </div>
+
+                        {% endfor %}
                     </div>
                     <div class="card-footer">
                         <div class="ml-auto text-center">
