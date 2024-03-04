@@ -30,14 +30,14 @@
                     <p class="card-text">Arrival Date: {{ flight.arrival_scheduled }} T/Z: {{ flight.arrival_airport.timezone }}</p>
                 </div>
                 <div class="card-body">
-
+                {% for p in passengers %}
                     <div class="card mb-3">
                         <div class="card-header">Ticket</div>
                         <div class="card-body">
                             <form action="{% url 'booking:create_ticket' flight.pk %}" id="ticketForm" method="post">
                                 {% csrf_token %}
                                 <div class="row">
-
+                                    <input type="hidden" name="preorder_pk" value="{{ preorder_pk }}">
                                     <div class="form-group col-8">
                                         <p>Seat Type:</p>
                                         <div class="form-check">
@@ -94,7 +94,7 @@
                             </form>
                         </div>
                     </div>
-
+            {% endfor %}
                 </div>
             </div>
 

@@ -5,7 +5,12 @@ from booking import views
 app_name = "booking"
 
 urlpatterns = [
-    path("book/<int:flight_pk>", views.book, name="book"),
+    path(
+        "preorder/<int:flight_pk>",
+        views.create_preorder,
+        name="create_preorder",
+    ),
+    path("book/<int:preorder_pk>", views.book, name="book"),
     path(
         "create-ticket/<int:flight_pk>",
         views.create_ticket,

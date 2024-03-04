@@ -13,8 +13,8 @@ def get_searched_flights(
 
     flights = (
         Flight.objects.filter(
-            Q(departure_airport__name=departure_airport)
-            & Q(arrival_airport__name=arrival_airport)
+            Q(departure_airport__name__icontains=departure_airport)
+            & Q(arrival_airport__name__icontains=arrival_airport)
             & Q(
                 departure_scheduled__range=(
                     departure_date_min,
