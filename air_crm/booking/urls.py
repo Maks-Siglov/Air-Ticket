@@ -11,4 +11,16 @@ urlpatterns = [
         views.create_ticket,
         name="create_ticket",
     ),
+    path("checkout/<int:ticket_pk>", views.checkout, name="checkout"),
+    path(
+        "create-checkout-session/<int:ticket_pk>",
+        views.create_checkout_session,
+        name="create_checkout_session",
+    ),
+    path("session-status/", views.session_status, name="session_status"),
+    path(
+        "<int:ticket_pk>/return/",
+        views.checkout_return,
+        name="checkout_return",
+    )
 ]

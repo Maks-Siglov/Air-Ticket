@@ -131,6 +131,11 @@ STATICFILES_DIRS = (BASE_DIR / "static",)
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
+# Stripe keys
+STRIPE_PUBLIC_KEY = os.environ["STRIPE_PUBLIC_KEY"]
+STRIPE_SECRET_KEY = os.environ["STRIPE_SECRET_KEY"]
+
+
 # Flight list paginator settings
 DEFAULT_PAGE = 1
 FLIGHTS_PER_PAGE = 10

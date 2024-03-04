@@ -1,8 +1,15 @@
 from django.contrib import messages
+from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpRequest, HttpResponse, JsonResponse
+from django.http import (
+    HttpRequest,
+    HttpResponse,
+    HttpResponseRedirect,
+    JsonResponse,
+)
 from django.shortcuts import redirect, render
 
+from booking.stripe import stripe
 from booking.models import Ticket
 from booking.selectors import get_seat, get_flight
 
@@ -56,6 +63,7 @@ def create_ticket(request: HttpRequest, flight_pk: int) -> JsonResponse:
                     },
                     "passenger": {
                         "id": passenger.id,
+                        "passport_id": passenger.passport_id,
                         "first_name": passenger.first_name,
                         "last_name": passenger.last_name,
                     },
@@ -64,3 +72,66 @@ def create_ticket(request: HttpRequest, flight_pk: int) -> JsonResponse:
             )
 
         return JsonResponse({"error": "Not valid form data"}, status=400)
+
+
+def checkout(
+        request: HttpRequest, ticket_pk: int
+) -> HttpResponse | HttpResponseRedirect:
+    try:
+        Ticket.objects.get(pk=ticket_pk)
+    except ObjectDoesNotExist:
+        messages.error(request, "Ticket does not exist")
+        return redirect(request.META.get("HTTP_REFERER"))
+
+    return render(
+        request, "booking/stripe/checkout.html", {"ticket_pk": ticket_pk}
+    )
+
+
+def create_checkout_session(
+        request: HttpRequest, ticket_pk
+) -> JsonResponse:
+    if request.method == "POST":
+        ticket = Ticket.objects.get(pk=ticket_pk)
+
+        data = (
+            {
+                "price_data": {
+                    "currency": "usd",
+                    "unit_amount": ticket.price,
+                    "product_data": {
+                        "name": f"Order №{ticket_pk}",
+                    },
+                },
+                "quantity": 1,
+            },
+        )
+        checkout_session = stripe.checkout.Session.create(
+            ui_mode="embedded",
+            line_items=data,
+            mode="payment",
+            return_url=(
+                    f"http://{settings.DOMAIN}/booking/{ticket_pk}"
+                    + "/return?session_id={CHECKOUT_SESSION_ID}"
+            ),
+        )
+        return JsonResponse({"clientSecret": checkout_session.client_secret})
+
+
+def session_status(request: HttpRequest):
+    session = stripe.checkout.Session.retrieve(request.GET.get("session_id"))
+    return JsonResponse(
+        {
+            "status": session.status,
+            "customer_email": session.customer_details.email,
+        }
+    )
+
+
+def checkout_return(request: HttpRequest, ticket_pk: int) -> HttpResponse:
+    ticket = Ticket.objects.get(id=ticket_pk)
+    return render(
+        request,
+        "booking/stripe/return.html",
+        {"ticket": ticket}
+    )
