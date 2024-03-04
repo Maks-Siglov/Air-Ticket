@@ -11,12 +11,12 @@ class Flight(models.Model):
     arrival_airport = models.ForeignKey(
         "flight.Airport",
         on_delete=models.CASCADE,
-        related_name="arrival_flight"
+        related_name="arrival_flight",
     )
     departure_airport = models.ForeignKey(
         "flight.Airport",
         on_delete=models.CASCADE,
-        related_name="departure_flight"
+        related_name="departure_flight",
     )
     arrival_scheduled = models.DateTimeField()
     departure_scheduled = models.DateTimeField()

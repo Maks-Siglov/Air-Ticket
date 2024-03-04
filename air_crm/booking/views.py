@@ -18,9 +18,7 @@ from customer.forms import PassengerForm
 from flight.models import Flight
 
 
-def create_order(
-        request: HttpRequest, flight_pk: int
-) -> HttpResponseRedirect:
+def create_order(request: HttpRequest, flight_pk: int) -> HttpResponseRedirect:
     try:
         flight = Flight.objects.get(pk=flight_pk)
     except ObjectDoesNotExist:
@@ -55,8 +53,8 @@ def book(request: HttpRequest, order_pk: int) -> HttpResponse:
             "passenger_amount": passenger_amount,
             "passengers": range(passenger_amount),
             "order_pk": order.pk,
-            "tickets": tickets
-        }
+            "tickets": tickets,
+        },
     )
 
 
@@ -71,7 +69,6 @@ def create_ticket(request: HttpRequest, flight_pk: int) -> JsonResponse:
         seat_type = request.POST.get("seat_type")
         price = request.POST.get("price")
         order_pk = request.POST.get("order_pk")
-        print(passenger_form.is_valid(), passenger_form.errors)
         if passenger_form.is_valid() and seat_type:
             try:
                 order = Order.objects.get(pk=order_pk)
@@ -87,7 +84,7 @@ def create_ticket(request: HttpRequest, flight_pk: int) -> JsonResponse:
                 passenger=passenger,
                 seat=seat,
                 price=int(price) * 100,
-                order=order
+                order=order,
             )
             return JsonResponse(
                 {
@@ -110,7 +107,7 @@ def create_ticket(request: HttpRequest, flight_pk: int) -> JsonResponse:
 
 
 def checkout(
-        request: HttpRequest, order_pk: int
+    request: HttpRequest, order_pk: int
 ) -> HttpResponse | HttpResponseRedirect:
     try:
         Order.objects.get(pk=order_pk)
@@ -123,9 +120,7 @@ def checkout(
     )
 
 
-def create_checkout_session(
-        request: HttpRequest, order_pk
-) -> JsonResponse:
+def create_checkout_session(request: HttpRequest, order_pk) -> JsonResponse:
     if request.method == "POST":
         order = Order.objects.get(pk=order_pk)
         tickets = get_order_tickets(order)
@@ -151,8 +146,8 @@ def create_checkout_session(
             line_items=line_items,
             mode="payment",
             return_url=(
-                    f"http://{settings.DOMAIN}/booking/{order.pk}"
-                    + "/return?session_id={CHECKOUT_SESSION_ID}"
+                f"http://{settings.DOMAIN}/booking/{order.pk}"
+                + "/return?session_id={CHECKOUT_SESSION_ID}"
             ),
         )
         return JsonResponse({"clientSecret": checkout_session.client_secret})
@@ -169,7 +164,7 @@ def session_status(request: HttpRequest):
 
 
 def checkout_return(
-        request: HttpRequest, order_pk: int
+    request: HttpRequest, order_pk: int
 ) -> HttpResponseRedirect:
     order = Order.objects.get(pk=order_pk)
     order.status = "Completed"
@@ -179,8 +174,4 @@ def checkout_return(
 
 def order_details(request: HttpRequest, order_pk: int) -> HttpResponse:
     order = Order.objects.get(pk=order_pk)
-    return render(
-        request,
-        "booking/stripe/return.html",
-        {"order": order}
-    )
+    return render(request, "booking/stripe/return.html", {"order": order})

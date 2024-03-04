@@ -26,5 +26,5 @@ class FlightAdmin(admin.ModelAdmin):
         "departure_airport",
         "arrival_airport",
         "arrival_scheduled",
-        "departure_scheduled"
+        "departure_scheduled",
     )

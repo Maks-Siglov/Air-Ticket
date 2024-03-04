@@ -11,5 +11,5 @@ class Order(models.Model):
     passenger_amount = models.PositiveIntegerField()
     flight = models.ForeignKey("flight.Flight", on_delete=models.CASCADE)
     status = models.CharField(
-            max_length=20, choices=STATUS_CHOICES, default="preorder"
-        )
+        max_length=20, choices=STATUS_CHOICES, default="preorder"
+    )
