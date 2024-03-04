@@ -8,7 +8,7 @@
     <div class="container container-form">
         <h2>
             {{ passenger_amount }} passenger{% if passenger_amount > 1 %}s{% endif %}
-            From {{ flight.departure.airport }} to {{ flight.arrival.airport }}
+            From {{ flight.departure_airport.name }} to {{ flight.arrival_airport.name }}
         </h2>
         <hr>
 
@@ -17,7 +17,7 @@
             <div class="card mb-3 col-md-8">
                 <div class="card-header row">
                     <div class="col-md-7">
-                        <h5 class="card-title">{{ flight.departure.airport }} to {{ flight.arrival.airport }}</h5>
+                        <h5 class="card-title">{{ flight.departure_airport.name }} to {{ flight.arrival_airport.name }}</h5>
                     </div>
                     <div class="col-md-5">
                         <div>
@@ -26,8 +26,8 @@
                         </div>
                     </div>
                     <p class="card-text">Airplane: {{ flight.airplane.name }}</p>
-                    <p class="card-text">Departure Date: {{ flight.departure.scheduled }} T/Z: {{ flight.departure.timezone }}</p>
-                    <p class="card-text">Destination Date: {{ flight.arrival.scheduled }} T/Z: {{ flight.arrival.timezone }}</p>
+                    <p class="card-text">Departure Date: {{ flight.departure_scheduled }} T/Z: {{ flight.departure_airport.timezone }}</p>
+                    <p class="card-text">Arrival Date: {{ flight.arrival_scheduled }} T/Z: {{ flight.arrival_airport.timezone }}</p>
                 </div>
                 <div class="card-body">
 

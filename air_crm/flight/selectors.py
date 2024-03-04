@@ -13,17 +13,17 @@ def get_searched_flights(
 
     flights = (
         Flight.objects.filter(
-            Q(departure__airport=departure_airport)
-            & Q(arrival__airport=arrival_airport)
+            Q(departure_airport__name=departure_airport)
+            & Q(arrival_airport__name=arrival_airport)
             & Q(
-                departure__scheduled__range=(
+                departure_scheduled__range=(
                     departure_date_min,
                     departure_date_max,
                 )
             )
         )
-        .order_by("departure__scheduled")
-        .select_related("airplane", "departure", "arrival")
+        .order_by("departure_scheduled")
+        .select_related("airplane", "departure_airport", "arrival_airport")
     )
 
     flights = flights.annotate(

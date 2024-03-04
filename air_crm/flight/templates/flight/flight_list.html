@@ -20,7 +20,7 @@
 
                     <div class="card mb-3">
                         <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="card-title">{{ flight.departure.airport }} to {{ flight.arrival.airport }}</h5>
+                            <h5 class="card-title">{{ flight.departure_airport.name }} to {{ flight.arrival_airport.name }}</h5>
                             <div>
                                 <p class="m-0">{{ flight.airplane_total_seats }} Seats:</p>
                                 <p class="m-0">Economy: {{ flight.airplane_economy_seats }} Business: {{ flight.airplane_business_seats }} First class: {{ flight.airplane_first_class_seats }}</p>
@@ -29,8 +29,8 @@
                         <div class="card-body d-flex justify-content-between align-items-center">
                             <div>
                                 <p class="card-text">Airplane: {{ flight.airplane.name }}</p>
-                                <p class="card-text">Departure Date: {{ flight.departure.scheduled }} T/Z: {{ flight.departure.timezone }}</p>
-                                <p class="card-text">Destination Date: {{ flight.arrival.scheduled }} T/Z: {{ flight.arrival.timezone }}</p>
+                                <p class="card-text">Departure Date: {{ flight.departure_scheduled }} T/Z: {{ flight.departure_airport.timezone }}</p>
+                                <p class="card-text">Arrival Date: {{ flight.arrival_scheduled }} T/Z: {{ flight.arrival_airport.timezone }}</p>
                             </div>
                             <div class="ml-auto">
                                 <a href="{% url 'booking:book' flight.pk %}?passenger_amount={{ passenger_amount }}" class="btn btn-primary">Book Now</a>

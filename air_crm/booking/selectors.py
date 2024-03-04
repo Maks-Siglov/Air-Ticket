@@ -6,7 +6,7 @@ from flight.models import Airplane, Flight, Seat
 def get_flight(flight_pk: int) -> Flight:
     return (
         Flight.objects
-        .select_related("airplane", "departure", "arrival")
+        .select_related("airplane", "departure_airport", "arrival_airport")
         .annotate(
             airplane_economy_seats=Count(
                 "airplane__seats__type", filter=Q(
