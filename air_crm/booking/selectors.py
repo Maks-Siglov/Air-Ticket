@@ -1,5 +1,6 @@
 from django.db.models import Count, QuerySet, Q
 
+from booking.models import Order, Ticket
 from flight.models import Airplane, Flight, Seat
 
 
@@ -39,3 +40,7 @@ def get_seat(airplane: Airplane, seat_type: str) -> Seat:
     seat.is_available = False
     seat.save()
     return seat
+
+
+def get_order_tickets(order: Order) -> QuerySet[Ticket]:
+    return Ticket.objects.filter(order=order).select_related("passenger")

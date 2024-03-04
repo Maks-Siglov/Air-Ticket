@@ -16,16 +16,21 @@ urlpatterns = [
         views.create_ticket,
         name="create_ticket",
     ),
-    path("checkout/<int:ticket_pk>", views.checkout, name="checkout"),
+    path("checkout/<int:order_pk>", views.checkout, name="checkout"),
     path(
-        "create-checkout-session/<int:ticket_pk>",
+        "create-checkout-session/<int:order_pk>",
         views.create_checkout_session,
         name="create_checkout_session",
     ),
     path("session-status/", views.session_status, name="session_status"),
     path(
-        "<int:ticket_pk>/return/",
+        "<int:order_pk>/return/",
         views.checkout_return,
         name="checkout_return",
-    )
+    ),
+    path(
+        "<int:order_pk>/detail/",
+        views.order_details,
+        name="detail",
+    ),
 ]
