@@ -11,6 +11,9 @@ class Ticket(models.Model):
     )
     order = models.ForeignKey("orders.Order", on_delete=models.PROTECT)
 
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
     def __str__(self):
         return f"{self.passenger}, seat: {self.seat}"
 

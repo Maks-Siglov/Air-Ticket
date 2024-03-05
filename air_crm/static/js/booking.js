@@ -18,10 +18,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     const response = JSON.parse(xhr.responseText);
                     const errorMessage = response.error;
 
-                    const errorDiv = document.createElement('div');
-                    errorDiv.classList.add('alert', 'alert-danger');
+                    let errorDiv = form.querySelector('.alert-danger');
+                    if (!errorDiv) {
+                        errorDiv = document.createElement('div');
+                        errorDiv.classList.add('alert', 'alert-danger');
+                        form.insertBefore(errorDiv, form.firstChild);
+                    }
                     errorDiv.textContent = errorMessage;
-                    form.insertBefore(errorDiv, form.firstChild);
                 }
             };
             xhr.send(formData);
