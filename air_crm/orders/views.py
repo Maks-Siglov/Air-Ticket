@@ -9,7 +9,9 @@ from django.http import (
 )
 from django.shortcuts import redirect, render
 
+from booking.models import Ticket
 from booking.stripe import stripe
+from customer.models.contact import Contact
 from orders.models import Order
 from orders.selectors import get_order_tickets
 
@@ -20,7 +22,17 @@ def checkout(
     try:
         order = Order.objects.get(pk=order_pk)
     except ObjectDoesNotExist:
-        messages.error(request, "Order does not exist")
+        messages.warning(request, "Order does not exist")
+        return redirect(request.META.get("HTTP_REFERER"))
+    try:
+        Contact.objects.get(order=order)
+    except ObjectDoesNotExist:
+        messages.warning(request, "Please fill contact data")
+        return redirect(request.META.get("HTTP_REFERER"))
+
+    tickets_count = Ticket.objects.filter(order=order).count()
+    if tickets_count != order.passenger_amount:
+        messages.warning(request, "Please fill all tickets for payment")
         return redirect(request.META.get("HTTP_REFERER"))
 
     order.status = "Processed"
