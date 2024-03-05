@@ -11,13 +11,10 @@ from django.http import (
 from django.shortcuts import redirect, render
 
 from booking.forms import TicketForm
-from booking.models import Order
 from booking.selectors import (
     get_seat,
     get_flight,
-    get_order_tickets,
     get_ticket,
-    get_order,
     get_contact,
 )
 from customer.forms import PassengerForm
@@ -25,6 +22,9 @@ from customer.forms.contact import ContactForm
 from customer.models.contact import Contact
 
 from flight.models import Flight
+
+from orders.models import Order
+from orders.selectors import get_order, get_order_tickets
 
 
 def create_order(request: HttpRequest, flight_pk: int) -> HttpResponseRedirect:

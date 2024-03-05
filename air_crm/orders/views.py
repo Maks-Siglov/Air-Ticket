@@ -10,8 +10,8 @@ from django.http import (
 from django.shortcuts import redirect, render
 
 from booking.stripe import stripe
-from booking.models import Order
-from booking.selectors import get_order_tickets
+from orders.models import Order
+from orders.selectors import get_order_tickets
 
 
 def checkout(

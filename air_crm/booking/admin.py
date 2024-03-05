@@ -1,13 +1,6 @@
 from django.contrib import admin
-from booking.models import Order, Ticket
 
-
-@admin.register(Order)
-class OrderAdmin(admin.ModelAdmin):
-    list_display = ("id", "passenger_amount", "flight", "status")
-    list_filter = ("status",)
-    search_fields = ("id", "flight__number", "status")
-    ordering = ("-id",)
+from booking.models import Ticket
 
 
 @admin.register(Ticket)
