@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const forms = document.querySelectorAll('form#ticketForm');
+    const forms = document.querySelectorAll('form#ticketForm, form#contactForm');
 
     forms.forEach(function(form) {
         form.addEventListener('submit', function(event) {

@@ -24,6 +24,7 @@ from booking.selectors import (
 )
 from customer.forms import PassengerForm
 from customer.forms.contact import ContactForm
+from customer.models.contact import Contact
 
 from flight.models import Flight
 
@@ -54,7 +55,7 @@ def book(request: HttpRequest, order_pk: int) -> HttpResponse:
     flight = get_flight(order.flight.pk)
     tickets = get_order_tickets(order)
     contact = get_contact(order)
-
+    print('cafas',contact, contact.pk)
     passenger_amount = order.passenger_amount
     passengers = range(1, passenger_amount + 1)
     numbered_tickets = list(zip_longest(passengers, tickets))
@@ -165,9 +166,9 @@ def create_contact(request) -> JsonResponse:
 
 def update_contact(request, contact_pk: int) -> JsonResponse:
     try:
-        contact = get_ticket(contact_pk)
+        contact = Contact.objects.get(pk=contact_pk)
     except ObjectDoesNotExist:
-        return JsonResponse("Contact does not exist", status=404)
+        return JsonResponse({"error": "Contact does not exist"}, status=404)
 
     form = ContactForm(request.POST, instance=contact)
     if form.is_valid():

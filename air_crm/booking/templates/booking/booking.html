@@ -71,7 +71,7 @@
                         <div class="card-header">Ticket №{{ num }}</div>
                         <div class="card-body">
 
-                            <form id="ticketForm" method="post" class="flight-booking-form"
+                            <form id="ticketForm" method="post"
                             {% if ticket %}action="{% url 'booking:update_ticket' ticket.pk %}" {% else %}action="{% url 'booking:create_ticket' flight.pk %}"{% endif %}>
                                 {% csrf_token %}
                                 <div class="row">
@@ -185,7 +185,6 @@
     </div>
 
     <script src="{% static 'js/ticket_price.js' %}"></script>
-    <script src="{% static 'js/ticket.js' %}"></script>
-    <script src="{% static 'js/contact.js' %}"></script>
+    <script src="{% static 'js/booking.js' %}"></script>
 {% endblock %}
 
