@@ -13,6 +13,7 @@ urlpatterns = [
     path("customer/", include("customer.urls", namespace="customer")),
     path("flight/", include("flight.urls", namespace="flight")),
     path("booking/", include("booking.urls", namespace="booking")),
+    path("orders/", include("orders.urls", namespace="orders")),
 ]
 
 if settings.DEBUG:

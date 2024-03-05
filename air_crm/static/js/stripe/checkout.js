@@ -7,7 +7,7 @@ async function initialize() {
 
   const csrftoken = getCookie('csrftoken');
 
-  const url = "http://localhost:8000/booking/create-checkout-session/"+ticket_pk
+  const url = "http://localhost:8000/orders/create-checkout-session/"+ticket_pk
 
   const response = await fetch(url, {
     method: "POST",
