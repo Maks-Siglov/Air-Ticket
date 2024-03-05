@@ -5,6 +5,8 @@ from django.db import models
 
 class Ticket(models.Model):
     price = models.PositiveIntegerField()
+    lunch = models.BooleanField(default=False)
+    luggage = models.BooleanField(default=False)
     seat = models.ForeignKey("flight.Seat", on_delete=models.PROTECT)
     passenger = models.ForeignKey(
         "customer.passenger", on_delete=models.PROTECT

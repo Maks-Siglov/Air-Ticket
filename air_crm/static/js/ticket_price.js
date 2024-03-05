@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (radio.checked) {
                     if (radio.value === 'Economy') price += 120;
                     else if (radio.value === 'Business') price += 250;
-                    else if (radio.value === 'First class') price += 450;
+                    else if (radio.value === 'First Class') price += 450;
                 }
             });
 

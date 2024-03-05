@@ -11,6 +11,7 @@ from django.http import (
 )
 from django.shortcuts import redirect, render
 
+from booking.forms import TicketForm
 from booking.stripe import stripe
 from booking.models import Ticket, Order
 from booking.selectors import get_seat, get_flight, get_order_tickets
@@ -72,10 +73,9 @@ def create_ticket(request: HttpRequest, flight_pk: int) -> JsonResponse:
             return JsonResponse({"error": "Flight does not exits"}, status=404)
 
         passenger_form = PassengerForm(request.POST)
-        seat_type = request.POST.get("seat_type")
-        price = request.POST.get("price")
+        ticket_form = TicketForm(request.POST)
         order_pk = request.POST.get("order_pk")
-        if passenger_form.is_valid() and seat_type:
+        if passenger_form.is_valid() and ticket_form.is_valid():
             try:
                 order = Order.objects.get(pk=order_pk)
             except ObjectDoesNotExist:
@@ -84,14 +84,16 @@ def create_ticket(request: HttpRequest, flight_pk: int) -> JsonResponse:
                 )
 
             passenger = passenger_form.save()
+
+            seat_type = ticket_form.cleaned_data["seat_type"]
             seat = get_seat(flight.airplane, seat_type)
 
-            ticket = Ticket.objects.create(
-                passenger=passenger,
-                seat=seat,
-                price=int(price) * 100,
-                order=order,
-            )
+            ticket = ticket_form.save(commit=False)
+            ticket.passenger = passenger
+            ticket.order = order
+            ticket.seat = seat
+            ticket.save()
+
             return JsonResponse(
                 {
                     "ticket_price": ticket.price,
@@ -110,17 +112,15 @@ def update_ticket(request, ticket_pk: int) -> JsonResponse:
         return JsonResponse("Ticket does not exist", status=404)
 
     passenger = ticket.passenger
+    ticket_form = TicketForm(request.POST, instance=ticket)
     passenger_form = PassengerForm(request.POST, instance=passenger)
-    if passenger_form.is_valid():
+    if ticket_form.is_valid() and passenger_form.is_valid():
         passenger_form.save()
-
-        seat_type = request.POST.get("seat_type")
-        price = request.POST.get("price")
-
-        ticket.seat_type = seat_type
-        ticket.price = int(price) * 100,
-
+        ticket = ticket_form.save(commit=False)
+        seat_type = ticket_form.cleaned_data["seat_type"]
+        ticket.seat.seat_type = seat_type
         ticket.save()
+
         return JsonResponse(
             {
                 "ticket_price": ticket.price,
