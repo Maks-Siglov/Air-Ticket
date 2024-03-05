@@ -45,6 +45,8 @@ def book(request: HttpRequest, order_pk: int) -> HttpResponse:
         return redirect("main:index")
 
     tickets = Ticket.objects.filter(order=order)
+    for t in  tickets:
+        print(t.seat.type)
     flight = get_flight(order.flight.pk)
     passenger_amount = order.passenger_amount
 
@@ -114,13 +116,11 @@ def update_ticket(request, ticket_pk: int) -> JsonResponse:
     passenger = ticket.passenger
     ticket_form = TicketForm(request.POST, instance=ticket)
     passenger_form = PassengerForm(request.POST, instance=passenger)
-    print(ticket_form.errors, passenger_form.errors)
     if ticket_form.is_valid() and passenger_form.is_valid():
-        print("14124",ticket_form.cleaned_data)
         passenger_form.save()
         ticket = ticket_form.save(commit=False)
         seat_type = ticket_form.cleaned_data["seat_type"]
-        ticket.seat.seat_type = seat_type
+        ticket.seat.type = seat_type
         ticket.save()
 
         return JsonResponse(
