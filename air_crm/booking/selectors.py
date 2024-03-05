@@ -58,3 +58,7 @@ def get_ticket(ticket_pk: int) -> Ticket:
         .select_related("passenger", "seat")
         .get(pk=ticket_pk)
     )
+
+
+def get_order(order_pk: int) -> Order:
+    return Order.objects.select_related("flight").get(pk=order_pk)

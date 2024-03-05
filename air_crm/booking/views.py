@@ -19,6 +19,7 @@ from booking.selectors import (
     get_flight,
     get_order_tickets,
     get_ticket,
+    get_order,
 )
 from customer.forms import PassengerForm
 
@@ -43,13 +44,13 @@ def create_order(request: HttpRequest, flight_pk: int) -> HttpResponseRedirect:
 
 def book(request: HttpRequest, order_pk: int) -> HttpResponse:
     try:
-        order = Order.objects.select_related("flight").get(pk=order_pk)
+        order = get_order(order_pk)
     except ObjectDoesNotExist:
         messages.error(request, "Order does not exist")
         return redirect("main:index")
 
-    tickets = Ticket.objects.filter(order=order)
     flight = get_flight(order.flight.pk)
+    tickets = Ticket.objects.filter(order=order)
     passenger_amount = order.passenger_amount
 
     passengers = range(1, passenger_amount + 1)
@@ -85,7 +86,6 @@ def create_ticket(request: HttpRequest, flight_pk: int) -> JsonResponse:
                 return JsonResponse(
                     {"error": "Order does not exist"}, status=400
                 )
-
             passenger = passenger_form.save()
 
             seat_type = ticket_form.cleaned_data["seat_type"]
