@@ -1,6 +1,7 @@
 from django.db.models import Count, QuerySet, Q
 
 from booking.models import Order, Ticket
+from customer.models.contact import Contact
 from flight.models import Airplane, Flight, Seat
 
 
@@ -46,7 +47,7 @@ def get_seat(airplane: Airplane, seat_type: str) -> Seat:
 
 
 def get_order_tickets(order: Order) -> QuerySet[Ticket]:
-    return(
+    return (
         Ticket.objects.filter(order=order)
         .select_related("passenger", "seat")
     )
@@ -62,3 +63,7 @@ def get_ticket(ticket_pk: int) -> Ticket:
 
 def get_order(order_pk: int) -> Order:
     return Order.objects.select_related("flight").get(pk=order_pk)
+
+
+def get_contact(order: Order) -> Contact:
+    return Contact.objects.filter(order=order).first()

@@ -20,8 +20,10 @@ from booking.selectors import (
     get_order_tickets,
     get_ticket,
     get_order,
+    get_contact,
 )
 from customer.forms import PassengerForm
+from customer.forms.contact import ContactForm
 
 from flight.models import Flight
 
@@ -50,9 +52,10 @@ def book(request: HttpRequest, order_pk: int) -> HttpResponse:
         return redirect("main:index")
 
     flight = get_flight(order.flight.pk)
-    tickets = Ticket.objects.filter(order=order)
-    passenger_amount = order.passenger_amount
+    tickets = get_order_tickets(order)
+    contact = get_contact(order)
 
+    passenger_amount = order.passenger_amount
     passengers = range(1, passenger_amount + 1)
     numbered_tickets = list(zip_longest(passengers, tickets))
 
@@ -65,6 +68,7 @@ def book(request: HttpRequest, order_pk: int) -> HttpResponse:
             "order_pk": order.pk,
             "tickets": tickets,
             "numbered_tickets": numbered_tickets,
+            "contact": contact,
         },
     )
 
@@ -137,6 +141,41 @@ def update_ticket(request, ticket_pk: int) -> JsonResponse:
         )
 
     return JsonResponse({"Error": passenger_form.errors}, status=400)
+
+
+def create_contact(request) -> JsonResponse:
+    order_pk = request.POST.get("order_pk")
+    try:
+        order = Order.objects.get(pk=order_pk)
+    except ObjectDoesNotExist:
+        return JsonResponse(
+            {"error": "Order does not exist"}, status=400
+        )
+
+    form = ContactForm(request.POST)
+    if form.is_valid():
+        contact = form.save(commit=False)
+        contact.order = order
+        contact.save()
+
+        return JsonResponse({"success": "Contact created"}, status=201)
+
+    return JsonResponse({"Error": form.errors}, status=400)
+
+
+def update_contact(request, contact_pk: int) -> JsonResponse:
+    try:
+        contact = get_ticket(contact_pk)
+    except ObjectDoesNotExist:
+        return JsonResponse("Contact does not exist", status=404)
+
+    form = ContactForm(request.POST, instance=contact)
+    if form.is_valid():
+        contact.save()
+
+        return JsonResponse({"success": "Contact updated"}, status=200)
+
+    return JsonResponse({"Error": form.errors}, status=400)
 
 
 def checkout(

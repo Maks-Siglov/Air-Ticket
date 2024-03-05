@@ -21,6 +21,12 @@ urlpatterns = [
         views.update_ticket,
         name="update_ticket",
     ),
+    path("create-contact/", views.create_contact, name="create_contact"),
+    path(
+        "update-contact/<int:contact_pk>",
+        views.update_contact,
+        name="update_contact"
+    ),
     path("checkout/<int:order_pk>", views.checkout, name="checkout"),
     path(
         "create-checkout-session/<int:order_pk>",
