@@ -17,13 +17,15 @@ from booking.selectors import get_contact, get_flight, get_seat, get_ticket
 from customer.forms import PassengerForm
 from customer.forms.contact import ContactForm
 from customer.models.contact import Contact
-from flight.forms.seat import SeatForm
 
 from flight.models import Flight
 
 from orders.models import Order
-from orders.selectors import get_order, get_order_tickets, \
-    get_order_total_price
+from orders.selectors import (
+    get_order,
+    get_order_tickets,
+    get_order_total_price,
+)
 
 
 def create_order(request: HttpRequest, flight_pk: int) -> HttpResponseRedirect:
@@ -85,13 +87,9 @@ def create_ticket(request: HttpRequest, flight_pk: int) -> JsonResponse:
 
         passenger_form = PassengerForm(request.POST)
         ticket_form = TicketForm(request.POST)
-        seat_form = SeatForm(request.POST)
-        if (
-            passenger_form.is_valid() and ticket_form.is_valid()
-            and seat_form.is_valid()
-        ):
+        if passenger_form.is_valid() and ticket_form.is_valid():
             with transaction.atomic():
-                seat_type = seat_form.cleaned_data["type"]
+                seat_type = passenger_form.cleaned_data["seat_type"]
                 seat = get_seat(flight.airplane, seat_type)
                 if seat is None:
                     return JsonResponse(
@@ -108,12 +106,7 @@ def create_ticket(request: HttpRequest, flight_pk: int) -> JsonResponse:
                 ticket.save()
 
                 return JsonResponse(
-                    {
-                        "ticket_price": ticket.price,
-                        "first_name": passenger.first_name,
-                        "last_name": passenger.last_name,
-                    },
-                    status=201,
+                    {"message": "Ticket successfully created"}, status=201
                 )
 
         return JsonResponse({"error": "Provided data not valid"}, status=400)
@@ -128,22 +121,33 @@ def update_ticket(request, ticket_pk: int) -> JsonResponse:
     passenger = ticket.passenger
     ticket_form = TicketForm(request.POST, instance=ticket)
     passenger_form = PassengerForm(request.POST, instance=passenger)
-    seat_form = SeatForm(request.POST, instance=ticket.seat)
-    if ticket_form.is_valid() and passenger_form.is_valid():
-        passenger_form.save()
-        seat_form.save()
-        ticket_form.save()
+    if passenger_form.is_valid() and ticket_form.is_valid():
+        with transaction.atomic():
+            seat_type = ticket_form.cleaned_data["seat_type"]
+            ticket = ticket_form.save(commit=False)
+
+            if ticket.seat.type != seat_type:
+                seat = ticket.seat
+                seat.is_available = True
+                seat.save()
+                new_seat = get_seat(seat.airplane, seat_type)
+                if new_seat is None:
+                    return JsonResponse(
+                        {"error": f"{seat_type} seat not available"},
+                        status=400
+                    )
+                new_seat.is_available = False
+                new_seat.save()
+                ticket.seat = new_seat
+
+            ticket.save()
+            passenger_form.save()
 
         return JsonResponse(
-            {
-                "ticket_price": ticket.price,
-                "first_name": passenger.first_name,
-                "last_name": passenger.last_name,
-            },
-            status=200,
+            {"message": "Ticket successfully updated"}, status=200
         )
 
-    return JsonResponse({"Error": passenger_form.errors}, status=400)
+    return JsonResponse({"Error": "Provided data not valid"}, status=400)
 
 
 def create_contact(request) -> JsonResponse:

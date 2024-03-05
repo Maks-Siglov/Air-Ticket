@@ -79,17 +79,17 @@
                                     <div class="form-group col-8">
                                         <p>Seat Type:</p>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="type" id="economyOption" value="Economy" required
+                                            <input class="form-check-input" type="radio" name="seat_type" id="economyOption" value="Economy" required
                                             {% if not ticket %}checked{% endif %}{% if ticket.seat.type == 'Economy' %}checked{% endif %}>
                                             <label class="form-check-label" for="economyOption">Economy</label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="type" id="businessOption" value="Business"
+                                            <input class="form-check-input" type="radio" name="seat_type" id="businessOption" value="Business"
                                             {% if ticket.seat.type == 'Business' %}checked{% endif %}>
                                             <label class="form-check-label" for="businessOption">Business</label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="type" id="firstClassOption" value="First Class"
+                                            <input class="form-check-input" type="radio" name="seat_type" id="firstClassOption" value="First Class"
                                             {% if ticket.seat.type == 'First Class' %}checked{% endif %}>
                                             <label class="form-check-label" for="firstClassOption">First Class</label>
                                         </div>
