@@ -1,3 +1,5 @@
+from itertools import zip_longest
+
 from django.contrib import messages
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
@@ -14,6 +16,7 @@ from booking.models import Ticket, Order
 from booking.selectors import get_seat, get_flight, get_order_tickets
 
 from customer.forms import PassengerForm
+from customer.models import Passenger
 
 from flight.models import Flight
 
@@ -45,15 +48,20 @@ def book(request: HttpRequest, order_pk: int) -> HttpResponse:
     flight = get_flight(order.flight.pk)
     passenger_amount = order.passenger_amount
 
+    passengers = range(1, passenger_amount + 1)
+    numbered_tickets = list(zip_longest(passengers, tickets))
+
+    print(numbered_tickets)
+
     return render(
         request,
         "booking/booking.html",
         {
             "flight": flight,
             "passenger_amount": passenger_amount,
-            "passengers": range(passenger_amount),
             "order_pk": order.pk,
             "tickets": tickets,
+            "numbered_tickets": numbered_tickets
         },
     )
 
@@ -106,14 +114,43 @@ def create_ticket(request: HttpRequest, flight_pk: int) -> JsonResponse:
         return JsonResponse({"error": "Not valid form data"}, status=400)
 
 
+def update_ticket(request, ticket_pk: int) -> JsonResponse:
+    try:
+        ticket = Ticket.objects.select_related("passenger").get(pk=ticket_pk)
+    except ObjectDoesNotExist:
+        return JsonResponse("Ticket does not exist", status=404)
+
+    passenger = ticket.passenger
+    passenger_form = PassengerForm(request.POST, instance=passenger)
+    if passenger_form.is_valid():
+        passenger_form.save()
+
+        seat_type = request.POST.get("seat_type")
+        price = request.POST.get("price")
+
+        ticket.seat_type = seat_type
+        ticket.price = price
+
+        ticket.save()
+        return JsonResponse({"message": "Ticket updated"}, status=200)
+
+    return JsonResponse({"Error": passenger_form.errors}, status=400)
+
+
+
+
+
 def checkout(
     request: HttpRequest, order_pk: int
 ) -> HttpResponse | HttpResponseRedirect:
     try:
-        Order.objects.get(pk=order_pk)
+        order = Order.objects.get(pk=order_pk)
     except ObjectDoesNotExist:
         messages.error(request, "Ticket does not exist")
         return redirect(request.META.get("HTTP_REFERER"))
+
+    order.status = "Processed"
+    order.save()
 
     return render(
         request, "booking/stripe/checkout.html", {"order_pk": order_pk}
