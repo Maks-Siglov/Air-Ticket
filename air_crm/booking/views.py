@@ -2,6 +2,7 @@ from itertools import zip_longest
 
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
+from django.db import transaction
 from django.http import (
     HttpRequest,
     HttpResponse,
@@ -16,6 +17,7 @@ from booking.selectors import get_contact, get_flight, get_seat, get_ticket
 from customer.forms import PassengerForm
 from customer.forms.contact import ContactForm
 from customer.models.contact import Contact
+from flight.forms.seat import SeatForm
 
 from flight.models import Flight
 
@@ -75,35 +77,34 @@ def create_ticket(request: HttpRequest, flight_pk: int) -> JsonResponse:
         except ObjectDoesNotExist:
             return JsonResponse({"error": "Flight does not exits"}, status=404)
 
+        order_pk = request.POST.get("order_pk")
+        order = Order.objects.get(pk=order_pk)
+
         passenger_form = PassengerForm(request.POST)
         ticket_form = TicketForm(request.POST)
-        order_pk = request.POST.get("order_pk")
-        if passenger_form.is_valid() and ticket_form.is_valid():
-            try:
-                order = Order.objects.get(pk=order_pk)
-            except ObjectDoesNotExist:
+        seat_form = SeatForm(request.POST)
+        if (
+            passenger_form.is_valid() and ticket_form.is_valid()
+            and seat_form.is_valid()
+        ):
+            with transaction.atomic():
+                passenger = passenger_form.save()
+
+                seat = get_seat(flight.airplane, seat_form.cleaned_data["type"])
+                ticket = ticket_form.save(commit=False)
+                ticket.passenger = passenger
+                ticket.order = order
+                ticket.seat = seat
+                ticket.save()
+
                 return JsonResponse(
-                    {"error": "Order does not exist"}, status=400
+                    {
+                        "ticket_price": ticket.price,
+                        "first_name": passenger.first_name,
+                        "last_name": passenger.last_name,
+                    },
+                    status=201,
                 )
-            passenger = passenger_form.save()
-
-            seat_type = ticket_form.cleaned_data["seat_type"]
-            seat = get_seat(flight.airplane, seat_type)
-
-            ticket = ticket_form.save(commit=False)
-            ticket.passenger = passenger
-            ticket.order = order
-            ticket.seat = seat
-            ticket.save()
-
-            return JsonResponse(
-                {
-                    "ticket_price": ticket.price,
-                    "first_name": passenger.first_name,
-                    "last_name": passenger.last_name,
-                },
-                status=201,
-            )
 
         return JsonResponse({"error": "Not valid form data"}, status=400)
 
@@ -117,14 +118,11 @@ def update_ticket(request, ticket_pk: int) -> JsonResponse:
     passenger = ticket.passenger
     ticket_form = TicketForm(request.POST, instance=ticket)
     passenger_form = PassengerForm(request.POST, instance=passenger)
+    seat_form = SeatForm(request.POST, instance=ticket.seat)
     if ticket_form.is_valid() and passenger_form.is_valid():
         passenger_form.save()
-        ticket = ticket_form.save(commit=False)
-        seat_type = ticket_form.cleaned_data["seat_type"]
-        seat = ticket.seat
-        seat.type = seat_type
-        seat.save()
-        ticket.save()
+        seat_form.save()
+        ticket_form.save()
 
         return JsonResponse(
             {

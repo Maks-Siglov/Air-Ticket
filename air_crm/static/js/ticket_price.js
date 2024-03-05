@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     function updatePriceForForm(form) {
         const priceInput = form.querySelector('#id_price');
-        const seatTypeRadios = form.querySelectorAll('input[name="seat_type"]');
+        const seatTypeRadios = form.querySelectorAll('input[name="type"]');
         const lunchCheckbox = form.querySelector('#lunchOption');
         const luggageCheckbox = form.querySelector('#luggageOption');
 
