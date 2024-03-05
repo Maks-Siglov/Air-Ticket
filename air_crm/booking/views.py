@@ -14,8 +14,12 @@ from django.shortcuts import redirect, render
 from booking.forms import TicketForm
 from booking.stripe import stripe
 from booking.models import Ticket, Order
-from booking.selectors import get_seat, get_flight, get_order_tickets
-
+from booking.selectors import (
+    get_seat,
+    get_flight,
+    get_order_tickets,
+    get_ticket,
+)
 from customer.forms import PassengerForm
 
 from flight.models import Flight
@@ -45,8 +49,6 @@ def book(request: HttpRequest, order_pk: int) -> HttpResponse:
         return redirect("main:index")
 
     tickets = Ticket.objects.filter(order=order)
-    for t in  tickets:
-        print(t.seat.type)
     flight = get_flight(order.flight.pk)
     passenger_amount = order.passenger_amount
 
@@ -109,7 +111,7 @@ def create_ticket(request: HttpRequest, flight_pk: int) -> JsonResponse:
 
 def update_ticket(request, ticket_pk: int) -> JsonResponse:
     try:
-        ticket = Ticket.objects.select_related("passenger").get(pk=ticket_pk)
+        ticket = get_ticket(ticket_pk)
     except ObjectDoesNotExist:
         return JsonResponse("Ticket does not exist", status=404)
 
@@ -120,7 +122,9 @@ def update_ticket(request, ticket_pk: int) -> JsonResponse:
         passenger_form.save()
         ticket = ticket_form.save(commit=False)
         seat_type = ticket_form.cleaned_data["seat_type"]
-        ticket.seat.type = seat_type
+        seat = ticket.seat
+        seat.type = seat_type
+        seat.save()
         ticket.save()
 
         return JsonResponse(
@@ -166,7 +170,7 @@ def create_checkout_session(request: HttpRequest, order_pk) -> JsonResponse:
                         "name": (
                             f"{ticket.passenger.first_name} "
                             f"{ticket.passenger.last_name} "
-                            f"Ticket №{ticket.pk}"
+                            f"{ticket.seat.type} Ticket "
                         )
                     },
                 },

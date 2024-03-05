@@ -46,4 +46,15 @@ def get_seat(airplane: Airplane, seat_type: str) -> Seat:
 
 
 def get_order_tickets(order: Order) -> QuerySet[Ticket]:
-    return Ticket.objects.filter(order=order).select_related("passenger")
+    return(
+        Ticket.objects.filter(order=order)
+        .select_related("passenger", "seat")
+    )
+
+
+def get_ticket(ticket_pk: int) -> Ticket:
+    return (
+        Ticket.objects
+        .select_related("passenger", "seat")
+        .get(pk=ticket_pk)
+    )
