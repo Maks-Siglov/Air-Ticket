@@ -6,17 +6,13 @@ from django.http import (
     HttpRequest,
     HttpResponse,
     HttpResponseRedirect,
-    JsonResponse,
+    JsonResponse
 )
 from django.shortcuts import redirect, render
 
 from booking.forms import TicketForm
-from booking.selectors import (
-    get_seat,
-    get_flight,
-    get_ticket,
-    get_contact,
-)
+from booking.selectors import get_contact, get_flight, get_seat, get_ticket
+
 from customer.forms import PassengerForm
 from customer.forms.contact import ContactForm
 from customer.models.contact import Contact
@@ -147,9 +143,7 @@ def create_contact(request) -> JsonResponse:
     try:
         order = Order.objects.get(pk=order_pk)
     except ObjectDoesNotExist:
-        return JsonResponse(
-            {"error": "Order does not exist"}, status=400
-        )
+        return JsonResponse({"error": "Order does not exist"}, status=400)
 
     form = ContactForm(request.POST)
     if form.is_valid():

@@ -25,6 +25,6 @@ urlpatterns = [
     path(
         "update-contact/<int:contact_pk>",
         views.update_contact,
-        name="update_contact"
+        name="update_contact",
     ),
 ]

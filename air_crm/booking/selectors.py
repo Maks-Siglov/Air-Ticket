@@ -1,9 +1,9 @@
 from django.db.models import Count, Q
 
 from booking.models import Ticket
-from orders.models import Order
 from customer.models.contact import Contact
 from flight.models import Airplane, Flight, Seat
+from orders.models import Order
 
 
 def get_flight(flight_pk: int) -> Flight:
@@ -48,11 +48,7 @@ def get_seat(airplane: Airplane, seat_type: str) -> Seat:
 
 
 def get_ticket(ticket_pk: int) -> Ticket:
-    return (
-        Ticket.objects
-        .select_related("passenger", "seat")
-        .get(pk=ticket_pk)
-    )
+    return Ticket.objects.select_related("passenger", "seat").get(pk=ticket_pk)
 
 
 def get_contact(order: Order) -> Contact:

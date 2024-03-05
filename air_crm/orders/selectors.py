@@ -9,7 +9,6 @@ def get_order(order_pk: int) -> Order:
 
 
 def get_order_tickets(order: Order) -> QuerySet[Ticket]:
-    return (
-        Ticket.objects.filter(order=order)
-        .select_related("passenger", "seat")
+    return Ticket.objects.filter(order=order).select_related(
+        "passenger", "seat"
     )

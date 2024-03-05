@@ -1,5 +1,5 @@
-from django.contrib import messages
 from django.conf import settings
+from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import (
     HttpRequest,
