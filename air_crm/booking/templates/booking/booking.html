@@ -113,13 +113,16 @@
 
             <div class="col-md-4">
                 <div class="card mb-3">
-                    <div class="card-body text-center">
+                    <div class="card-body text-center" id="checkout-card-body">
                         {% for ticket in tickets %}
 
                             <div class="card mb-1">
+                                <div class="card-header">
+                                    Ticket Details
+                                </div>
                                 <div class="card-body text-center">
-                                    {{ ticket.price }}
-                                    {{ ticket.passenger.first_name }} {{ ticket.passenger.last_name }}
+                                    <p>Passenger: {{ ticket.passenger.first_name }} {{ ticket.passenger.last_name }}</p>
+                                    <p>Price: {{ ticket.price }}$</p>
                                 </div>
                             </div>
 

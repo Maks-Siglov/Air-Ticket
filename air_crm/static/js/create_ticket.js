@@ -38,22 +38,22 @@ function displayTicketDetails(response) {
     const data = JSON.parse(response);
 
     const ticketCard = document.createElement('div');
-    ticketCard.classList.add('card', 'mb-3');
+    ticketCard.classList.add('card', 'mb-1');
 
     const cardHeader = document.createElement('div');
     cardHeader.classList.add('card-header');
-    cardHeader.textContent = 'Ticket Details';
+    cardHeader.textContent = `Ticket Details`;
     ticketCard.appendChild(cardHeader);
 
     const cardBody = document.createElement('div');
     cardBody.classList.add('card-body', 'text-center');
 
     const passengerDetails = document.createElement('p');
-    passengerDetails.textContent = `Passenger: ${data.passenger.first_name} ${data.passenger.last_name}`;
+    passengerDetails.textContent = `Passenger: ${data.first_name} ${data.last_name}`;
     cardBody.appendChild(passengerDetails);
 
     const ticketDetails = document.createElement('p');
-    ticketDetails.textContent = `Ticket ID: ${data.ticket.id}, Price: ${data.ticket.price}, Seat Type: ${data.ticket.seat_type}`;
+    ticketDetails.textContent = `Price: ${data.ticket_price}`;
     cardBody.appendChild(ticketDetails);
 
     ticketCard.appendChild(cardBody);

@@ -51,8 +51,6 @@ def book(request: HttpRequest, order_pk: int) -> HttpResponse:
     passengers = range(1, passenger_amount + 1)
     numbered_tickets = list(zip_longest(passengers, tickets))
 
-    print(numbered_tickets)
-
     return render(
         request,
         "booking/booking.html",
@@ -96,19 +94,10 @@ def create_ticket(request: HttpRequest, flight_pk: int) -> JsonResponse:
             )
             return JsonResponse(
                 {
-                    "ticket": {
-                        "id": ticket.id,
-                        "price": ticket.price,
-                        "seat_type": seat.type,
-                    },
-                    "passenger": {
-                        "id": passenger.id,
-                        "passport_id": passenger.passport_id,
-                        "first_name": passenger.first_name,
-                        "last_name": passenger.last_name,
-                    },
-                },
-                status=201,
+                    "ticket_price": ticket.price,
+                    "first_name": passenger.first_name,
+                    "last_name": passenger.last_name
+                }, status=201
             )
 
         return JsonResponse({"error": "Not valid form data"}, status=400)
@@ -129,15 +118,18 @@ def update_ticket(request, ticket_pk: int) -> JsonResponse:
         price = request.POST.get("price")
 
         ticket.seat_type = seat_type
-        ticket.price = price
+        ticket.price = int(price) * 100,
 
         ticket.save()
-        return JsonResponse({"message": "Ticket updated"}, status=200)
+        return JsonResponse(
+            {
+                "ticket_price": ticket.price,
+                "first_name": passenger.first_name,
+                "last_name": passenger.last_name
+            }, status=200
+        )
 
     return JsonResponse({"Error": passenger_form.errors}, status=400)
-
-
-
 
 
 def checkout(
