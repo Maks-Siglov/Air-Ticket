@@ -15,7 +15,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (xhr.status === 201 || xhr.status === 200) {
                     location.reload();
                 } else {
-                    console.error(xhr.responseText);
+                    const response = JSON.parse(xhr.responseText);
+                    const errorMessage = response.error;
+
+                    const errorDiv = document.createElement('div');
+                    errorDiv.classList.add('alert', 'alert-danger');
+                    errorDiv.textContent = errorMessage;
+                    form.insertBefore(errorDiv, form.firstChild);
                 }
             };
             xhr.send(formData);

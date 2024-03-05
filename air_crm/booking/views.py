@@ -91,9 +91,16 @@ def create_ticket(request: HttpRequest, flight_pk: int) -> JsonResponse:
             and seat_form.is_valid()
         ):
             with transaction.atomic():
+                seat_type = seat_form.cleaned_data["type"]
+                seat = get_seat(flight.airplane, seat_type)
+                if seat is None:
+                    return JsonResponse(
+                        {"error": f"{seat_type} seat not available"},
+                        status=400
+                    )
+                seat.is_available = False
+                seat.save()
                 passenger = passenger_form.save()
-
-                seat = get_seat(flight.airplane, seat_form.cleaned_data["type"])
                 ticket = ticket_form.save(commit=False)
                 ticket.passenger = passenger
                 ticket.order = order
@@ -109,7 +116,7 @@ def create_ticket(request: HttpRequest, flight_pk: int) -> JsonResponse:
                     status=201,
                 )
 
-        return JsonResponse({"error": "Not valid form data"}, status=400)
+        return JsonResponse({"error": "Provided data not valid"}, status=400)
 
 
 def update_ticket(request, ticket_pk: int) -> JsonResponse:
