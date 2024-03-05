@@ -22,7 +22,8 @@ from flight.forms.seat import SeatForm
 from flight.models import Flight
 
 from orders.models import Order
-from orders.selectors import get_order, get_order_tickets
+from orders.selectors import get_order, get_order_tickets, \
+    get_order_total_price
 
 
 def create_order(request: HttpRequest, flight_pk: int) -> HttpResponseRedirect:
@@ -51,6 +52,7 @@ def book(request: HttpRequest, order_pk: int) -> HttpResponse:
     flight = get_flight(order.flight.pk)
     tickets = get_order_tickets(order)
     contact = get_contact(order)
+    total_price = get_order_total_price(order)
 
     passenger_amount = order.passenger_amount
     passengers = range(1, passenger_amount + 1)
@@ -66,6 +68,7 @@ def book(request: HttpRequest, order_pk: int) -> HttpResponse:
             "tickets": tickets,
             "numbered_tickets": numbered_tickets,
             "contact": contact,
+            "total_price": total_price,
         },
     )
 
