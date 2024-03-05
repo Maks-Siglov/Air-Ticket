@@ -17,7 +17,6 @@ from booking.models import Ticket, Order
 from booking.selectors import get_seat, get_flight, get_order_tickets
 
 from customer.forms import PassengerForm
-from customer.models import Passenger
 
 from flight.models import Flight
 
@@ -60,7 +59,7 @@ def book(request: HttpRequest, order_pk: int) -> HttpResponse:
             "passenger_amount": passenger_amount,
             "order_pk": order.pk,
             "tickets": tickets,
-            "numbered_tickets": numbered_tickets
+            "numbered_tickets": numbered_tickets,
         },
     )
 
@@ -98,8 +97,9 @@ def create_ticket(request: HttpRequest, flight_pk: int) -> JsonResponse:
                 {
                     "ticket_price": ticket.price,
                     "first_name": passenger.first_name,
-                    "last_name": passenger.last_name
-                }, status=201
+                    "last_name": passenger.last_name,
+                },
+                status=201,
             )
 
         return JsonResponse({"error": "Not valid form data"}, status=400)
@@ -125,8 +125,9 @@ def update_ticket(request, ticket_pk: int) -> JsonResponse:
             {
                 "ticket_price": ticket.price,
                 "first_name": passenger.first_name,
-                "last_name": passenger.last_name
-            }, status=200
+                "last_name": passenger.last_name,
+            },
+            status=200,
         )
 
     return JsonResponse({"Error": passenger_form.errors}, status=400)

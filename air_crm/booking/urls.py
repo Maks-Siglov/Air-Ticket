@@ -19,7 +19,7 @@ urlpatterns = [
     path(
         "update-ticket/<int:ticket_pk>",
         views.update_ticket,
-        name="update_ticket"
+        name="update_ticket",
     ),
     path("checkout/<int:order_pk>", views.checkout, name="checkout"),
     path(
