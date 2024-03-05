@@ -114,7 +114,9 @@ def update_ticket(request, ticket_pk: int) -> JsonResponse:
     passenger = ticket.passenger
     ticket_form = TicketForm(request.POST, instance=ticket)
     passenger_form = PassengerForm(request.POST, instance=passenger)
+    print(ticket_form.errors, passenger_form.errors)
     if ticket_form.is_valid() and passenger_form.is_valid():
+        print("14124",ticket_form.cleaned_data)
         passenger_form.save()
         ticket = ticket_form.save(commit=False)
         seat_type = ticket_form.cleaned_data["seat_type"]
@@ -159,7 +161,7 @@ def create_checkout_session(request: HttpRequest, order_pk) -> JsonResponse:
             data = {
                 "price_data": {
                     "currency": "usd",
-                    "unit_amount": ticket.price,
+                    "unit_amount": ticket.unit_amount,
                     "product_data": {
                         "name": (
                             f"{ticket.passenger.first_name} "

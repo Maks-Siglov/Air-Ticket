@@ -4,7 +4,7 @@ from django.db import models
 
 
 class Ticket(models.Model):
-    price = models.PositiveIntegerField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     lunch = models.BooleanField(default=False)
     luggage = models.BooleanField(default=False)
     seat = models.ForeignKey("flight.Seat", on_delete=models.PROTECT)
@@ -16,5 +16,6 @@ class Ticket(models.Model):
     def __str__(self):
         return f"{self.passenger}, seat: {self.seat}"
 
-    def get_decimal_price(self) -> Decimal:
-        return Decimal(self.price) / 100
+    @property
+    def unit_amount(self) -> int:
+        return int(self.price * 100)

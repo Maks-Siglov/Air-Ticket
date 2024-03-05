@@ -12,8 +12,8 @@ class OrderAdmin(admin.ModelAdmin):
 
 @admin.register(Ticket)
 class TicketAdmin(admin.ModelAdmin):
-    list_display = ("id", "passenger", "seat", "order", "get_decimal_price")
+    list_display = ("id", "passenger", "seat", "price", "order")
     list_filter = ("seat__type",)
     search_fields = ("id", "passenger__first_name", "passenger__last_name")
     ordering = ("-id",)
-    readonly_fields = ("get_decimal_price",)
+    readonly_fields = ("unit_amount",)
