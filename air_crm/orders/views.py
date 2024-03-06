@@ -9,48 +9,48 @@ from django.http import (
 )
 from django.shortcuts import redirect, render
 
-from booking.models import Ticket
+from booking.models import Ticket, TicketCart
+from booking.selectors import get_cart_total_price, get_cart_tickets
 from booking.stripe import stripe
+
 from customer.services.tickets_email import send_creation_user_email
+
 from flight.selectors import get_flight
+
 from orders.models import Order
-from orders.selectors import (
-    get_order_tickets,
-    get_order_total_price,
-    get_order,
-)
+from orders.selectors import get_order
 
 
 def checkout(
-    request: HttpRequest, order_pk: int
+    request: HttpRequest, cart_pk: int
 ) -> HttpResponse | HttpResponseRedirect:
     try:
-        order = Order.objects.select_related("contact").get(pk=order_pk)
+        cart = TicketCart.objects.select_related("contact").get(pk=cart_pk)
     except ObjectDoesNotExist:
-        messages.warning(request, "Order does not exist")
+        messages.warning(request, "Cart does not exist")
         return redirect(request.META.get("HTTP_REFERER"))
 
-    if order.contact is None:
+    if cart.contact is None:
         messages.warning(request, "Please fill contact data")
         return redirect(request.META.get("HTTP_REFERER"))
 
-    tickets_count = Ticket.objects.filter(order=order).count()
-    if tickets_count != order.passenger_amount:
+    tickets_count = Ticket.objects.filter(cart=cart).count()
+    if tickets_count != cart.passenger_amount:
         messages.warning(request, "Please fill all tickets for payment")
         return redirect(request.META.get("HTTP_REFERER"))
 
-    order.status = "Processed"
-    order.save()
+    total_price = get_cart_total_price(cart)
+    order = Order.objects.create(cart=cart, total_price=total_price)
 
     return render(
-        request, "orders/stripe/checkout.html", {"order_pk": order_pk}
+        request, "orders/stripe/checkout.html", {"order_pk": order.pk}
     )
 
 
 def create_checkout_session(request: HttpRequest, order_pk) -> JsonResponse:
     if request.method == "POST":
-        order = Order.objects.get(pk=order_pk)
-        tickets = get_order_tickets(order)
+        order = Order.objects.select_related("cart").get(pk=order_pk)
+        tickets = get_cart_tickets(order.cart)
         line_items = []
         for ticket in tickets:
             data = {
@@ -104,10 +104,9 @@ def checkout_return(
 
 def order_details(request: HttpRequest, order_pk: int) -> HttpResponse:
     order = get_order(order_pk)
-    total_price = get_order_total_price(order)
-
-    tickets = get_order_tickets(order)
-    flight = get_flight(order.flight.pk)
+    cart = order.cart
+    tickets = get_cart_tickets(cart)
+    flight = get_flight(cart.flight.pk)
     return render(
         request,
         "orders/stripe/return.html",
@@ -115,6 +114,6 @@ def order_details(request: HttpRequest, order_pk: int) -> HttpResponse:
             "order": order,
             "tickets": tickets,
             "flight": flight,
-            "total_price": total_price,
+            "total_price": order.total_price,
         },
     )

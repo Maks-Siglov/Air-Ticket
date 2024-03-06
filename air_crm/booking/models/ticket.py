@@ -9,7 +9,7 @@ class Ticket(models.Model):
     passenger = models.ForeignKey(
         "customer.passenger", on_delete=models.PROTECT
     )
-    order = models.ForeignKey("orders.Order", on_delete=models.PROTECT)
+    cart = models.ForeignKey("booking.TicketCart", on_delete=models.PROTECT)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

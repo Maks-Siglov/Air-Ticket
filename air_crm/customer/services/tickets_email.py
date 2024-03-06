@@ -4,17 +4,18 @@ from django.template.loader import render_to_string
 
 from flight.selectors import get_flight
 from orders.models import Order
-from orders.selectors import get_order_tickets
+from booking.selectors import get_cart_tickets
 from users.models import User
 
 
 def send_creation_user_email(order: Order):
-    email = order.contact.email
+    email = order.cart.contact.email
     password = User.objects.make_random_password()
     user = User.objects.create_user(email=email, password=password)
 
-    tickets = get_order_tickets(order)
-    flight = get_flight(order.flight.pk)
+    cart = order.cart
+    tickets = get_cart_tickets(cart)
+    flight = get_flight(cart.flight.pk)
 
     html_content = render_to_string(
         template_name="customer/email/email_wit_user_tickets.html",

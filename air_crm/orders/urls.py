@@ -5,7 +5,7 @@ from orders import views
 app_name = "orders"
 
 urlpatterns = [
-    path("checkout/<int:order_pk>", views.checkout, name="checkout"),
+    path("checkout/<int:cart_pk>", views.checkout, name="checkout"),
     path(
         "create-checkout-session/<int:order_pk>",
         views.create_checkout_session,

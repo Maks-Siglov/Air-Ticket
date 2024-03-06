@@ -7,10 +7,10 @@ app_name = "booking"
 urlpatterns = [
     path(
         "order/<int:flight_pk>",
-        views.create_order,
+        views.create_cart,
         name="create_order",
     ),
-    path("book/<int:order_pk>", views.book, name="book"),
+    path("book/<int:cart_pk>", views.book, name="book"),
     path(
         "create-ticket/<int:flight_pk>",
         views.create_ticket,

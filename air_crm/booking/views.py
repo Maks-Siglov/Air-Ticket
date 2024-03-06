@@ -12,7 +12,13 @@ from django.http import (
 from django.shortcuts import redirect, render
 
 from booking.forms import TicketForm
-from booking.selectors import get_ticket
+from booking.models import TicketCart
+from booking.selectors import (
+    get_ticket,
+    get_cart,
+    get_cart_tickets,
+    get_cart_total_price,
+)
 
 from customer.forms import PassengerForm
 from customer.forms.contact import ContactForm
@@ -21,15 +27,8 @@ from customer.models import Contact
 from flight.models import Flight
 from flight.selectors import get_flight, get_seat
 
-from orders.models import Order
-from orders.selectors import (
-    get_order,
-    get_order_tickets,
-    get_order_total_price,
-)
 
-
-def create_order(request: HttpRequest, flight_pk: int) -> HttpResponseRedirect:
+def create_cart(request: HttpRequest, flight_pk: int) -> HttpResponseRedirect:
     try:
         flight = Flight.objects.get(pk=flight_pk)
     except ObjectDoesNotExist:
@@ -38,25 +37,25 @@ def create_order(request: HttpRequest, flight_pk: int) -> HttpResponseRedirect:
 
     passenger_amount = request.GET.get("passenger_amount")
 
-    order = Order.objects.create(
+    cart = TicketCart.objects.create(
         passenger_amount=passenger_amount, flight=flight
     )
 
-    return redirect("booking:book", order.pk)
+    return redirect("booking:book", cart.pk)
 
 
-def book(request: HttpRequest, order_pk: int) -> HttpResponse:
+def book(request: HttpRequest, cart_pk: int) -> HttpResponse:
     try:
-        order = get_order(order_pk)
+        cart = get_cart(cart_pk)
     except ObjectDoesNotExist:
-        messages.error(request, "Order does not exist")
+        messages.error(request, "Cart does not exist")
         return redirect("main:index")
 
-    flight = get_flight(order.flight.pk)
-    tickets = get_order_tickets(order)
-    total_price = get_order_total_price(order)
+    flight = get_flight(cart.flight.pk)
+    tickets = get_cart_tickets(cart)
+    total_price = get_cart_total_price(cart)
 
-    passenger_amount = order.passenger_amount
+    passenger_amount = cart.passenger_amount
     passengers = range(1, passenger_amount + 1)
     numbered_tickets = list(zip_longest(passengers, tickets))
 
@@ -66,10 +65,10 @@ def book(request: HttpRequest, order_pk: int) -> HttpResponse:
         {
             "flight": flight,
             "passenger_amount": passenger_amount,
-            "order_pk": order.pk,
+            "cart_pk": cart.pk,
             "tickets": tickets,
             "numbered_tickets": numbered_tickets,
-            "contact": order.contact,
+            "contact": cart.contact,
             "total_price": total_price,
         },
     )
@@ -82,8 +81,8 @@ def create_ticket(request: HttpRequest, flight_pk: int) -> JsonResponse:
         except ObjectDoesNotExist:
             return JsonResponse({"error": "Flight does not exits"}, status=404)
 
-        order_pk = request.POST.get("order_pk")
-        order = Order.objects.get(pk=order_pk)
+        cart_pk = request.POST.get("cart_pk")
+        cart = TicketCart.objects.get(pk=cart_pk)
 
         passenger_form = PassengerForm(request.POST)
         ticket_form = TicketForm(request.POST)
@@ -101,7 +100,7 @@ def create_ticket(request: HttpRequest, flight_pk: int) -> JsonResponse:
                 passenger = passenger_form.save()
                 ticket = ticket_form.save(commit=False)
                 ticket.passenger = passenger
-                ticket.order = order
+                ticket.cart = cart
                 ticket.seat = seat
                 ticket.save()
 
@@ -151,17 +150,18 @@ def update_ticket(request, ticket_pk: int) -> JsonResponse:
 
 
 def create_contact(request) -> JsonResponse:
-    order_pk = request.POST.get("order_pk")
+    cart_pk = request.POST.get("cart_pk")
+    print(cart_pk)
     try:
-        order = Order.objects.get(pk=order_pk)
+        cart = TicketCart.objects.get(pk=cart_pk)
     except ObjectDoesNotExist:
-        return JsonResponse({"error": "Order does not exist"}, status=400)
+        return JsonResponse({"error": "Cart does not exist"}, status=400)
 
     form = ContactForm(request.POST)
     if form.is_valid():
         contact = form.save()
-        order.contact = contact
-        order.save()
+        cart.contact = contact
+        cart.save()
 
         return JsonResponse({"success": "Contact created"}, status=201)
 
