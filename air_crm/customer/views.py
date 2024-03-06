@@ -12,5 +12,5 @@ def profile(request: HttpRequest) -> HttpResponse:
 
 @login_required(login_url="users:login")
 def customer_orders(request: HttpRequest) -> HttpResponse:
-    orders = Order.objects.all()
+    orders = Order.objects.filter(user=request.user)
     return render(request, "customer/orders.html", {"orders": orders})
