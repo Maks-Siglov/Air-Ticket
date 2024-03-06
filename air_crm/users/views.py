@@ -1,4 +1,5 @@
 from django.contrib import auth, messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
@@ -32,8 +33,15 @@ def login(request: HttpRequest) -> HttpResponseRedirect:
             if user is not None:
                 auth.login(request, user)
                 messages.success(request, "You are log in")
-                return redirect("main:index")
+                return redirect("customer:profile")
     else:
         form = AuthenticationForm()
 
     return render(request, "users/login.html", {"form": form})
+
+
+@login_required(login_url="users:login")
+def logout(request: HttpRequest) -> HttpResponseRedirect:
+    auth.logout(request)
+    messages.success(request, "You are logged out")
+    return redirect("main:index")
