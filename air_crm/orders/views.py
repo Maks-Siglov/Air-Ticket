@@ -11,6 +11,7 @@ from django.shortcuts import redirect, render
 
 from booking.models import Ticket
 from booking.stripe import stripe
+from customer.services.create_user import send_creation_user_email
 from flight.selectors import get_flight
 from orders.models import Order
 from orders.selectors import (
@@ -95,6 +96,9 @@ def checkout_return(
     order = Order.objects.get(pk=order_pk)
     order.status = "Completed"
     order.save()
+
+    send_creation_user_email(order)
+
     return redirect("orders:detail", order.pk)
 
 

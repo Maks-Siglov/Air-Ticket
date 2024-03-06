@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AirTicket: Your Booking Confirmation and Login Details</title>
+    <style>
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        .heading {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .paragraph {
+            line-height: 1.5;
+        }
+        .card {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .card-header {
+            font-weight: bold;
+        }
+        .card-body {
+            text-align: center;
+        }
+        a {
+            color: #333;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="heading">Welcome to AirTicket!</h1>
+        <p class="paragraph">
+            Thank you for choosing AirTicket for your recent booking! We're excited to have you on board.
+        </p>
+        <p class="paragraph">
+            This email contains your login details for your AirTicket account and confirmation of your flight booking.
+        </p>
+        <h2 class="heading">Account Credentials</h2>
+        <p class="paragraph">
+            Username: {{ email }}
+        </p>
+        <p class="paragraph">
+            Password: {{ password }}
+        </p>
+        <h4>Please change your password to a secure one after logging in.</h4>
+        <p class="paragraph">
+            Click the link below to log in to your account and manage your bookings:
+        </p>
+        <p class="paragraph">
+            <a href="http://{{ domain }}{% url 'users:login' %}">Login to AirTicket</a>
+        </p>
+        <hr>
+        <h2 class="heading">Flight Booking Details</h2>
+        {% for ticket in tickets %}
+            <div class="card mb-1">
+                <div class="card-header text-center">
+                    Ticket Details
+                </div>
+                <div class="card-body text-center">
+                    <p>Passenger: {{ ticket.passenger.first_name }} {{ ticket.passenger.last_name }}</p>
+                    <p>Passport: {{ ticket.passenger.passport_id }}</p>
+                    <p>Seat type: {{ ticket.seat.type }}</p>
+                </div>
+            </div>
+        {% endfor %}
+        <hr>
+        <p class="paragraph">
+            Airplane: {{ flight.airplane.name }}
+        </p>
+        <p class="paragraph">
+            Departure Airport: {{ flight.departure_airport.name }}
+        </p>
+        <p class="paragraph">
+            Departure Date: {{ flight.departure_scheduled }} T/Z: {{ flight.departure_airport.timezone }}
+        </p>
+        <p class="paragraph">
+            Arrival Airport: {{ flight.arrival_airport.name }}
+        </p>
+        <p class="paragraph">
+            Arrival Date: {{ flight.arrival_scheduled }} T/Z: {{ flight.arrival_airport.timezone }}
+        </p>
+        <hr>
+        <p class="paragraph">
+            Visit your profile for further details or assistance with your booking
+        </p>
+        <p class="paragraph">If you need help you can call to the <a href="tel:+380675567558">+380 67 556 75 58</a>.</p>
+        <p class="paragraph">
+            Thank you again for choosing AirTicket! We wish you a pleasant journey.
+        </p>
+        <p class="paragraph">
+            Sincerely,<br>
+            The AirTicket Team
+        </p>
+    </div>
+</body>
+</html>
