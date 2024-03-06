@@ -12,13 +12,14 @@ from django.http import (
 from django.shortcuts import redirect, render
 
 from booking.forms import TicketForm
-from booking.selectors import get_contact, get_flight, get_seat, get_ticket
+from booking.selectors import get_contact, get_ticket
 
 from customer.forms import PassengerForm
 from customer.forms.contact import ContactForm
 from customer.models.contact import Contact
 
 from flight.models import Flight
+from flight.selectors import get_flight, get_seat
 
 from orders.models import Order
 from orders.selectors import (
