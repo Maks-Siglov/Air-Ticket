@@ -12,8 +12,10 @@ from django.shortcuts import redirect, render
 from booking.models import Ticket
 from booking.stripe import stripe
 from customer.models.contact import Contact
+from flight.selectors import get_flight
 from orders.models import Order
-from orders.selectors import get_order_tickets
+from orders.selectors import get_order_tickets, get_order_total_price, \
+    get_order
 
 
 def checkout(
@@ -96,5 +98,18 @@ def checkout_return(
 
 
 def order_details(request: HttpRequest, order_pk: int) -> HttpResponse:
-    order = Order.objects.get(pk=order_pk)
-    return render(request, "orders/stripe/return.html", {"order": order})
+    order = get_order(order_pk)
+    total_price = get_order_total_price(order)
+
+    tickets = get_order_tickets(order)
+    flight = get_flight(order.flight.pk)
+    return render(
+        request,
+        "orders/stripe/return.html",
+        {
+            "order": order,
+            "tickets": tickets,
+            "flight": flight,
+            "total_price": total_price
+        }
+    )
