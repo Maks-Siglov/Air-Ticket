@@ -92,7 +92,7 @@ def get_flight_with_seats(flight_pk: int) -> Flight:
 
 def get_flight(flight_pk: int) -> Flight:
     return Flight.objects.select_related(
-            "airplane", "departure_airport", "arrival_airport"
+        "airplane", "departure_airport", "arrival_airport"
     ).get(pk=flight_pk)
 
 

@@ -7,7 +7,7 @@ from django.http import (
     HttpRequest,
     HttpResponse,
     HttpResponseRedirect,
-    JsonResponse
+    JsonResponse,
 )
 from django.shortcuts import redirect, render
 
@@ -95,7 +95,7 @@ def create_ticket(request: HttpRequest, flight_pk: int) -> JsonResponse:
                 if seat is None:
                     return JsonResponse(
                         {"error": f"{seat_type} seat not available"},
-                        status=400
+                        status=400,
                     )
                 seat.is_available = False
                 seat.save()
@@ -135,7 +135,7 @@ def update_ticket(request, ticket_pk: int) -> JsonResponse:
                 if new_seat is None:
                     return JsonResponse(
                         {"error": f"{seat_type} seat not available"},
-                        status=400
+                        status=400,
                     )
                 new_seat.is_available = False
                 new_seat.save()

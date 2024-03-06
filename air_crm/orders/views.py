@@ -14,8 +14,11 @@ from booking.stripe import stripe
 from customer.models.contact import Contact
 from flight.selectors import get_flight
 from orders.models import Order
-from orders.selectors import get_order_tickets, get_order_total_price, \
-    get_order
+from orders.selectors import (
+    get_order_tickets,
+    get_order_total_price,
+    get_order,
+)
 
 
 def checkout(
@@ -110,6 +113,6 @@ def order_details(request: HttpRequest, order_pk: int) -> HttpResponse:
             "order": order,
             "tickets": tickets,
             "flight": flight,
-            "total_price": total_price
-        }
+            "total_price": total_price,
+        },
     )
