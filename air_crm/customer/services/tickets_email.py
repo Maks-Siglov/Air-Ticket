@@ -9,8 +9,7 @@ from users.models import User
 
 
 def send_creation_user_email(order: Order):
-    contact = order.contact
-    email = contact.email
+    email = order.contact.email
     password = User.objects.make_random_password()
     user = User.objects.create_user(email=email, password=password)
 

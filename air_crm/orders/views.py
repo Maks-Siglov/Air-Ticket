@@ -11,7 +11,7 @@ from django.shortcuts import redirect, render
 
 from booking.models import Ticket
 from booking.stripe import stripe
-from customer.services.create_user import send_creation_user_email
+from customer.services.tickets_email import send_creation_user_email
 from flight.selectors import get_flight
 from orders.models import Order
 from orders.selectors import (
