@@ -12,11 +12,11 @@ from django.http import (
 from django.shortcuts import redirect, render
 
 from booking.forms import TicketForm
-from booking.selectors import get_contact, get_ticket
+from booking.selectors import get_ticket
 
 from customer.forms import PassengerForm
 from customer.forms.contact import ContactForm
-from customer.models.contact import Contact
+from customer.models import Contact
 
 from flight.models import Flight
 from flight.selectors import get_flight, get_seat
@@ -54,7 +54,6 @@ def book(request: HttpRequest, order_pk: int) -> HttpResponse:
 
     flight = get_flight(order.flight.pk)
     tickets = get_order_tickets(order)
-    contact = get_contact(order)
     total_price = get_order_total_price(order)
 
     passenger_amount = order.passenger_amount
@@ -70,7 +69,7 @@ def book(request: HttpRequest, order_pk: int) -> HttpResponse:
             "order_pk": order.pk,
             "tickets": tickets,
             "numbered_tickets": numbered_tickets,
-            "contact": contact,
+            "contact": order.contact,
             "total_price": total_price,
         },
     )
@@ -160,9 +159,9 @@ def create_contact(request) -> JsonResponse:
 
     form = ContactForm(request.POST)
     if form.is_valid():
-        contact = form.save(commit=False)
-        contact.order = order
-        contact.save()
+        contact = form.save()
+        order.contact = contact
+        order.save()
 
         return JsonResponse({"success": "Contact created"}, status=201)
 

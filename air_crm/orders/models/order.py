@@ -9,6 +9,9 @@ class Order(models.Model):
         ("Canceled", "canceled"),
     )
     passenger_amount = models.PositiveIntegerField()
+    contact = models.ForeignKey(
+        "customer.Contact", on_delete=models.CASCADE, null=True, blank=True
+    )
     flight = models.ForeignKey("flight.Flight", on_delete=models.CASCADE)
     status = models.CharField(
         max_length=20, choices=STATUS_CHOICES, default="preorder"

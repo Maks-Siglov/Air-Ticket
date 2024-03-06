@@ -11,7 +11,6 @@ from django.shortcuts import redirect, render
 
 from booking.models import Ticket
 from booking.stripe import stripe
-from customer.models.contact import Contact
 from flight.selectors import get_flight
 from orders.models import Order
 from orders.selectors import (
@@ -25,13 +24,12 @@ def checkout(
     request: HttpRequest, order_pk: int
 ) -> HttpResponse | HttpResponseRedirect:
     try:
-        order = Order.objects.get(pk=order_pk)
+        order = Order.objects.select_related("contact").get(pk=order_pk)
     except ObjectDoesNotExist:
         messages.warning(request, "Order does not exist")
         return redirect(request.META.get("HTTP_REFERER"))
-    try:
-        Contact.objects.get(order=order)
-    except ObjectDoesNotExist:
+
+    if order.contact is None:
         messages.warning(request, "Please fill contact data")
         return redirect(request.META.get("HTTP_REFERER"))
 

@@ -7,7 +7,7 @@ from orders.models import Order
 
 
 def get_order(order_pk: int) -> Order:
-    return Order.objects.select_related("flight").get(pk=order_pk)
+    return Order.objects.select_related("flight", "contact").get(pk=order_pk)
 
 
 def get_order_tickets(order: Order) -> QuerySet[Ticket]:
