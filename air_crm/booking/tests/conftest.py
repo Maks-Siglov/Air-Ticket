@@ -6,7 +6,22 @@ from flight.models import Airport, Flight, Airplane, Seat
 
 
 @pytest.fixture
-def test_flight(db) -> Flight:
+def test_airplane_with_seats(db):
+    test_airplane = Airplane.objects.create(name="Cirrus King Air-4660")
+    economy_seat = Seat.objects.create(type="Economy", airplane=test_airplane)
+    business_seat = Seat.objects.create(
+        type="Business", airplane=test_airplane
+    )
+
+    yield test_airplane
+
+    economy_seat.delete()
+    business_seat.delete()
+    test_airplane.delete()
+
+
+@pytest.fixture
+def test_flight(db, test_airplane_with_seats: Airplane) -> Flight:
     test_departure_airport = Airport.objects.create(
         name="Vienna International",
         timezone="Europe/Vienna",
@@ -19,13 +34,11 @@ def test_flight(db) -> Flight:
         iata="BER",
         icao="EDDB",
     )
-    test_airplane = Airplane.objects.create(name="Cirrus King Air-4660")
-    seat = Seat.objects.create(type="Economy", airplane=test_airplane)
 
     test_flight = Flight.objects.create(
         departure_airport=test_departure_airport,
         arrival_airport=test_arrival_airport,
-        airplane=test_airplane,
+        airplane=test_airplane_with_seats,
         departure_scheduled="2024-03-03 17:05:00.000000 +00:00",
         arrival_scheduled="2024-03-03 19:55:00.000000 +00:00",
         iata="MH9906",
@@ -33,6 +46,10 @@ def test_flight(db) -> Flight:
     )
 
     yield test_flight
+
+    test_departure_airport.delete()
+    test_arrival_airport.delete()
+    test_flight.delete()
 
 
 @pytest.fixture
@@ -55,15 +72,14 @@ def test_contact(db) -> Contact:
 
 @pytest.fixture
 def test_ticket(db, test_cart: TicketCart) -> Ticket:
-    test_airplane = Airplane.objects.create(name="Cirrus King Air-4660")
-    Seat.objects.create(type="Business", airplane=test_airplane)
-    seat = Seat.objects.create(type="Economy", airplane=test_airplane)
 
     passenger = Passenger.objects.create(
         first_name="test_first_name",
         last_name="test_last_name",
         passport_id="331542159",
     )
+
+    seat = Seat.objects.filter(airplane=test_cart.flight.airplane).first()
 
     ticket = Ticket.objects.create(
         cart=test_cart,
@@ -75,3 +91,6 @@ def test_ticket(db, test_cart: TicketCart) -> Ticket:
     )
 
     yield ticket
+
+    passenger.delete()
+    ticket.delete()
