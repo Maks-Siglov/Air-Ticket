@@ -12,7 +12,7 @@ urlpatterns = [
     ),
     path("book/<int:cart_pk>", views.book, name="book"),
     path(
-        "create-ticket/<int:flight_pk>",
+        "create-ticket/<int:cart_pk>",
         views.create_ticket,
         name="create_ticket",
     ),
@@ -21,7 +21,11 @@ urlpatterns = [
         views.update_ticket,
         name="update_ticket",
     ),
-    path("create-contact/", views.create_contact, name="create_contact"),
+    path(
+        "create-contact/<int:cart_pk>",
+        views.create_contact,
+        name="create_contact",
+    ),
     path(
         "update-contact/<int:contact_pk>",
         views.update_contact,

@@ -10,18 +10,16 @@ def test_flight(db) -> User:
         name="Vienna International",
         timezone="Europe/Vienna",
         iata="VIE",
-        icao="LOWW"
+        icao="LOWW",
     )
     test_arrival_airport = Airport.objects.create(
         name="Berlin Brandenburg Airport",
         timezone="Europe/Berlin",
         iata="BER",
-        icao="EDDB"
+        icao="EDDB",
     )
 
-    test_airplane = Airplane.objects.create(
-        name="Cirrus King Air-4660"
-    )
+    test_airplane = Airplane.objects.create(name="Cirrus King Air-4660")
 
     test_flight = Flight.objects.create(
         departure_airport=test_departure_airport,
@@ -30,7 +28,7 @@ def test_flight(db) -> User:
         departure_scheduled="2024-03-03 17:05:00.000000 +00:00",
         arrival_scheduled="2024-03-03 19:55:00.000000 +00:00",
         iata="MH9906",
-        icao="MAS9906"
+        icao="MAS9906",
     )
 
     yield test_flight

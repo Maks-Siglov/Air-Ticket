@@ -36,9 +36,8 @@
                     <div class="card-body">
 
                         <form id="contactForm" method="post"
-                        {% if contact %}action="{% url 'booking:update_contact' contact.pk %}" {% else %}action="{% url 'booking:create_contact'%}"{% endif %}>
+                        {% if contact %}action="{% url 'booking:update_contact' contact.pk %}" {% else %}action="{% url 'booking:create_contact' cart_pk%}"{% endif %}>
                         {% csrf_token %}
-                        <input type="hidden" name="cart_pk" value="{{ cart_pk }}">
 
                          <div class="form-group mt-1 mb-1">
                             <label for="id_phone_number">Phone Number:</label>
@@ -72,10 +71,9 @@
                         <div class="card-body">
 
                             <form id="ticketForm" method="post"
-                            {% if ticket %}action="{% url 'booking:update_ticket' ticket.pk %}" {% else %}action="{% url 'booking:create_ticket' flight.pk %}"{% endif %}>
+                            {% if ticket %}action="{% url 'booking:update_ticket' ticket.pk %}" {% else %}action="{% url 'booking:create_ticket' cart_pk %}"{% endif %}>
                                 {% csrf_token %}
                                 <div class="row">
-                                    <input type="hidden" name="cart_pk" value="{{ cart_pk }}">
                                     <div class="form-group col-8">
                                         <p>Seat Type:</p>
                                         <div class="form-check">

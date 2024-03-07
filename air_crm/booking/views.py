@@ -74,22 +74,19 @@ def book(request: HttpRequest, cart_pk: int) -> HttpResponse:
     )
 
 
-def create_ticket(request: HttpRequest, flight_pk: int) -> JsonResponse:
+def create_ticket(request: HttpRequest, cart_pk: int) -> JsonResponse:
     if request.method == "POST":
         try:
-            flight = Flight.objects.get(pk=flight_pk)
+            cart = get_cart(cart_pk)
         except ObjectDoesNotExist:
             return JsonResponse({"error": "Flight does not exits"}, status=404)
-
-        cart_pk = request.POST.get("cart_pk")
-        cart = TicketCart.objects.get(pk=cart_pk)
 
         passenger_form = PassengerForm(request.POST)
         ticket_form = TicketForm(request.POST)
         if passenger_form.is_valid() and ticket_form.is_valid():
             with transaction.atomic():
                 seat_type = ticket_form.cleaned_data["seat_type"]
-                seat = get_seat(flight.airplane, seat_type)
+                seat = get_seat(cart.flight.airplane, seat_type)
                 if seat is None:
                     return JsonResponse(
                         {"error": f"{seat_type} seat not available"},
@@ -149,9 +146,7 @@ def update_ticket(request, ticket_pk: int) -> JsonResponse:
     return JsonResponse({"Error": "Provided data not valid"}, status=400)
 
 
-def create_contact(request) -> JsonResponse:
-    cart_pk = request.POST.get("cart_pk")
-    print(cart_pk)
+def create_contact(request, cart_pk: int) -> JsonResponse:
     try:
         cart = TicketCart.objects.get(pk=cart_pk)
     except ObjectDoesNotExist:
