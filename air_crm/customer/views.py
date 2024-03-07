@@ -2,7 +2,6 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 
-from flight.models import Flight
 from flight.selectors import get_user_flights
 from orders.models import Order
 

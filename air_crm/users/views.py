@@ -59,6 +59,4 @@ def change_password(request: HttpRequest):
             return redirect("customer:profile")
     else:
         form = PasswordChangeForm(request.user)
-    return render(
-        request, "users/change_password.html", {"form": form}
-    )
+    return render(request, "users/change_password.html", {"form": form})

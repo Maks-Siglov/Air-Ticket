@@ -40,7 +40,8 @@ class Migration(migrations.Migration):
                 (
                     "flight",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="flight.flight"
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="flight.flight",
                     ),
                 ),
             ],

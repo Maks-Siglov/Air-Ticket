@@ -1,8 +1,3 @@
-from decimal import Decimal
-
-from django.db.models import QuerySet, Sum
-
-from booking.models import Ticket
 from orders.models import Order
 
 
