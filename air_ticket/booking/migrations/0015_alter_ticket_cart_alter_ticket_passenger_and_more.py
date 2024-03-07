@@ -17,14 +17,16 @@ class Migration(migrations.Migration):
             model_name="ticket",
             name="cart",
             field=models.ForeignKey(
-                on_delete=django.db.models.deletion.CASCADE, to="booking.ticketcart"
+                on_delete=django.db.models.deletion.CASCADE,
+                to="booking.ticketcart",
             ),
         ),
         migrations.AlterField(
             model_name="ticket",
             name="passenger",
             field=models.ForeignKey(
-                on_delete=django.db.models.deletion.CASCADE, to="customer.passenger"
+                on_delete=django.db.models.deletion.CASCADE,
+                to="customer.passenger",
             ),
         ),
         migrations.AlterField(

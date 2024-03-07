@@ -67,3 +67,19 @@ def test_change_password(client: Client, test_user: User):
     }
     response = client.post(reverse("users:login"), data=new_login_post_data)
     assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_change_contact(client: Client, test_user: User):
+    client.login(email="test@gmail.com", password="test_password")
+
+    response = client.get(reverse("users:change_contact"))
+    assert response.status_code == 200
+
+    post_data = {"email": "new_test@gmail.com", "phone_number": "38021412512"}
+
+    response = client.post(reverse("users:change_contact"), data=post_data)
+    assert response.status_code == 302
+
+    user = User.objects.get(email=post_data["email"])
+    assert user.phone_number == post_data["phone_number"]

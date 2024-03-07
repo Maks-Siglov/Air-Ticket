@@ -47,7 +47,8 @@ def create_cart(request: HttpRequest, flight_pk: int) -> HttpResponseRedirect:
             contact = Contact.objects.get(email=user.email)
         except ObjectDoesNotExist:
             contact = Contact.objects.create(
-                phone_number=user.phone_number, email=user.email,
+                phone_number=user.phone_number,
+                email=user.email,
             )
         cart.contact = contact
         cart.save()
@@ -81,7 +82,7 @@ def book(request: HttpRequest, cart_pk: int) -> HttpResponse:
             "numbered_tickets": numbered_tickets,
             "contact": cart.contact,
             "total_price": total_price,
-            "is_auth": request.user.is_authenticated
+            "is_auth": request.user.is_authenticated,
         },
     )
 

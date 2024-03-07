@@ -20,7 +20,5 @@ def customer_orders(request: HttpRequest) -> HttpResponse:
 @login_required(login_url="users:login")
 def customer_flights(request: HttpRequest) -> HttpResponse:
     selected_status = request.GET.get("status")
-
     flights = get_user_flights(request.user, selected_status)
-
     return render(request, "customer/flights.html", {"flights": flights})

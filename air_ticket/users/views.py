@@ -5,7 +5,7 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 
-from users.forms import RegisterForm
+from users.forms import RegisterForm, UserForm
 
 
 def register(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
@@ -49,7 +49,9 @@ def logout(request: HttpRequest) -> HttpResponseRedirect:
 
 
 @login_required(login_url="users:login")
-def change_password(request: HttpRequest):
+def change_password(
+    request: HttpRequest,
+) -> HttpResponseRedirect | HttpResponse:
     if request.method == "POST":
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
@@ -60,3 +62,20 @@ def change_password(request: HttpRequest):
     else:
         form = PasswordChangeForm(request.user)
     return render(request, "users/change_password.html", {"form": form})
+
+
+@login_required(login_url="users:login")
+def change_contact(
+    request: HttpRequest,
+) -> HttpResponseRedirect | HttpResponse:
+    user = request.user
+    if request.method == "POST":
+        form = UserForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "You successfully update contacts.")
+            return redirect("customer:profile")
+    else:
+        form = UserForm(instance=user)
+
+    return render(request, "users/change_contact.html", {"form": form})
