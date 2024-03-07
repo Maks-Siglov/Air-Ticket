@@ -3,6 +3,7 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 
 from flight.models import Flight
+from flight.selectors import get_user_flights
 from orders.models import Order
 
 
@@ -19,5 +20,8 @@ def customer_orders(request: HttpRequest) -> HttpResponse:
 
 @login_required(login_url="users:login")
 def customer_flights(request: HttpRequest) -> HttpResponse:
-    flights = Flight.objects.all()
+    selected_status = request.GET.get("status")
+
+    flights = get_user_flights(request.user, selected_status)
+
     return render(request, "customer/flights.html", {"flights": flights})

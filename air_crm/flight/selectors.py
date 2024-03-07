@@ -1,8 +1,10 @@
 from datetime import datetime, timedelta
 
 from django.db.models import Count, F, Q, QuerySet
+from django.utils import timezone
 
 from flight.models import Airplane, Flight, Seat
+from users.models import User
 
 
 def get_searched_flights(
@@ -101,3 +103,21 @@ def get_seat(airplane: Airplane, seat_type: str) -> Seat:
         airplane=airplane, type=seat_type.title(), is_available=True
     ).first()
     return seat
+
+
+def get_user_flights(user: User, status: str) -> QuerySet[Flight]:
+
+    if status == "Future":
+        flights = Flight.objects.filter(
+            departure_scheduled__gte=timezone.now()
+        )
+    elif status == "Past":
+        flights = Flight.objects.filter(
+            departure_scheduled__lte=timezone.now()
+        )
+    else:
+        flights = Flight.objects.all()
+
+    return flights.select_related(
+        "airplane", "departure_airport", "arrival_airport"
+    )
