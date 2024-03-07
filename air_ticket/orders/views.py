@@ -13,7 +13,8 @@ from booking.models import Ticket, TicketCart
 from booking.selectors import get_cart_total_price, get_cart_tickets
 from booking.stripe import stripe
 
-from customer.services.tickets_email import send_creation_user_email
+from customer.services.tickets_email import send_tickets_email
+from customer.services.user_creation_email import send_creation_user_email
 
 from flight.selectors import get_flight
 
@@ -97,8 +98,8 @@ def checkout_return(
     order.status = "Completed"
     order.save()
 
-    if request.user:
-        send_ticket_email()
+    if request.user.is_authenticated:
+        send_tickets_email(request.user, order)
     else:
         send_creation_user_email(order)
 
