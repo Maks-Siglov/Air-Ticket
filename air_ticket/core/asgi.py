@@ -1,5 +1,5 @@
 """
-ASGI config for air_crm project.
+ASGI config for air_ticket project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 

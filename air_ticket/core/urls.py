@@ -1,5 +1,5 @@
 """
-URL configuration for air_crm project.
+URL configuration for air_ticket project.
 """
 
 from django.conf import settings

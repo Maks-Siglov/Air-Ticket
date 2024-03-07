@@ -1,5 +1,5 @@
 """
-WSGI config for air_crm project.
+WSGI config for air_ticket project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

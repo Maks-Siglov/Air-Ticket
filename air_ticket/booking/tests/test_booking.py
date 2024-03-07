@@ -5,7 +5,7 @@ from django.urls import reverse
 
 from booking.models import TicketCart, Ticket
 from customer.models import Contact
-from flight.models import Flight, Seat
+from flight.models import Flight
 
 
 @pytest.mark.django_db
