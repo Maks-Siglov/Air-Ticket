@@ -10,7 +10,7 @@ from django.http import (
 from django.shortcuts import redirect, render
 
 from booking.models import Ticket, TicketCart
-from booking.selectors import get_cart_total_price, get_cart_tickets
+from booking.selectors import get_cart_tickets, get_cart_total_price
 from booking.stripe import stripe
 
 from customer.services.tickets_email import send_tickets_email
@@ -25,22 +25,20 @@ from orders.selectors import get_order
 def checkout(
     request: HttpRequest, cart_pk: int
 ) -> HttpResponse | HttpResponseRedirect:
-    print('gasgas')
     try:
         cart = TicketCart.objects.select_related("contact").get(pk=cart_pk)
     except ObjectDoesNotExist:
         messages.warning(request, "Cart does not exist")
         return redirect(request.META.get("HTTP_REFERER"))
-    print("asgsd")
+
     if cart.contact is None:
         messages.warning(request, "Please fill contact data")
         return redirect(request.META.get("HTTP_REFERER"))
-    print("ffffffffffffff")
+
     tickets_count = Ticket.objects.filter(cart=cart).count()
     if tickets_count != cart.passenger_amount:
         messages.warning(request, "Please fill all tickets for payment")
         return redirect(request.META.get("HTTP_REFERER"))
-    print(2)
 
     total_price = get_cart_total_price(cart)
     order = Order.objects.create(cart=cart, total_price=total_price)

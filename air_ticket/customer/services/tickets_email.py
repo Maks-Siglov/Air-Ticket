@@ -2,9 +2,9 @@ from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 
+from booking.selectors import get_cart_tickets
 from flight.selectors import get_flight
 from orders.models import Order
-from booking.selectors import get_cart_tickets
 from users.models import User
 
 

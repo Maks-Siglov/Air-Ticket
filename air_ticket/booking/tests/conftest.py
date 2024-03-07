@@ -1,8 +1,8 @@
 import pytest
 
-from booking.models import TicketCart, Ticket
+from booking.models import Ticket, TicketCart
 from customer.models import Contact, Passenger
-from flight.models import Airport, Flight, Airplane, Seat
+from flight.models import Airplane, Airport, Flight, Seat
 
 
 @pytest.fixture

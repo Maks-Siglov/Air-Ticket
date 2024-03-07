@@ -3,7 +3,7 @@ import pytest
 from django.test import Client
 from django.urls import reverse
 
-from booking.models import TicketCart, Ticket
+from booking.models import Ticket, TicketCart
 from customer.models import Contact
 from flight.models import Flight
 

@@ -14,18 +14,17 @@ from django.shortcuts import redirect, render
 from booking.forms import TicketForm
 from booking.models import TicketCart
 from booking.selectors import (
-    get_ticket,
     get_cart,
     get_cart_tickets,
     get_cart_total_price,
+    get_ticket,
 )
-
 from customer.forms import PassengerForm
 from customer.forms.contact import ContactForm
 from customer.models import Contact
 
 from flight.models import Flight
-from flight.selectors import get_seat, get_flight_with_seats
+from flight.selectors import get_flight_with_seats, get_seat
 
 
 def create_cart(request: HttpRequest, flight_pk: int) -> HttpResponseRedirect:
