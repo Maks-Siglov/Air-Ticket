@@ -8,16 +8,24 @@ from booking.selectors import get_cart_tickets
 from users.models import User
 
 
-def send_tickets_email(user: User, order: Order):
+def send_creation_user_email(order: Order):
+    email = order.cart.contact.email
+    password = User.objects.make_random_password()
+    user = User.objects.create_user(email=email, password=password)
+
+    order.user = user
+    order.save()
 
     cart = order.cart
     tickets = get_cart_tickets(cart)
     flight = get_flight(cart.flight.pk)
 
     html_content = render_to_string(
-        template_name="customer/email/tickets_email.html",
+        template_name="customer/email/creation_email_with_tickets.html",
         context={
             "domain": settings.DOMAIN,
+            "email": email,
+            "password": password,
             "tickets": tickets,
             "flight": flight,
         },

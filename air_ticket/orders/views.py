@@ -97,7 +97,10 @@ def checkout_return(
     order.status = "Completed"
     order.save()
 
-    send_creation_user_email(order)
+    if request.user:
+        send_ticket_email()
+    else:
+        send_creation_user_email(order)
 
     return redirect("orders:detail", order.pk)
 

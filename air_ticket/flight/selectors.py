@@ -24,8 +24,8 @@ def get_searched_flights(
                 )
             )
         )
-        .order_by("departure_scheduled")
         .select_related("airplane", "departure_airport", "arrival_airport")
+        .order_by("departure_scheduled")
     )
 
     flights = flights.annotate(
