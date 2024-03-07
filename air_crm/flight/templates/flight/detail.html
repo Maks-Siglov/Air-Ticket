@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+  {% block title %}My flight{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="container mt-5 mb-5">
+            <div class="justify-content-center">
+                <div class="row">
+                    <div class="col-md-6">
+                        <a href="{% url 'main:index' %}"><img src="{% static 'logo/airplane-ticket.png' %}" alt="AirTicket Logo" width="150"></a>
+                    </div>
+
+                    <div class="col-md-6 d-flex flex-column justify-content-end align-items-end">
+                        <p>Flight IATA code: {{ flight.iata }}</p>
+                        <p>Flight ICAO code: {{ flight.icao }}</p>
+                    </div>
+                </div>
+                    <hr>
+
+
+                <div class="row align-items-center">
+                    <div class="col-md-2">
+                        <div class="d-flex h-100 justify-content-center align-items-center">
+                            <p class="mb-2">FLight № {{ flight.number }}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="d-flex h-100 justify-content-center align-items-center">
+                            <p class="mb-2">Airplane: {{ flight.airplane.name }}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex flex-column h-100 justify-content-center">
+                            <p class="mb-2">Departure Airport: {{ flight.departure_airport.name }}</p>
+                            <p class="mb-2">Departure Date: {{ flight.departure_scheduled }} T/Z: {{ flight.departure_airport.timezone }}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex flex-column h-100 justify-content-center">
+                            <p class="mb-2">Arrival Airport: {{ flight.arrival_airport.name }}</p>
+                            <p class="mb-2">Arrival Date: {{ flight.arrival_scheduled }} T/Z: {{ flight.arrival_airport.timezone }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+                <div class="text-center">
+                    <span class="d-block font-weight-bold">Thanks for flying with us!</span>
+                    <span>AirTicket Team</span>
+                </div>
+
+                </div>
+            </div>
+        </div>
+
+
+{% endblock %}

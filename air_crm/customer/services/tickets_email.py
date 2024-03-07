@@ -13,6 +13,9 @@ def send_creation_user_email(order: Order):
     password = User.objects.make_random_password()
     user = User.objects.create_user(email=email, password=password)
 
+    order.user = user
+    order.save()
+
     cart = order.cart
     tickets = get_cart_tickets(cart)
     flight = get_flight(cart.flight.pk)
