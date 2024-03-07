@@ -58,21 +58,11 @@ def test_cart(db, test_flight: Flight) -> TicketCart:
 
     yield cart
 
-
-@pytest.fixture
-def test_contact(db) -> Contact:
-    contact = Contact.objects.create(
-        phone_number="0673335623", email="test@gmail.com"
-    )
-
-    yield contact
-
-    contact.delete()
+    cart.delete()
 
 
 @pytest.fixture
 def test_ticket(db, test_cart: TicketCart) -> Ticket:
-
     passenger = Passenger.objects.create(
         first_name="test_first_name",
         last_name="test_last_name",
@@ -94,3 +84,14 @@ def test_ticket(db, test_cart: TicketCart) -> Ticket:
 
     passenger.delete()
     ticket.delete()
+
+
+@pytest.fixture
+def test_contact(db) -> Contact:
+    contact = Contact.objects.create(
+        phone_number="0673335623", email="test@gmail.com"
+    )
+
+    yield contact
+
+    contact.delete()
