@@ -1,22 +1,20 @@
 import pytest
+from django.core import mail
 
 from django.test import Client
 from django.urls import reverse
 
-from booking.models import Ticket, TicketCart
-from booking.tests.conftest import (
-    test_airplane_with_seats,
-    test_cart,
-    test_contact,
-    test_flight,
-    test_ticket,
-)
-from customer.models import Contact
+from booking.models import TicketCart
+
 from orders.models import Order
+from users.models import User
 
 
 @pytest.mark.django_db
 def test_create_order_without_contact(client: Client, test_cart: TicketCart):
+    test_cart.contact = None
+    test_cart.save()
+
     referer_url = reverse("main:index")
     response = client.get(
         reverse("orders:checkout", kwargs={"cart_pk": test_cart.pk}),
@@ -28,15 +26,15 @@ def test_create_order_without_contact(client: Client, test_cart: TicketCart):
     assert order is None
 
 
-def test_create_order_with_wrong_tickets(
-    client: Client, test_ticket: Ticket, test_contact: Contact
+def test_order_with_wrong_tickets_amount(
+    client: Client, test_cart: TicketCart
 ):
-    cart = test_ticket.cart
-    cart.contact = test_contact
+    test_cart.passenger_amount = 2
+    test_cart.save()
 
     referer_url = reverse("main:index")
     response = client.get(
-        reverse("orders:checkout", kwargs={"cart_pk": cart.pk}),
+        reverse("orders:checkout", kwargs={"cart_pk": test_cart.pk}),
         HTTP_REFERER=referer_url,
     )
     assert response.status_code == 302
@@ -45,18 +43,50 @@ def test_create_order_with_wrong_tickets(
     assert order is None
 
 
-def test_create_order(
-    client: Client, test_ticket: Ticket, test_contact: Contact
-):
-    cart = test_ticket.cart
-    cart.contact = test_contact
-    cart.passenger_amount = 1
-    cart.save()
-
+def test_create_order(client: Client, test_cart: TicketCart):
     response = client.get(
-        reverse("orders:checkout", kwargs={"cart_pk": cart.pk}),
+        reverse("orders:checkout", kwargs={"cart_pk": test_cart.pk}),
     )
     assert response.status_code == 200
 
     order = Order.objects.first()
     assert order is not None
+
+
+def test_checkout_return(client: Client, test_order: Order):
+    order = test_order
+    response = client.get(
+        reverse("orders:checkout_return", kwargs={"order_pk": order.pk})
+    )
+    assert response.status_code == 302
+
+    contact = order.cart.contact
+
+    created_user = User.objects.get(email=contact.email)
+    assert created_user is not None
+
+    assert created_user.phone_number == contact.phone_number
+
+    assert len(mail.outbox) == 1
+    assert mail.outbox[0].subject == "AirTicket"
+
+
+def test_auth_checkout_return(
+    client: Client, test_order: Order, test_user: User
+):
+    client.login(email="test@gmail.com", password="test_password")
+    order = test_order
+    response = client.get(
+        reverse("orders:checkout_return", kwargs={"order_pk": order.pk})
+    )
+    assert response.status_code == 302
+
+    assert len(mail.outbox) == 1
+    assert mail.outbox[0].subject == "AirTicket"
+
+
+def test_order_detail(client: Client, test_order: Order):
+    response = client.get(
+        reverse("orders:detail", kwargs={"order_pk": test_order.pk})
+    )
+    assert response.status_code == 200

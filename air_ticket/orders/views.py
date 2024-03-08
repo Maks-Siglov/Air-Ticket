@@ -110,7 +110,7 @@ def order_details(request: HttpRequest, order_pk: int) -> HttpResponse:
     order = get_order(order_pk)
     cart = order.cart
     tickets = get_cart_tickets(cart)
-    flight = get_flight(cart.flight.pk)
+    flight = get_flight(cart.flight_id)
     return render(
         request,
         "orders/stripe/return.html",

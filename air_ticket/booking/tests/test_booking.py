@@ -35,8 +35,8 @@ def test_book(client: Client, test_cart: TicketCart):
 
 
 @pytest.mark.django_db
-def test_create_ticket(client: Client, test_cart: TicketCart):
-    cart = test_cart
+def test_create_ticket(client: Client, test_empty_cart: TicketCart):
+    cart = test_empty_cart
 
     post_data = {
         "seat_type": "Economy",
@@ -69,8 +69,8 @@ def test_create_ticket(client: Client, test_cart: TicketCart):
 
 
 @pytest.mark.django_db
-def test_update_ticket(client: Client, test_ticket: Ticket):
-    ticket = test_ticket
+def test_update_ticket(client: Client, test_cart: TicketCart):
+    ticket = Ticket.objects.filter(cart=test_cart).first()
 
     update_post_data = {
         "seat_type": "Business",
@@ -104,8 +104,8 @@ def test_update_ticket(client: Client, test_ticket: Ticket):
 
 
 @pytest.mark.django_db
-def test_create_contact(client: Client, test_cart: TicketCart):
-    cart = test_cart
+def test_create_contact(client: Client, test_empty_cart: TicketCart):
+    cart = test_empty_cart
 
     post_data = {"phone_number": "0673335623", "email": "test@gmail.com"}
 

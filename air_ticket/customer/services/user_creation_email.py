@@ -22,7 +22,7 @@ def send_creation_user_email(order: Order):
 
     cart = order.cart
     tickets = get_cart_tickets(cart)
-    flight = get_flight(cart.flight.pk)
+    flight = get_flight(cart.flight_id)
 
     html_content = render_to_string(
         template_name="customer/email/creation_email_with_tickets.html",

@@ -53,40 +53,6 @@ def test_flight(db, test_airplane_with_seats: Airplane) -> Flight:
 
 
 @pytest.fixture
-def test_cart(db, test_flight: Flight) -> TicketCart:
-    cart = TicketCart.objects.create(flight=test_flight, passenger_amount=2)
-
-    yield cart
-
-    cart.delete()
-
-
-@pytest.fixture
-def test_ticket(db, test_cart: TicketCart) -> Ticket:
-    passenger = Passenger.objects.create(
-        first_name="test_first_name",
-        last_name="test_last_name",
-        passport_id="331542159",
-    )
-
-    seat = Seat.objects.filter(airplane=test_cart.flight.airplane).first()
-
-    ticket = Ticket.objects.create(
-        cart=test_cart,
-        passenger=passenger,
-        seat=seat,
-        price=200,
-        lunch=False,
-        luggage=False,
-    )
-
-    yield ticket
-
-    passenger.delete()
-    ticket.delete()
-
-
-@pytest.fixture
 def test_contact(db) -> Contact:
     contact = Contact.objects.create(
         phone_number="0673335623", email="test@gmail.com"
@@ -95,3 +61,41 @@ def test_contact(db) -> Contact:
     yield contact
 
     contact.delete()
+
+
+@pytest.fixture
+def test_cart(db, test_flight: Flight, test_contact: Contact) -> TicketCart:
+    cart = TicketCart.objects.create(
+        flight=test_flight, passenger_amount=1, contact=test_contact
+    )
+    passenger = Passenger.objects.create(
+        first_name="test_first_name",
+        last_name="test_last_name",
+        passport_id="331542159",
+    )
+
+    seat = Seat.objects.filter(airplane=cart.flight.airplane).first()
+
+    ticket = Ticket.objects.create(
+        cart=cart,
+        passenger=passenger,
+        seat=seat,
+        price=200,
+        lunch=False,
+        luggage=False,
+    )
+
+    yield cart
+
+    passenger.delete()
+    ticket.delete()
+    cart.delete()
+
+
+@pytest.fixture
+def test_empty_cart(db, test_flight: Flight):
+    cart = TicketCart.objects.create(flight=test_flight, passenger_amount=1)
+
+    yield cart
+
+    cart.delete()
