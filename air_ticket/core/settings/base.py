@@ -150,4 +150,4 @@ STRIPE_SECRET_KEY = os.environ["STRIPE_SECRET_KEY"]
 
 # Flight list paginator settings
 DEFAULT_PAGE = 1
-FLIGHTS_PER_PAGE = 10
+ITEMS_PER_PAGE = 10

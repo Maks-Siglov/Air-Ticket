@@ -26,7 +26,7 @@ def search_flights(request: HttpRequest) -> HttpResponse:
                 departure_airport, arrival_airport, departure_date
             )
 
-            paginator = Paginator(flights, settings.FLIGHTS_PER_PAGE)
+            paginator = Paginator(flights, settings.ITEMS_PER_PAGE)
             current_page = paginator.page(int(page))
 
             return render(
