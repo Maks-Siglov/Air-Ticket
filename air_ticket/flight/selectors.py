@@ -3,7 +3,9 @@ from datetime import datetime, timedelta
 from django.db.models import Count, F, Q, QuerySet
 from django.utils import timezone
 
+from booking.models import TicketCart
 from flight.models import Airplane, Flight, Seat
+from orders.models import Order
 from users.models import User
 
 
@@ -106,17 +108,21 @@ def get_seat(airplane: Airplane, seat_type: str) -> Seat:
 
 
 def get_user_flights(user: User, status: str) -> QuerySet[Flight]:
-
+    cart_ids = Order.objects.filter(user=user).values_list("cart_id")
+    flight_ids = TicketCart.objects.filter(id__in=cart_ids).values_list(
+        "flight_id"
+    )
+    flights = Flight.objects.filter(id__in=flight_ids).order_by(
+        "departure_scheduled"
+    )
     if status == "Future":
-        flights = Flight.objects.filter(
+        flights = flights.objects.filter(
             departure_scheduled__gte=timezone.now()
         )
     elif status == "Past":
-        flights = Flight.objects.filter(
+        flights = flights.objects.filter(
             departure_scheduled__lte=timezone.now()
         )
-    else:
-        flights = Flight.objects.all()
 
     return flights.select_related(
         "airplane", "departure_airport", "arrival_airport"

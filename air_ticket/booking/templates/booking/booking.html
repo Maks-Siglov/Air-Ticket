@@ -61,6 +61,10 @@
                                 </div>
                             {% endif %}
 
+                        {% else %}
+                            <div class="text-center mt-3">
+                                    <a href="{% url 'users:change_contact' %}" class="btn btn-success">Change Contact Data</a>
+                            </div>
                         {% endif %}
 
                         </form>
