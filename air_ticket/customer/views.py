@@ -1,10 +1,12 @@
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
-from flight.selectors import get_user_flights
+from flight.selectors import get_user_flights, get_flight
 from orders.selectors import get_user_orders
 
 
@@ -36,5 +38,16 @@ def customer_flights(request: HttpRequest) -> HttpResponse:
     return render(request, "customer/flights.html", {"flights": current_page})
 
 
-def check_in(request: HttpRequest) -> HttpResponse:
-    return render(request, "customer/check_in.html")
+@login_required(login_url="users:login")
+def check_in(request: HttpRequest, flight_pk: int) -> HttpResponse:
+    try:
+        flight = get_flight(flight_pk)
+    except ObjectDoesNotExist:
+        messages.warning(request, "Flight for check-in not exit")
+        return redirect("customer:profile")
+
+    return render(
+        request,
+        "customer/check_in.html",
+        {"flight": flight}
+    )
