@@ -1,6 +1,6 @@
 let rows = 6;
 let columns = 10;
-let corridorRow = 4
+let corridorRow = 3
 const seatAvailability = [];
 const seatImageUrl = '/static/images/seat.png'
 
@@ -14,7 +14,7 @@ function generateSeatMap() {
         rowElement.classList.add(`seat-row-${row}`, 'm-1')
 
         if (row === corridorRow){
-            appendCorridorRow(seatMapContainer)
+            rowElement.classList.add('mb-4')
         }
 
         for (let col = 1; col < columns + 1 ; col++){
@@ -27,7 +27,10 @@ function generateSeatMap() {
             imgElement.width = 40
             imgElement.src = seatImageUrl;
             imgElement.alt = 'Seat';
+            imgElement.classList.add('seat-image')
             seatElement.appendChild(imgElement);
+
+            seatElement.addEventListener('click', handleSeatSelection);
 
             rowElement.appendChild(seatElement);
         }
@@ -35,10 +38,9 @@ function generateSeatMap() {
     }
 }
 
-function appendCorridorRow(seatMap){
-    const corridorRow = document.createElement('div');
-    corridorRow.classList.add('corridor-row', 'm-4');
-    seatMap.appendChild(corridorRow);
+function handleSeatSelection(event){
+    console.log('select')
 }
+
 
 generateSeatMap();

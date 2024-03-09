@@ -1,0 +1,7 @@
+.seat-image {
+    cursor: pointer;
+}
+
+.seat-image:hover {
+    background-color: royalblue;
+}
