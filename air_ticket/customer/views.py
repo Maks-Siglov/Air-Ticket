@@ -34,3 +34,7 @@ def customer_flights(request: HttpRequest) -> HttpResponse:
     paginator = Paginator(flights, settings.ITEMS_PER_PAGE)
     current_page = paginator.page(int(page))
     return render(request, "customer/flights.html", {"flights": current_page})
+
+
+def check_in(request: HttpRequest) -> HttpResponse:
+    return render(request, "customer/check_in.html")

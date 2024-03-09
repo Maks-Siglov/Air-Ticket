@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Check in{% endblock %}
+
+{% block content %}
+
+    <div id="seat-map-container" class="text-center mt-5">
+    </div>
+
+    <script src="{% static 'js/seat_map.js' %}"></script>
+{% endblock %}
