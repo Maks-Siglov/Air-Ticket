@@ -127,3 +127,7 @@ def get_user_flights(user: User, status: str) -> QuerySet[Flight]:
     return flights.select_related(
         "airplane", "departure_airport", "arrival_airport"
     )
+
+
+def get_airplane_seats(airplane: Airplane) -> QuerySet[Seat]:
+    return Seat.objects.filter(airplane=airplane, type="Economy")

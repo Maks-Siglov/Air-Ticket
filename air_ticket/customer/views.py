@@ -3,10 +3,11 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator
+from django.core.serializers import serialize
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 
-from flight.selectors import get_user_flights, get_flight
+from flight.selectors import get_user_flights, get_flight, get_airplane_seats
 from orders.selectors import get_user_orders
 
 
@@ -46,8 +47,15 @@ def check_in(request: HttpRequest, flight_pk: int) -> HttpResponse:
         messages.warning(request, "Flight for check-in not exit")
         return redirect("customer:profile")
 
+    seats = get_airplane_seats(flight.airplane)
+    seats_count = seats.count()
+
     return render(
         request,
         "customer/check_in.html",
-        {"flight": flight}
+        {
+            "flight": flight,
+            "seats": seats,
+            "seats_count": seats_count,
+        }
     )

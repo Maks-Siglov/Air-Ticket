@@ -1,6 +1,7 @@
-let rows = 6;
-let columns = 10;
-let corridorRow = 3
+const rows = Math.floor(Math.sqrt(seatsCount));
+const columns = Math.ceil(seatsCount / rows);
+
+const corridorRow = 3
 const seatAvailability = [];
 const seatImageUrl = '/static/images/seat.png'
 
@@ -10,7 +11,6 @@ for (let row = 0; row < rows ; row++) {
         seatAvailability[row].push(true);
     }
 }
-
 
 function generateSeatMap() {
     const seatMapContainer = document.getElementById('seat-map-container');
