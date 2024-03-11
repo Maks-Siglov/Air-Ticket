@@ -13,34 +13,34 @@ fetch('/api/v1/check-in/' + flightPk)
         const rows = Math.floor(Math.sqrt(seatsAmount));
         const columns = 15
 
-        const seatMap = [];
-
-        for (let row = 0; row < rows; row++) {
-            seatMap.push([]);
-
-            for (let col = 0; col < columns; col++) {
-                const seatIndex = row * columns + col;
-                if (seatIndex < seatsData.length) {
-                    const seat = seatsData[seatIndex];
-                    seatMap[row].push(createSeatElement(seat));
-                }
-            }
-        }
-
         for (let row = 0; row < rows; row++) {
             const rowElement = document.createElement('div');
             rowElement.classList.add(`seat-row-${row}`, 'd-flex', 'justify-content-center');
 
             for (let col = 0; col < columns; col++) {
-                const seatElement = seatMap[row][col];
-                if (seatElement) {
+                const seatIndex = row * columns + col;
+                if (seatIndex < seatsData.length) {
+                    const seat = seatsData[seatIndex];
+                    const seatElement = createSeatElement(seat)
+
+                    seatElement.addEventListener('click', handleSeatSelection);
+
                     rowElement.appendChild(seatElement);
                 }
             }
-            seatMapContainer.appendChild(rowElement);
-        }
+
+    seatMapContainer.appendChild(rowElement);
+}
     })
     .catch(error => console.error(error));
+
+function handleSeatSelection(event){
+    const seat = event.currentTarget;
+    const id = seat.dataset.id;
+
+    console.log(`Selected seat id: ${id}`);
+}
+
 
 function createSeatElement(seat) {
     const seatElement = document.createElement('div');
