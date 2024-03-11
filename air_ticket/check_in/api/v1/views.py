@@ -1,7 +1,7 @@
 from django.http import HttpRequest
-from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
-from rest_framework.views import APIView
+
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from check_in.api.v1.serializers import SeatSerializer
 from flight.models import Seat
@@ -20,7 +20,7 @@ class SeatsView(APIView):
 class SelectSeatView(APIView):
 
     def post(self, request: HttpRequest) -> Response:
-        seat_pk = request.data['seatId']
+        seat_pk = request.data["seatId"]
         seat = Seat.objects.get(pk=seat_pk)
         seat.is_available = False
         seat.save()

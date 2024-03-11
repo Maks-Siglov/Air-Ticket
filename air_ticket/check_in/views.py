@@ -2,9 +2,9 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
 
-from flight.selectors import get_flight, get_airplane_seats
+from flight.selectors import get_flight
 
 
 @login_required(login_url="users:login")
@@ -15,13 +15,11 @@ def check_in(request: HttpRequest, flight_pk: int) -> HttpResponse:
         messages.warning(request, "Flight for check-in not exit")
         return redirect("customer:profile")
 
-    seats = get_airplane_seats(flight.airplane)
-
     return render(
         request,
         "check_in/check_in.html",
         {
             "flight": flight,
             "flight_pk": flight_pk,
-        }
+        },
     )

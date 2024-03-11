@@ -17,7 +17,7 @@ urlpatterns = [
     path("check-in/", include("check_in.urls", namespace="check_in")),
     path(
         "api/v1/check-in/",
-        include("check_in.api.v1.urls", namespace="api_check_in")
+        include("check_in.api.v1.urls", namespace="api_check_in"),
     ),
 ]
 

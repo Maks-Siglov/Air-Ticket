@@ -10,12 +10,12 @@ class StaffAdmin(admin.ModelAdmin):
 
     def has_view_permission(self, request, obj=None):
         return request.user.is_superuser or (
-                obj is not None and obj.user == request.user
+            obj is not None and obj.user == request.user
         )
 
     def has_change_permission(self, request, obj=None):
         return request.user.is_superuser or (
-                obj is not None and obj.user == request.user
+            obj is not None and obj.user == request.user
         )
 
     def has_delete_permission(self, request, obj=None):
