@@ -5,3 +5,7 @@
 .seat-image:hover {
     background-color: royalblue;
 }
+
+.unavailable-seat {
+    background-color: gray;
+}

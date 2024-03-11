@@ -1,69 +1,64 @@
-const rows = Math.floor(Math.sqrt(seatsCount));
-const columns = Math.ceil(seatsCount / rows);
+const seatMapContainer = document.getElementById('seat-map-container');
 
-const corridorRow = 3
-const seatAvailability = [];
-const seatImageUrl = '/static/images/seat.png'
+const seatImageUrl = '/static/images/seat.png';
 
-for (let row = 0; row < rows ; row++) {
-    seatAvailability.push([]);
-    for (let col = 0; col < columns; col++) {
-        seatAvailability[row].push(true);
-    }
-}
+seatMapContainer.textContent = 'Loading seat map data...';
 
-function generateSeatMap() {
-    const seatMapContainer = document.getElementById('seat-map-container');
-    seatMapContainer.innerHTML = '';
+fetch('/api/v1/check-in/' + flightPk)
+    .then(response => response.json())
+    .then(seatsData => {
+        seatMapContainer.textContent = '';
 
-    for (let row = 1; row < rows + 1; row++){
-        const rowElement = document.createElement('div')
-        rowElement.classList.add(`seat-row-${row}`, 'm-1')
+        const seatsAmount = seatsData.length;
+        const rows = Math.floor(Math.sqrt(seatsAmount));
+        const columns = 15
 
-        if (row === corridorRow){
-            rowElement.classList.add('mb-4')
-        }
+        const seatMap = [];
 
-        for (let col = 1; col < columns + 1 ; col++){
-            const seatElement = createSeatElement(row, col)
+        for (let row = 0; row < rows; row++) {
+            seatMap.push([]);
 
-            createSeatImgElement(seatElement)
-
-            if (!seatAvailability[row - 1][col - 1]) {
-                seatElement.classList.add('unavailable');
+            for (let col = 0; col < columns; col++) {
+                const seatIndex = row * columns + col;
+                if (seatIndex < seatsData.length) {
+                    const seat = seatsData[seatIndex];
+                    seatMap[row].push(createSeatElement(seat));
+                }
             }
-
-            seatElement.addEventListener('click', handleSeatSelection);
-
-            rowElement.appendChild(seatElement);
         }
-        seatMapContainer.appendChild(rowElement)
-    }
-}
 
-function handleSeatSelection(event){
-    const seat = event.currentTarget;
-    const row = seat.dataset.row;
-    const column = seat.dataset.column;
+        for (let row = 0; row < rows; row++) {
+            const rowElement = document.createElement('div');
+            rowElement.classList.add(`seat-row-${row}`, 'd-flex', 'justify-content-center');
 
-    console.log(`Seat selected: Row ${row}, Column ${column}`);
-}
+            for (let col = 0; col < columns; col++) {
+                const seatElement = seatMap[row][col];
+                if (seatElement) {
+                    rowElement.appendChild(seatElement);
+                }
+            }
+            seatMapContainer.appendChild(rowElement);
+        }
+    })
+    .catch(error => console.error(error));
 
-function createSeatElement(row, col){
-    const seatElement = document.createElement('span');
-    seatElement.classList.add('seat', 'm-2');
-    seatElement.dataset.row = row;
-    seatElement.dataset.column = col;
-    return seatElement
-}
+function createSeatElement(seat) {
+    const seatElement = document.createElement('div');
+    seatElement.dataset.id = seat.id;
 
-function createSeatImgElement(seatElement){
     const imgElement = document.createElement('img');
-    imgElement.width = 40
+    imgElement.width = 40;
     imgElement.src = seatImageUrl;
     imgElement.alt = 'Seat';
-    imgElement.classList.add('seat-image')
-    seatElement.appendChild(imgElement);
-}
 
-generateSeatMap();
+     if (!seat.is_available) {
+        seatElement.classList.add('unavailable-seat', 'm-1');
+    } else {
+        seatElement.classList.add('seat', 'm-1');
+        imgElement.classList.add('seat-image');
+    }
+
+    seatElement.appendChild(imgElement);
+
+    return seatElement;
+}

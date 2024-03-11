@@ -1,13 +1,10 @@
 from django.conf import settings
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator
-from django.core.serializers import serialize
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 
-from flight.selectors import get_user_flights, get_flight, get_airplane_seats
+from flight.selectors import get_user_flights
 from orders.selectors import get_user_orders
 
 
@@ -37,25 +34,3 @@ def customer_flights(request: HttpRequest) -> HttpResponse:
     paginator = Paginator(flights, settings.ITEMS_PER_PAGE)
     current_page = paginator.page(int(page))
     return render(request, "customer/flights.html", {"flights": current_page})
-
-
-@login_required(login_url="users:login")
-def check_in(request: HttpRequest, flight_pk: int) -> HttpResponse:
-    try:
-        flight = get_flight(flight_pk)
-    except ObjectDoesNotExist:
-        messages.warning(request, "Flight for check-in not exit")
-        return redirect("customer:profile")
-
-    seats = get_airplane_seats(flight.airplane)
-    seats_count = seats.count()
-
-    return render(
-        request,
-        "customer/check_in.html",
-        {
-            "flight": flight,
-            "seats": seats,
-            "seats_count": seats_count,
-        }
-    )

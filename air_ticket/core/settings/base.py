@@ -32,6 +32,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # External apps
+    "rest_framework",
     # Internal apps
     "users.apps.UsersConfig",
     "main.apps.MainConfig",
@@ -39,6 +41,7 @@ INSTALLED_APPS = [
     "customer.apps.CustomerConfig",
     "booking.apps.BookingConfig",
     "orders.apps.OrdersConfig",
+    "check_in.apps.CheckInConfig",
     "staff.apps.StaffConfig",
 ]
 
@@ -51,6 +54,13 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
 
 ROOT_URLCONF = "core.urls"
 
