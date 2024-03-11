@@ -1,4 +1,6 @@
 const seatMapContainer = document.getElementById('seat-map-container');
+const seatSelectionCard = document.getElementById('seat-selection-card');
+const selectSeatButton = document.getElementById('select-seat-button');
 
 const seatImageUrl = '/static/images/seat.png';
 
@@ -36,15 +38,45 @@ fetch('/api/v1/check-in/' + flightPk)
 
 function handleSeatSelection(event){
     const seat = event.currentTarget;
-    const id = seat.dataset.id;
+    const seatId = seat.dataset.id;
 
-    console.log(`Selected seat id: ${id}`);
+    const seatElement = document.querySelector(`.seat-${seatId}`)
+    const seatImg = seatElement.querySelector('img')
+    seatImg.style.backgroundColor = 'green'
+
+    document.getElementById('selected-seat-id').textContent = seatId;
+    seatSelectionCard.classList.toggle('d-none');
+
+
+    selectSeatButton.addEventListener('click', function handleSelectionApproving() {
+        fetch('/api/v1/check-in/select-seat/', {
+            method: 'POST',
+            body: JSON.stringify({ seatId: seatId }),
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log('Seat selection successful!');
+                seat.classList.add('unavailable');
+
+            } else {
+                console.error('Error selecting seat:', response.statusText);
+            }
+        })
+        .catch(error => console.error('Error:', error));
+
+        selectSeatButton.removeEventListener('click', this);
+    });
 }
 
 
 function createSeatElement(seat) {
     const seatElement = document.createElement('div');
-    seatElement.dataset.id = seat.id;
+    const seatId = seat.id
+    seatElement.dataset.id = seatId
 
     const imgElement = document.createElement('img');
     imgElement.width = 40;
@@ -54,11 +86,17 @@ function createSeatElement(seat) {
      if (!seat.is_available) {
         seatElement.classList.add('unavailable-seat', 'm-1');
     } else {
-        seatElement.classList.add('seat', 'm-1');
+        seatElement.classList.add(`seat-${seatId}`, 'm-1');
         imgElement.classList.add('seat-image');
     }
 
     seatElement.appendChild(imgElement);
 
     return seatElement;
+}
+
+function getCookie(name) {
+    const value = "; " + document.cookie;
+    const parts = value.split("; " + name + "=");
+    if (parts.length === 2) return parts.pop().split(";").shift();
 }

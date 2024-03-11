@@ -16,7 +16,6 @@ def check_in(request: HttpRequest, flight_pk: int) -> HttpResponse:
         return redirect("customer:profile")
 
     seats = get_airplane_seats(flight.airplane)
-    seats_count = seats.count()
 
     return render(
         request,
