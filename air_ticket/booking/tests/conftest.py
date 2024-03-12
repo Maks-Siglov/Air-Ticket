@@ -79,7 +79,6 @@ def test_cart(db, test_flight: Flight, test_contact: Contact) -> TicketCart:
     ticket = Ticket.objects.create(
         cart=cart,
         passenger=passenger,
-        seat=seat,
         price=200,
         lunch=False,
         luggage=False,

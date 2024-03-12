@@ -108,10 +108,7 @@ def get_seat(airplane: Airplane, seat_type: str) -> Seat:
 
 
 def get_user_flights(user: User, status: str) -> QuerySet[Flight]:
-    cart_ids = Order.objects.filter(user=user).values_list("cart_id")
-    flight_ids = TicketCart.objects.filter(id__in=cart_ids).values_list(
-        "flight_id"
-    )
+    flight_ids = Order.objects.filter(user=user).values_list("flight_id")
     flights = Flight.objects.filter(id__in=flight_ids).order_by(
         "departure_scheduled"
     )

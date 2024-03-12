@@ -98,19 +98,11 @@ def create_ticket(request: HttpRequest, cart_pk: int) -> JsonResponse:
         if passenger_form.is_valid() and ticket_form.is_valid():
             with transaction.atomic():
                 seat_type = ticket_form.cleaned_data["seat_type"]
-                seat = get_seat(cart.flight.airplane, seat_type)
-                if seat is None:
-                    return JsonResponse(
-                        {"error": f"{seat_type} seat not available"},
-                        status=400,
-                    )
-                seat.is_available = False
-                seat.save()
+
                 passenger = passenger_form.save()
                 ticket = ticket_form.save(commit=False)
                 ticket.passenger = passenger
                 ticket.cart = cart
-                ticket.seat = seat
                 ticket.save()
 
                 return JsonResponse(
@@ -133,21 +125,6 @@ def update_ticket(request, ticket_pk: int) -> JsonResponse:
         with transaction.atomic():
             seat_type = ticket_form.cleaned_data["seat_type"]
             ticket = ticket_form.save(commit=False)
-
-            if ticket.seat.type != seat_type:
-                seat = ticket.seat
-                seat.is_available = True
-                seat.save()
-                new_seat = get_seat(seat.airplane, seat_type)
-                if new_seat is None:
-                    return JsonResponse(
-                        {"error": f"{seat_type} seat not available"},
-                        status=400,
-                    )
-                new_seat.is_available = False
-                new_seat.save()
-                ticket.seat = new_seat
-
             ticket.save()
             passenger_form.save()
 

@@ -46,15 +46,14 @@
         </p>
 
         <h2 class="heading">Flight Booking Details</h2>
-        {% for ticket in tickets %}
+        {% for order_ticket in order_tickets %}
             <div class="card mb-1">
                 <div class="card-header text-center">
                     Ticket Details
                 </div>
                 <div class="card-body text-center">
-                    <p>Passenger: {{ ticket.passenger.first_name }} {{ ticket.passenger.last_name }}</p>
-                    <p>Passport ID: {{ ticket.passenger.passport_id }}</p>
-                    <p>Seat type: {{ ticket.seat.type }}</p>
+                    <p>Passenger: {{ order_ticket.ticket.passenger.first_name }} {{ order_ticket.ticket.passenger.last_name }}</p>
+                    <p>Passport ID: {{ order_ticket.ticket.passenger.passport_id }}</p>
                 </div>
             </div>
         {% endfor %}

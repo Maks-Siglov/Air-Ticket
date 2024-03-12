@@ -59,9 +59,6 @@ def test_create_ticket(client: Client, test_empty_cart: TicketCart):
     assert ticket.lunch == post_data["lunch"]
     assert ticket.luggage == post_data["luggage"]
 
-    seat = ticket.seat
-    assert seat.type == post_data["seat_type"]
-
     passenger = ticket.passenger
     assert passenger.first_name == post_data["first_name"]
     assert passenger.last_name == post_data["last_name"]
@@ -92,10 +89,6 @@ def test_update_ticket(client: Client, test_cart: TicketCart):
     assert ticket.price == update_post_data["price"]
     assert ticket.lunch == update_post_data["lunch"]
     assert ticket.luggage == update_post_data["luggage"]
-
-    seat = ticket.seat
-    assert seat is not None
-    assert seat.type == update_post_data["seat_type"]
 
     passenger = ticket.passenger
     assert passenger.first_name == update_post_data["first_name"]

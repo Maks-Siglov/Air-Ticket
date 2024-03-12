@@ -19,7 +19,8 @@ from customer.services.user_creation_email import send_creation_user_email
 from flight.selectors import get_flight
 
 from orders.models import Order
-from orders.selectors import get_order
+from orders.models.order_ticket import OrderTicket
+from orders.selectors import get_order, get_order_tickets
 
 
 def checkout(
@@ -35,13 +36,16 @@ def checkout(
         messages.warning(request, "Please fill contact data")
         return redirect(request.META.get("HTTP_REFERER"))
 
-    tickets_count = Ticket.objects.filter(cart=cart).count()
-    if tickets_count != cart.passenger_amount:
+    tickets = get_cart_tickets(cart)
+    if tickets.count() != cart.passenger_amount:
         messages.warning(request, "Please fill all tickets for payment")
         return redirect(request.META.get("HTTP_REFERER"))
 
     total_price = get_cart_total_price(cart)
-    order = Order.objects.create(cart=cart, total_price=total_price)
+    order = Order.objects.create(flight=cart.flight, total_price=total_price)
+
+    for ticket in tickets:
+        OrderTicket.objects.create(order=order, ticket=ticket)
 
     return render(
         request, "orders/stripe/checkout.html", {"order_pk": order.pk}
@@ -50,10 +54,11 @@ def checkout(
 
 def create_checkout_session(request: HttpRequest, order_pk) -> JsonResponse:
     if request.method == "POST":
-        order = Order.objects.select_related("cart").get(pk=order_pk)
-        tickets = get_cart_tickets(order.cart)
+        order = get_order(order_pk)
+        tickets = get_order_tickets(order)
         line_items = []
-        for ticket in tickets:
+        for order_ticket in tickets:
+            ticket = order_ticket.ticket
             data = {
                 "price_data": {
                     "currency": "usd",
@@ -62,7 +67,6 @@ def create_checkout_session(request: HttpRequest, order_pk) -> JsonResponse:
                         "name": (
                             f"{ticket.passenger.first_name} "
                             f"{ticket.passenger.last_name} "
-                            f"{ticket.seat.type} Ticket "
                         )
                     },
                 },
@@ -94,7 +98,7 @@ def session_status(request: HttpRequest):
 def checkout_return(
     request: HttpRequest, order_pk: int
 ) -> HttpResponseRedirect:
-    order = Order.objects.get(pk=order_pk)
+    order = get_order(order_pk)
     order.status = "Completed"
     order.save()
 
@@ -108,15 +112,14 @@ def checkout_return(
 
 def order_details(request: HttpRequest, order_pk: int) -> HttpResponse:
     order = get_order(order_pk)
-    cart = order.cart
-    tickets = get_cart_tickets(cart)
-    flight = get_flight(cart.flight_id)
+    order_tickets = get_order_tickets(order)
+    flight = get_flight(order.flight_id)
     return render(
         request,
         "orders/stripe/return.html",
         {
             "order": order,
-            "tickets": tickets,
+            "order_tickets": order_tickets,
             "flight": flight,
             "total_price": order.total_price,
         },

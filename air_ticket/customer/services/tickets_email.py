@@ -5,20 +5,20 @@ from django.template.loader import render_to_string
 from booking.selectors import get_cart_tickets
 from flight.selectors import get_flight
 from orders.models import Order
+from orders.selectors import get_order_tickets
 from users.models import User
 
 
 def send_tickets_email(user: User, order: Order):
 
-    cart = order.cart
-    tickets = get_cart_tickets(cart)
-    flight = get_flight(cart.flight.pk)
+    order_tickets = get_order_tickets(order)
+    flight = get_flight(order.flight_id)
 
     html_content = render_to_string(
         template_name="customer/email/tickets_email.html",
         context={
             "domain": settings.DOMAIN,
-            "tickets": tickets,
+            "order_tickets": order_tickets,
             "flight": flight,
         },
     )

@@ -10,7 +10,7 @@ class Order(models.Model):
     user = models.ForeignKey(
         "users.User", on_delete=models.CASCADE, null=True, blank=True
     )
-    cart = models.ForeignKey("booking.TicketCart", on_delete=models.CASCADE)
+    flight = models.ForeignKey("flight.Flight", on_delete=models.CASCADE)
     status = models.CharField(
         max_length=20, choices=STATUS_CHOICES, default="Processed"
     )

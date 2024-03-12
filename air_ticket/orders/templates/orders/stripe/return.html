@@ -42,19 +42,19 @@
                 </div>
                 <hr>
 
-                {% for ticket in tickets %}
+                {% for order_ticket in order_tickets %}
                 <div class="card mt-2">
                     <div class="card-body row">
                         <div class="col-md-2">
                             <img src="{% static 'images/ticket.png' %}" alt="Ticket Image" width="80">
                         </div>
                         <div class="col-md-8">
-                            <h5 class="card-title">Passenger: {{ ticket.passenger.first_name }} {{ ticket.passenger.last_name }}</h5>
-                            <p class="card-text">Passport id {{ ticket.passenger.passport_id }}</p>
-                            <p class="card-text">Seat type: {{ ticket.seat.type }}</p>
+                            <h5 class="card-title">Passenger: {{ order_ticket.ticket.passenger.first_name }} {{ order_ticket.ticket.passenger.last_name }}</h5>
+                            <p class="card-text">Passport id {{ order_ticket.ticket.passenger.passport_id }}</p>
+                            <p class="card-text">Seat type: {{ order_ticket.ticket.seat.type }}</p>
                         </div>
                         <div class="col-md-2 d-flex align-items-center">
-                            <p class="card-text">Price: {{ ticket.price }}$</p>
+                            <p class="card-text">Price: {{ order_ticket.ticket.price }}$</p>
                         </div>
                     </div>
                 </div>

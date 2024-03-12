@@ -6,7 +6,7 @@ from booking.models import Ticket, TicketCart
 
 
 def get_ticket(ticket_pk: int) -> Ticket:
-    return Ticket.objects.select_related("passenger", "seat").get(pk=ticket_pk)
+    return Ticket.objects.select_related("passenger").get(pk=ticket_pk)
 
 
 def get_cart(cart_pk: int) -> TicketCart:
@@ -14,7 +14,7 @@ def get_cart(cart_pk: int) -> TicketCart:
 
 
 def get_cart_tickets(cart: TicketCart) -> QuerySet[Ticket]:
-    return Ticket.objects.filter(cart=cart).select_related("passenger", "seat")
+    return Ticket.objects.filter(cart=cart).select_related("passenger")
 
 
 def get_cart_total_price(cart: TicketCart) -> Decimal:

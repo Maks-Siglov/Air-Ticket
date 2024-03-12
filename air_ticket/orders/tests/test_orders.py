@@ -6,7 +6,7 @@ from django.urls import reverse
 
 from booking.models import TicketCart
 
-from orders.models import Order
+from orders.models import Order, OrderTicket
 from users.models import User
 
 
@@ -53,29 +53,22 @@ def test_create_order(client: Client, test_cart: TicketCart):
     assert order is not None
 
 
-def test_checkout_return(client: Client, test_order: Order):
-    order = test_order
+def test_checkout_return(client: Client, test_order_ticket: OrderTicket):
+    order = test_order_ticket.order
     response = client.get(
         reverse("orders:checkout_return", kwargs={"order_pk": order.pk})
     )
     assert response.status_code == 302
-
-    contact = order.cart.contact
-
-    created_user = User.objects.get(email=contact.email)
-    assert created_user is not None
-
-    assert created_user.phone_number == contact.phone_number
 
     assert len(mail.outbox) == 1
     assert mail.outbox[0].subject == "AirTicket"
 
 
 def test_auth_checkout_return(
-    client: Client, test_order: Order, test_user: User
+    client: Client, test_order_ticket: OrderTicket, test_user: User
 ):
     client.login(email="test@gmail.com", password="test_password")
-    order = test_order
+    order = test_order_ticket.order
     response = client.get(
         reverse("orders:checkout_return", kwargs={"order_pk": order.pk})
     )

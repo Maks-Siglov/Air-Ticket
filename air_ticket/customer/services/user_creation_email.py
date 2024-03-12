@@ -5,11 +5,17 @@ from django.template.loader import render_to_string
 from booking.selectors import get_cart_tickets
 from flight.selectors import get_flight
 from orders.models import Order
+from orders.selectors import get_order_tickets
 from users.models import User
 
 
 def send_creation_user_email(order: Order):
-    contact = order.cart.contact
+    order_tickets = get_order_tickets(order)
+    flight = get_flight(order.flight_id)
+
+    order_ticket = order_tickets.first()
+    contact = order_ticket.ticket.cart.contact
+
     password = User.objects.make_random_password()
     user = User.objects.create_user(
         email=contact.email,
@@ -20,17 +26,13 @@ def send_creation_user_email(order: Order):
     order.user = user
     order.save()
 
-    cart = order.cart
-    tickets = get_cart_tickets(cart)
-    flight = get_flight(cart.flight_id)
-
     html_content = render_to_string(
         template_name="customer/email/creation_email_with_tickets.html",
         context={
             "domain": settings.DOMAIN,
             "email": contact.email,
             "password": password,
-            "tickets": tickets,
+            "order_tickets": order_tickets,
             "flight": flight,
         },
     )
