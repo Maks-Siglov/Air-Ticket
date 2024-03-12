@@ -4,13 +4,13 @@ from django.template.loader import render_to_string
 
 from flight.selectors import get_flight
 from orders.models import Order
-from orders.selectors import get_order_tickets
+from orders.selectors import get_passenger_order_tickets
 from users.models import User
 
 
 def send_tickets_email(user: User, order: Order):
 
-    order_tickets = get_order_tickets(order)
+    order_tickets = get_passenger_order_tickets(order)
     flight = get_flight(order.flight_id)
 
     order.user = user

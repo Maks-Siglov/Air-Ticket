@@ -27,10 +27,10 @@
                             <p class="card-text">Status: {{ order.status }}</p>
                         </div>
                         <div class="col-md-2 d-flex align-items-center">
-                            <p class="card-text">Passenger Amount: {{ order.passenger_amount }}</p>
+                            <a href="{% url 'orders:detail' order.id %}" class="btn btn-primary">Details</a>
                         </div>
                         <div class="col-md-2 d-flex align-items-center">
-                            <a href="{% url 'orders:detail' order.id %}" class="btn btn-primary">Details</a>
+                            <a href="{% url 'check_in:check_in' order.id %}" class="btn btn-info">Check In</a>
                         </div>
                     </div>
                 </div>

@@ -4,9 +4,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 
-from booking.selectors import get_cart_tickets
 from flight.selectors import get_flight
-from orders.selectors import get_order
+from orders.selectors import get_order, get_order_tickets
 
 
 @login_required(login_url="users:login")
@@ -17,9 +16,9 @@ def check_in(request: HttpRequest, order_pk: int) -> HttpResponse:
         messages.warning(request, "Order for check-in not exit")
         return redirect("customer:profile")
 
-    flight_pk = order.cart.flight_id
+    flight_pk = order.flight_id
     flight = get_flight(flight_pk)
-    tickets = get_cart_tickets(order.cart)
+    tickets = get_order_tickets(order)
 
     return render(
         request,

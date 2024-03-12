@@ -20,7 +20,7 @@ from flight.selectors import get_flight
 
 from orders.models import Order
 from orders.models.order_ticket import OrderTicket
-from orders.selectors import get_order, get_order_tickets
+from orders.selectors import get_order, get_passenger_order_tickets
 
 
 def checkout(
@@ -55,7 +55,7 @@ def checkout(
 def create_checkout_session(request: HttpRequest, order_pk) -> JsonResponse:
     if request.method == "POST":
         order = get_order(order_pk)
-        tickets = get_order_tickets(order)
+        tickets = get_passenger_order_tickets(order)
         line_items = []
         for order_ticket in tickets:
             ticket = order_ticket.ticket
@@ -112,7 +112,7 @@ def checkout_return(
 
 def order_details(request: HttpRequest, order_pk: int) -> HttpResponse:
     order = get_order(order_pk)
-    order_tickets = get_order_tickets(order)
+    order_tickets = get_passenger_order_tickets(order)
     flight = get_flight(order.flight_id)
     return render(
         request,
