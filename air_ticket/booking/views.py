@@ -24,7 +24,7 @@ from customer.forms.contact import ContactForm
 from customer.models import Contact
 
 from flight.models import Flight
-from flight.selectors import get_flight_with_seats, get_seat
+from flight.selectors import get_flight_with_seats
 
 
 def create_cart(request: HttpRequest, flight_pk: int) -> HttpResponseRedirect:
@@ -124,6 +124,7 @@ def update_ticket(request, ticket_pk: int) -> JsonResponse:
     if passenger_form.is_valid() and ticket_form.is_valid():
         with transaction.atomic():
             seat_type = ticket_form.cleaned_data["seat_type"]
+
             ticket = ticket_form.save(commit=False)
             ticket.save()
             passenger_form.save()

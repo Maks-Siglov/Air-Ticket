@@ -73,9 +73,6 @@ def test_cart(db, test_flight: Flight, test_contact: Contact) -> TicketCart:
         last_name="test_last_name",
         passport_id="331542159",
     )
-
-    seat = Seat.objects.filter(airplane=cart.flight.airplane).first()
-
     ticket = Ticket.objects.create(
         cart=cart,
         passenger=passenger,

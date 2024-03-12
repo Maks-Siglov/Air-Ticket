@@ -25,12 +25,10 @@ def test_order(db, test_flight: Flight) -> Order:
 
 @pytest.fixture
 def test_order_ticket(
-        db, test_order: Order, test_cart: TicketCart
+    db, test_order: Order, test_cart: TicketCart
 ) -> OrderTicket:
     ticket = Ticket.objects.first()
-    order_ticket = OrderTicket.objects.create(
-        order=test_order, ticket=ticket
-    )
+    order_ticket = OrderTicket.objects.create(order=test_order, ticket=ticket)
 
     yield order_ticket
 

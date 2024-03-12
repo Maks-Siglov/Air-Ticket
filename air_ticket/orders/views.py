@@ -9,7 +9,7 @@ from django.http import (
 )
 from django.shortcuts import redirect, render
 
-from booking.models import Ticket, TicketCart
+from booking.models import TicketCart
 from booking.selectors import get_cart_tickets, get_cart_total_price
 from booking.stripe import stripe
 
