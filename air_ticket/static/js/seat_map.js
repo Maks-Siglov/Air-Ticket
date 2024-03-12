@@ -39,19 +39,20 @@ fetch('/api/v1/check-in/' + flightPk)
     .catch(error => console.error(error));
 
 function handleSeatSelection(event) {
-    if (selectedSeats.length >= 4) {
-        console.warn("Maximum seat selection reached (4)");
-        return;
-    }
-
     const seat = event.currentTarget;
     const seatId = seat.dataset.id;
 
     if (selectedSeats.includes(seatId)) {
         removeSelectedSeat(seat, seatId);
-    } else {
-        addSelectedSeat(seat, seatId);
+        return;
     }
+    if (selectedSeats.length >= ticketsAmount) {
+        console.warn(`Maximum seat selection reached (${ticketsAmount})`);
+        return;
+    }
+
+    addSelectedSeat(seat, seatId);
+
 }
 
 function removeSelectedSeat(seat, seatId) {
@@ -66,6 +67,11 @@ function removeSelectedSeat(seat, seatId) {
     seat.disabled = false;
 
     updateSelectedSeatsCount();
+    if (selectedSeats.length === 0){
+        hideSelectedSeats();
+    } else {
+        showSelectedSeats();
+    }
 }
 
 function addSelectedSeat(seat, seatId) {
@@ -81,8 +87,7 @@ function addSelectedSeat(seat, seatId) {
 }
 
 function selectSeat(seat, seatId) {
-    document.getElementById('selected-seat-id').textContent = selectedSeats;
-    seatSelectionCard.classList.remove('d-none');
+    showSelectedSeats();
 
     selectSeatButton.addEventListener('click', function () {
         fetch('/api/v1/check-in/select-seat/', {
@@ -104,6 +109,16 @@ function selectSeat(seat, seatId) {
 
         selectSeatButton.removeEventListener('click', this);
     });
+}
+
+function showSelectedSeats(){
+    document.getElementById('selected-seat-id').textContent = selectedSeats;
+    seatSelectionCard.classList.remove('d-none');
+}
+
+function hideSelectedSeats(){
+    document.getElementById('selected-seat-id').textContent = selectedSeats;
+    seatSelectionCard.classList.add('d-none');
 }
 
 function updateSelectedSeatsCount() {
