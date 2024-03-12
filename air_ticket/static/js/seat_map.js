@@ -7,7 +7,7 @@ const seatImageUrl = '/static/images/seat.png';
 let selectedSeats = []
 
 seatMapContainer.textContent = 'Loading seat map data...';
-
+console.log(ticketIDs)
 fetch('/api/v1/check-in/' + flightPk)
     .then(response => response.json())
     .then(seatsData => {
@@ -90,9 +90,10 @@ function selectSeat(seat, seatId) {
     showSelectedSeats();
 
     selectSeatButton.addEventListener('click', function () {
-        fetch('/api/v1/check-in/select-seat/', {
+        const ticketId = getFirstTicketId();
+        fetch('/api/v1/check-in/select-seat/' + seatId, {
             method: 'POST',
-            body: JSON.stringify({ seatId: seatId }),
+            body: JSON.stringify({ticketId: ticketId}),
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': getCookie('csrftoken')
@@ -122,7 +123,14 @@ function hideSelectedSeats(){
 }
 
 function updateSelectedSeatsCount() {
-    document.getElementById('selected-seat-count').textContent = `Selected seats: ${selectedSeats.length}`;
+    document.getElementById('selected-seat-count').textContent = selectedSeats.length;
+}
+
+function getFirstTicketId() {
+  if (!ticketIDs.length) {
+    throw new Error('No ticket IDs available for selection.');
+  }
+  return ticketIDs.shift();
 }
 
 

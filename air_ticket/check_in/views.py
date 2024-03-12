@@ -5,7 +5,7 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 
 from flight.selectors import get_flight
-from orders.selectors import get_order, get_order_tickets
+from orders.selectors import get_order, get_order_tickets_without_seat
 
 
 @login_required(login_url="users:login")
@@ -18,8 +18,8 @@ def check_in(request: HttpRequest, order_pk: int) -> HttpResponse:
 
     flight_pk = order.flight_id
     flight = get_flight(flight_pk)
-    tickets = get_order_tickets(order)
-
+    tickets = get_order_tickets_without_seat(order)
+    ticket_ids = [ticket.id for ticket in tickets]
     return render(
         request,
         "check_in/check_in.html",
@@ -27,5 +27,6 @@ def check_in(request: HttpRequest, order_pk: int) -> HttpResponse:
             "flight": flight,
             "flight_pk": flight_pk,
             "tickets_amount": tickets.count(),
+            "ticket_ids": ticket_ids,
         },
     )

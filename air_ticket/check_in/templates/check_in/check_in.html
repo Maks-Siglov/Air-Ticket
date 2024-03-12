@@ -16,8 +16,7 @@
             <div class="card-header text-center">
                 <h3>{{ flight.airplane }}</h3>
                 <div class="text-center">
-                    <div>Tickets Amount: <span>{{ tickets_amount }}</span></div>
-                    <div id="selected-seat-count"></div>
+                    <div>Tickets Amount: <span>{{ tickets_amount }}</span> | Selected Seats: <span id="selected-seat-count">0</span></div>
                 </div>
             </div>
             <div class="card-body">
@@ -37,7 +36,8 @@
 
     </div>
 
-    <script>let ticketsAmount = {{ tickets_amount }};</script>
-    <script>let flightPk = {{ flight_pk }};</script>
+    <script>const ticketsAmount = {{ tickets_amount }};</script>
+    <script>const flightPk = {{ flight_pk }};</script>
+    <script>const ticketIDs = {{ ticket_ids }};</script>
     <script src="{% static 'js/seat_map.js' %}"></script>
 {% endblock %}
