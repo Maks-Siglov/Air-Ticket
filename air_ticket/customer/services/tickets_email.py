@@ -13,6 +13,9 @@ def send_tickets_email(user: User, order: Order):
     order_tickets = get_order_tickets(order)
     flight = get_flight(order.flight_id)
 
+    order.user = user
+    order.save()
+
     html_content = render_to_string(
         template_name="customer/email/tickets_email.html",
         context={

@@ -11,8 +11,14 @@ def get_order(order_pk: int) -> Order:
 
 
 def get_user_orders(user: User) -> QuerySet[Order]:
-    return Order.objects.filter(user=user).order_by("created_at")
+    return (
+        Order.objects.filter(user=user)
+        .select_related("flight__departure_airport", "flight__arrival_airport")
+        .order_by("created_at")
+    )
 
 
 def get_order_tickets(order: Order) -> QuerySet[OrderTicket]:
-    return OrderTicket.objects.filter(order=order).select_related("ticket")
+    return OrderTicket.objects.filter(order=order).select_related(
+        "ticket", "ticket__passenger"
+    )
