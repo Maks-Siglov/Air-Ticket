@@ -4,6 +4,8 @@ const selectSeatButton = document.getElementById('select-seat-button');
 
 const seatImageUrl = '/static/images/seat.png';
 
+let selectedSeats = []
+
 seatMapContainer.textContent = 'Loading seat map data...';
 
 fetch('/api/v1/check-in/' + flightPk)
@@ -36,19 +38,53 @@ fetch('/api/v1/check-in/' + flightPk)
     })
     .catch(error => console.error(error));
 
-function handleSeatSelection(event){
+function handleSeatSelection(event) {
+    if (selectedSeats.length >= 4) {
+        console.warn("Maximum seat selection reached (4)");
+        return;
+    }
+
     const seat = event.currentTarget;
     const seatId = seat.dataset.id;
 
-    const seatElement = document.querySelector(`.seat-${seatId}`)
-    const seatImg = seatElement.querySelector('img')
-    seatImg.style.backgroundColor = 'green'
+    if (selectedSeats.includes(seatId)) {
+        removeSelectedSeat(seat, seatId);
+    } else {
+        addSelectedSeat(seat, seatId);
+    }
+}
 
-    document.getElementById('selected-seat-id').textContent = seatId;
-    seatSelectionCard.classList.toggle('d-none');
+function removeSelectedSeat(seat, seatId) {
+    const seatIndex = selectedSeats.indexOf(seatId);
+    selectedSeats.splice(seatIndex, 1);
 
+    const seatElement = document.querySelector(`.seat-${seatId}`);
+    const seatImg = seatElement.querySelector('img');
+    seatImg.style.backgroundColor = '';
 
-    selectSeatButton.addEventListener('click', function handleSelectionApproving() {
+    seat.classList.remove('selected');
+    seat.disabled = false;
+
+    updateSelectedSeatsCount();
+}
+
+function addSelectedSeat(seat, seatId) {
+    selectedSeats.push(seatId);
+
+    const seatElement = document.querySelector(`.seat-${seatId}`);
+    const seatImg = seatElement.querySelector('img');
+    seatImg.style.backgroundColor = 'green';
+
+    updateSelectedSeatsCount();
+
+    selectSeat(seat, seatId);
+}
+
+function selectSeat(seat, seatId) {
+    document.getElementById('selected-seat-id').textContent = selectedSeats;
+    seatSelectionCard.classList.remove('d-none');
+
+    selectSeatButton.addEventListener('click', function () {
         fetch('/api/v1/check-in/select-seat/', {
             method: 'POST',
             body: JSON.stringify({ seatId: seatId }),
@@ -59,9 +95,7 @@ function handleSeatSelection(event){
         })
         .then(response => {
             if (response.ok) {
-                console.log('Seat selection successful!');
                 seat.classList.add('unavailable');
-
             } else {
                 console.error('Error selecting seat:', response.statusText);
             }
@@ -70,6 +104,10 @@ function handleSeatSelection(event){
 
         selectSeatButton.removeEventListener('click', this);
     });
+}
+
+function updateSelectedSeatsCount() {
+    document.getElementById('selected-seat-count').textContent = `Selected seats: ${selectedSeats.length}`;
 }
 
 
