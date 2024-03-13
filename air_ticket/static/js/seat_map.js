@@ -190,16 +190,31 @@ function removeDeclineSelectedSeat(seat, seatID){
 function declineSeat(seat, seatID){
     showDeclineSelectedSeats()
 
-    declineSeatButton.addEventListener('click', function (){
+    declineSeatButton.addEventListener('click', function () {
+        fetch('/api/v1/check-in/decline-seat/' + seatID, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                window.location.reload();
+            } else {
+                console.error('Error selecting seat:', response.statusText);
+            }
+        })
+        .catch(error => console.error('Error:', error));
 
-    })
+        declineSeatButton.removeEventListener('click', this);
+    });
 }
 
 function showDeclineSelectedSeats(){
     document.getElementById('decline-seat-id').textContent = declinedSeats;
     seatDeclineSelectionCard.classList.remove('d-none');
 }
-
 
 
 function createSeatElement(seat) {

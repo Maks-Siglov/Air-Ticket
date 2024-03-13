@@ -11,4 +11,9 @@ urlpatterns = [
         views.SelectSeatView.as_view(),
         name="select_seat",
     ),
+    path(
+        "decline-seat/<int:seat_pk>",
+        views.DeclineSeatView.as_view(),
+        name="decline_seat",
+    ),
 ]

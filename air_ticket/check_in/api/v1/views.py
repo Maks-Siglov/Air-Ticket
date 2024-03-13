@@ -38,3 +38,25 @@ class SelectSeatView(APIView):
         order_ticket.seat = seat
         order_ticket.save()
         return Response(status=200)
+
+
+class DeclineSeatView(APIView):
+    def post(self, request: HttpRequest, seat_pk: int) -> Response:
+        try:
+            seat = Seat.objects.get(pk=seat_pk)
+        except ObjectDoesNotExist:
+            return Response(
+                {"error": f"Seat with id {seat_pk} not found"}, status=404
+            )
+        try:
+            order_ticket = OrderTicket.objects.get(seat=seat)
+        except ObjectDoesNotExist:
+            return Response(
+                {"error": f"Seat {seat_pk} don't assigned to order's ticket"},
+                status=404
+            )
+        order_ticket.seat = None
+        order_ticket.save()
+        seat.is_available = True
+        seat.save()
+        return Response(status=200)
