@@ -6,6 +6,11 @@
     background-color: royalblue;
 }
 
-.unavailable-seat {
+.unavailable {
     background-color: gray;
+}
+
+.selected {
+    background-color: darkgreen;
+    cursor: pointer;
 }

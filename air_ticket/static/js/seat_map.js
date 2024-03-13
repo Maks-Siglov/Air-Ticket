@@ -1,13 +1,13 @@
 const seatMapContainer = document.getElementById('seat-map-container');
 const seatSelectionCard = document.getElementById('seat-selection-card');
 const selectSeatButton = document.getElementById('select-seat-button');
-
+console.log(selectedSeatsIDs)
 const seatImageUrl = '/static/images/seat.png';
 
 let selectedSeats = []
 
 seatMapContainer.textContent = 'Loading seat map data...';
-console.log(ticketIDs)
+
 fetch('/api/v1/check-in/' + flightPk)
     .then(response => response.json())
     .then(seatsData => {
@@ -33,8 +33,9 @@ fetch('/api/v1/check-in/' + flightPk)
                 }
             }
 
-    seatMapContainer.appendChild(rowElement);
-}
+            seatMapContainer.appendChild(rowElement);
+        }
+        displaySelectedUserSeat();
     })
     .catch(error => console.error(error));
 
@@ -101,7 +102,7 @@ function selectSeat(seat, seatId) {
         })
         .then(response => {
             if (response.ok) {
-                seat.classList.add('unavailable');
+                window.location.reload();
             } else {
                 console.error('Error selecting seat:', response.statusText);
             }
@@ -134,6 +135,21 @@ function getFirstTicketId() {
 }
 
 
+function displaySelectedUserSeat() {
+    if (selectedSeatsIDs.length) {
+        console.log('staret')
+        selectedSeatsIDs.forEach(seatId => {
+            const seatElement = document.querySelector(`.seat-${seatId}`);
+            console.log(seatElement)
+            if (seatElement) {
+                seatElement.classList.remove('unavailable')
+                seatElement.classList.add('selected')
+            }
+        });
+    }
+}
+
+
 function createSeatElement(seat) {
     const seatElement = document.createElement('div');
     const seatId = seat.id
@@ -145,7 +161,7 @@ function createSeatElement(seat) {
     imgElement.alt = 'Seat';
 
      if (!seat.is_available) {
-        seatElement.classList.add('unavailable-seat', 'm-1');
+        seatElement.classList.add('unavailable', `seat-${seatId}`, 'm-1');
     } else {
         seatElement.classList.add(`seat-${seatId}`, 'm-1');
         imgElement.classList.add('seat-image');

@@ -9,6 +9,6 @@ urlpatterns = [
     path(
         "select-seat/<int:seat_pk>",
         views.SelectSeatView.as_view(),
-        name="select_seat"
+        name="select_seat",
     ),
 ]

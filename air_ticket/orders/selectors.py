@@ -18,11 +18,19 @@ def get_user_orders(user: User) -> QuerySet[Order]:
     )
 
 
+def get_passenger_order_tickets(order: Order) -> QuerySet[OrderTicket]:
+    return OrderTicket.objects.filter(order=order).select_related(
+        "ticket", "ticket__passenger"
+    )
+
+
 def get_order_tickets_without_seat(order: Order) -> QuerySet[OrderTicket]:
     return OrderTicket.objects.filter(order=order, seat__isnull=True)
 
 
-def get_passenger_order_tickets(order: Order) -> QuerySet[OrderTicket]:
-    return OrderTicket.objects.filter(order=order).select_related(
-        "ticket", "ticket__passenger"
+def get_selected_seat_ids(order: Order) -> QuerySet[OrderTicket]:
+    return (
+        OrderTicket.objects
+        .filter(order=order, seat__isnull=False)
+        .values_list("seat_id", flat=True)
     )
