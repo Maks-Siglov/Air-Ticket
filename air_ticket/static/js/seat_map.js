@@ -1,9 +1,12 @@
 const seatMapContainer = document.getElementById('seat-map-container');
 const seatSelectionCard = document.getElementById('seat-selection-card');
 const selectSeatButton = document.getElementById('select-seat-button');
-console.log(selectedSeatsIDs)
+const seatDeclineSelectionCard = document.getElementById('seat-decline-card')
+const declineSeatButton = document.getElementById('decline-seat-button')
+
 const seatImageUrl = '/static/images/seat.png';
 
+let declinedSeats = []
 let selectedSeats = []
 
 seatMapContainer.textContent = 'Loading seat map data...';
@@ -69,7 +72,7 @@ function removeSelectedSeat(seat, seatId) {
 
     updateSelectedSeatsCount();
     if (selectedSeats.length === 0){
-        hideSelectedSeats();
+         seatSelectionCard.classList.add('d-none');
     } else {
         showSelectedSeats();
     }
@@ -113,20 +116,6 @@ function selectSeat(seat, seatId) {
     });
 }
 
-function showSelectedSeats(){
-    document.getElementById('selected-seat-id').textContent = selectedSeats;
-    seatSelectionCard.classList.remove('d-none');
-}
-
-function hideSelectedSeats(){
-    document.getElementById('selected-seat-id').textContent = selectedSeats;
-    seatSelectionCard.classList.add('d-none');
-}
-
-function updateSelectedSeatsCount() {
-    document.getElementById('selected-seat-count').textContent = selectedSeats.length;
-}
-
 function getFirstTicketId() {
   if (!ticketIDs.length) {
     throw new Error('No ticket IDs available for selection.');
@@ -134,20 +123,83 @@ function getFirstTicketId() {
   return ticketIDs.shift();
 }
 
+function showSelectedSeats(){
+    document.getElementById('selected-seat-id').textContent = selectedSeats;
+    seatSelectionCard.classList.remove('d-none');
+}
+
+function updateSelectedSeatsCount() {
+    document.getElementById('selected-seat-count').textContent = selectedSeats.length;
+}
+
 
 function displaySelectedUserSeat() {
-    if (selectedSeatsIDs.length) {
-        console.log('staret')
-        selectedSeatsIDs.forEach(seatId => {
+    if (approvedSelectedSeatsIDs.length) {
+        approvedSelectedSeatsIDs.forEach(seatId => {
             const seatElement = document.querySelector(`.seat-${seatId}`);
-            console.log(seatElement)
             if (seatElement) {
                 seatElement.classList.remove('unavailable')
                 seatElement.classList.add('selected')
+                seatElement.removeEventListener('click', handleSeatSelection)
+                seatElement.addEventListener('click', handleDeclineSeatSelection)
             }
         });
     }
 }
+
+
+function handleDeclineSeatSelection(event) {
+    const seat = event.currentTarget;
+    const seatId = seat.dataset.id;
+
+    if (declinedSeats.includes(seatId)) {
+        removeDeclineSelectedSeat(seat, seatId);
+        return;
+    }
+
+    declineSelectedSeat(seat, seatId);
+
+    showDeclineSelectedSeats();
+}
+
+
+function declineSelectedSeat(seat, seatID){
+    declinedSeats.push(seatID)
+
+    seat.classList.remove('selected');
+    seat.classList.add('declined')
+
+    declineSeat(seat, seatID)
+}
+
+function removeDeclineSelectedSeat(seat, seatID){
+    const seatIndex = declinedSeats.indexOf(seatID);
+    declinedSeats.splice(seatIndex, 1);
+
+    seat.classList.remove('declined');
+    seat.classList.add('selected')
+
+    if (declinedSeats.length === 0){
+        seatDeclineSelectionCard.classList.add('d-none');
+    } else {
+        showDeclineSelectedSeats();
+    }
+}
+
+
+function declineSeat(seat, seatID){
+    showDeclineSelectedSeats()
+
+    declineSeatButton.addEventListener('click', function (){
+
+    })
+}
+
+function showDeclineSelectedSeats(){
+    document.getElementById('decline-seat-id').textContent = declinedSeats;
+    seatDeclineSelectionCard.classList.remove('d-none');
+}
+
 
 
 function createSeatElement(seat) {

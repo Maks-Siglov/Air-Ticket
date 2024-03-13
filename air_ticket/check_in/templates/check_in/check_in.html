@@ -34,11 +34,20 @@
             </div>
         </div>
 
+        <div id="seat-decline-card" class="card d-none mt-3">
+            <div class="card-header">
+                Declined Seat: <span id="decline-seat-id"></span>
+            </div>
+            <div class="card-body">
+                <button id="decline-seat-button" class="btn btn-danger">Cancel Seat</button>
+            </div>
+        </div>
+
     </div>
 
     <script>
         const ticketsAmount = {{ tickets_amount }};
-        const selectedSeatsIDs = {{ selected_seat_ids }};
+        const approvedSelectedSeatsIDs = {{ selected_seat_ids }};
         const flightPk = {{ flight_pk }};
         const ticketIDs = {{ ticket_ids }};
     </script>

@@ -14,3 +14,8 @@
     background-color: darkgreen;
     cursor: pointer;
 }
+
+.declined {
+    background-color: red;
+    cursor: pointer;
+}
