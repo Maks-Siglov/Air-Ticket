@@ -1,0 +1,45 @@
+services:
+  air-ticket:
+    build: .
+    user: ${CURRENT_UID}
+    container_name: air_ticket
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./air_ticket:/air_ticket
+    env_file:
+      - .env.docker
+    command: [
+      "sh", "-c", "python manage.py migrate &&
+      python manage.py loaddata fixtures/*.json &&
+      python manage.py runserver 0.0.0.0:8000"
+    ]
+    depends_on:
+      - database
+    networks:
+      - mynetwork
+
+  database:
+    image: postgres:16.2
+    container_name: postgres_air_ticket
+    env_file:
+      - .env.docker
+    environment:
+      - DB_HOST=postgres_air_ticket
+      - POSTGRES_DB=air_ticket
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+    volumes:
+      - postgres-db-volume:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    external: True
+    name: mynetwork
+
+volumes:
+  postgres-db-volume:

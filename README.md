@@ -12,7 +12,7 @@ cd task_19_air_crm/
 1. Install dependencies:
 
     ```bash
-    pip install -r requirements/prod.txt -r requirements/dev.txt
+    pip install -r requirements/prod.txt -r requirements/tools.txt -r requirements/dev.txt
     ```
 
 2. Create postgres db and place data to the .env file:
