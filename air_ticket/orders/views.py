@@ -48,7 +48,9 @@ def checkout(
         OrderTicket.objects.create(order=order, ticket=ticket)
 
     return render(
-        request, "orders/stripe/checkout.html", {"order_pk": order.pk}
+        request,
+        "orders/stripe/checkout.html",
+        {"order_pk": order.pk, "stripe_public_key": settings.STRIPE_PUBLIC_KEY}
     )
 
 

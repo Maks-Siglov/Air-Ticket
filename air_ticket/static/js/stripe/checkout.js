@@ -1,5 +1,5 @@
 // This is your test publishable API key.
-const stripe = Stripe("pk_test_51OfnD9A3hlBNn6LWxGxANdslhCJvuhrJ4I7oKwCaQatrZbq5rQHbwhtRJPGYVFpOdQGv2c2bSQ5F2qJ6lvMfkp6600RWXc71Fa");
+const stripe = Stripe(publicStripeKey);
 
 initialize();
 // Create a Checkout Session as soon as the page loads
