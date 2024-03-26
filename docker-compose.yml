@@ -4,7 +4,7 @@ services:
     user: ${CURRENT_UID}
     container_name: air_ticket
     ports:
-      - "8080:8000"
+      - "8000:8000"
     volumes:
       - ./air_ticket:/app
     env_file:
@@ -23,8 +23,6 @@ services:
   database:
     image: postgres:16.2
     container_name: postgres_air_ticket
-    env_file:
-      - .env.docker_db
     environment:
       - DB_HOST=postgres_air_ticket
       - POSTGRES_DB=air_ticket
@@ -33,7 +31,7 @@ services:
     volumes:
       - postgres-db-volume:/var/lib/postgresql/data
     ports:
-      - "5433:5432"
+      - "127.0.0.1:5433:5432"
     networks:
       - mynetwork
 
@@ -45,7 +43,7 @@ services:
       - ./nginx/site.conf:/etc/nginx/conf.d/site.conf
       - ./nginx/logs:/var/log/nginx
     ports:
-      - "80:80"
+      - "80:1370"
     depends_on:
       - air-ticket
     networks:
