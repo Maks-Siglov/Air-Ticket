@@ -9,12 +9,7 @@
   </a>
     <a class="navbar-brand m-2" href="{% url 'main:index' %}">AirTicket</a>
     <div class="collapse navbar-collapse" id="navbarColor01">
-        <ul class="navbar-nav me-auto">
-        <li class="nav-item">
-          <a class="nav-link active" href="{% url 'main:index' %}">Home
-          </a>
-        </li>
-      </ul>
+        <ul class="navbar-nav me-auto"></ul>
         <div class="d-flex mx-5">
             <ul class="navbar-nav me-auto">
                 {% if user.is_authenticated %}
