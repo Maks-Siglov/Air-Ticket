@@ -26,3 +26,11 @@ def test_customer_flights(client: Client, test_user: User):
     response = client.get(reverse("customer:flights"))
 
     assert response.status_code == 200
+
+
+def test_customer_check_in(client: Client, test_user: User):
+    client.login(email="test@gmail.com", password="test_password")
+
+    response = client.get(reverse("customer:check-in"))
+
+    assert response.status_code == 200
