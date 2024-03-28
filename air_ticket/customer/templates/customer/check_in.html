@@ -15,26 +15,25 @@
             <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
                 {% if orders %}
                     {% for order in orders %}
-                    <div class="card mt-2">
-                        <div class="card-body row">
-                            <div class="col-md-6">
-                                <p>From {{ order.flight.departure_airport.name }} to {{ order.flight.arrival_airport.name }}</p>
+                        <div class="card mt-2">
+                            <div class="card-body row">
+                                <div class="col-md-6">
+                                    <p>From {{ order.flight.departure_airport.name }} to {{ order.flight.arrival_airport.name }}</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <p class="card-title">Departure Date: {{ order.flight.departure_scheduled }}</p>
+                                </div>
+                                <div class="col-md-2 d-flex align-items-center">
+                                    <a href="{% url 'check_in:check_in' order.id %}" class="btn btn-info">Check In</a>
+                                </div>
                             </div>
-                            <div class="col-md-4">
-                                <p class="card-title">Departure Date: {{ order.flight.departure_scheduled }}</p>
-                            </div>
-                            <div class="col-md-2 d-flex align-items-center">
-                                <a href="{% url 'check_in:check_in' order.id %}" class="btn btn-info">Check In</a>
-                            </div>
-                    </div>
+                        </div>
                     {% endfor %}
-
                 {% else %}
                     <div class="text-center">
                         <h2>There Is Nothing to check in</h2>
                     </div>
                 {% endif %}
-                </div>
             </div>
         </div>
     </div>
