@@ -34,3 +34,9 @@ def customer_flights(request: HttpRequest) -> HttpResponse:
     paginator = Paginator(flights, settings.ITEMS_PER_PAGE)
     current_page = paginator.page(int(page))
     return render(request, "customer/flights.html", {"flights": current_page})
+
+
+@login_required(login_url="users:login")
+def customer_check_ins(request: HttpRequest) -> HttpResponse:
+    orders = get_user_orders(request.user)
+    return render(request, "customer/check_in.html", {"orders": orders})

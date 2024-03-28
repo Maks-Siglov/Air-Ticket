@@ -2,6 +2,7 @@
     <ul class="list-group list-group-flush no-decoration-link">
         <li class="list-group-item text-center {% if request.path == '/customer/profile/' %}active{% endif %}"><a href="{% url 'customer:profile' %}">Profile</a></li>
         <li class="list-group-item text-center {% if request.path == '/customer/flights/' %}active{% endif %}"><a href="{% url 'customer:flights' %}" >My Flights</a></li>
+        <li class="list-group-item text-center {% if request.path == '/customer/check-in/' %}active{% endif %}"><a href="{% url 'customer:check-in' %}" >My Check in</a></li>
         <li class="list-group-item text-center {% if request.path == '/customer/orders/' %}active{% endif %}"><a href="{% url 'customer:orders' %}" >My Orders</a></li>
         <li class="list-group-item text-center {% if request.path == '/users/change-contact/' %}active{% endif %}"><a href="{% url 'users:change_contact' %}">Edit Profile</a></li>
         <li class="list-group-item text-center {% if request.path == '/users/change-password/' %}active{% endif %}"><a href="{% url 'users:change_password' %}">Change Password</a></li>
