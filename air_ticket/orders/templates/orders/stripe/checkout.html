@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="style.css" />
     <script>const ticket_pk = {{ order_pk }};</script>
     <script src="https://js.stripe.com/v3/"></script>
-      <script>const publicStripeKey = {{ stripe_public_key }};</script>
+      <script>const publicStripeKey = '{{ stripe_public_key }}';</script>
     <script src="{% static 'js/stripe/checkout.js' %}"></script>
   </head>
   <body>

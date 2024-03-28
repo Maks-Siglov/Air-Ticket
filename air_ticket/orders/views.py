@@ -81,7 +81,7 @@ def create_checkout_session(request: HttpRequest, order_pk) -> JsonResponse:
             mode="payment",
             return_url=(
                 f"http://{settings.DOMAIN}/orders/{order.pk}"
-                + "/return?session_id={CHECKOUT_SESSION_ID}"
+                + "/return/?session_id={CHECKOUT_SESSION_ID}"
             ),
         )
         return JsonResponse({"clientSecret": checkout_session.client_secret})
