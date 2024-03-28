@@ -51,5 +51,7 @@
         const flightPk = {{ flight_pk }};
         const ticketIDs = {{ ticket_ids }};
     </script>
-    <script src="{% static 'js/seat_map.js' %}"></script>
+    <script type="module" src="{% static 'js/seat_map/select_seat.js' %}"></script>
+    <script type="module" src="{% static 'js/seat_map/cancel_seat.js' %}"></script>
+    <script type="module" src="{% static 'js/seat_map/map.js' %}"></script>
 {% endblock %}
