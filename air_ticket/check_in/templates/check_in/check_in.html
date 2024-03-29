@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{% static 'css/seat.css' %}">
 
     <div class="container mt-4">
-    <h2>From {{ flight.departure_airport }} To {{ flight.arrival_airport }}</h2>
+        <h2>From {{ flight.departure_airport }} To {{ flight.arrival_airport }}</h2>
         <p>Departure Date: {{ flight.departure_scheduled }} T/Z: {{ flight.departure_airport.timezone }}</p>
         <p>Arrival Date: {{ flight.arrival_scheduled }} T/Z: {{ flight.arrival_airport.timezone }}</p>
 
@@ -24,6 +24,8 @@
                 </div>
             </div>
         </div>
+
+        <div class="mt-3 mb-3 text-center" id="pagination-container"></div>
 
         <div id="seat-selection-card" class="card d-none mt-3">
             <div class="card-header">
@@ -42,7 +44,6 @@
                 <button id="decline-seat-button" class="btn btn-danger">Cancel Seat</button>
             </div>
         </div>
-
     </div>
 
     <script>
