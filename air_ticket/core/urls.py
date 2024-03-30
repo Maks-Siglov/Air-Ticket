@@ -13,13 +13,11 @@ urlpatterns = [
     path("users/", include("users.urls", namespace="users")),
     path("customer/", include("customer.urls", namespace="customer")),
     path("flight/", include("flight.urls", namespace="flight")),
+    path("api/v1/flights/", include("flight.api.v1.urls")),
     path("booking/", include("booking.urls", namespace="booking")),
     path("orders/", include("orders.urls", namespace="orders")),
     path("check-in/", include("check_in.urls", namespace="check_in")),
-    path(
-        "api/v1/check-in/",
-        include("check_in.api.v1.urls", namespace="api_check_in"),
-    ),
+    path("api/v1/check-in/", include("check_in.api.v1.urls")),
 ]
 
 if settings.DEBUG:
