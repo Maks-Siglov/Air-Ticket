@@ -11,12 +11,12 @@ from django.shortcuts import redirect, render
 
 from booking.models import TicketCart
 from booking.selectors import get_cart_tickets, get_cart_total_price
-from booking.stripe import stripe
 
 from flight.selectors import get_flight
 
 from orders.services.tickets_email import send_tickets_email
 from orders.services.user_creation_email import send_creation_user_email
+from orders.stripe import stripe
 from orders.models import Order
 from orders.models.order_ticket import OrderTicket
 from orders.selectors import get_order, get_passenger_order_tickets
