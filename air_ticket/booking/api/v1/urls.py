@@ -15,4 +15,14 @@ urlpatterns = [
         views.TicketAPI.as_view(),
         name="update_ticket",
     ),
+    path(
+        "create-contact/<int:cart_pk>/",
+        views.ContactAPI.as_view(),
+        name="create_contact",
+    ),
+    path(
+        "update-contact/<int:contact_pk>/",
+        views.ContactAPI.as_view(),
+        name="update_contact",
+    ),
 ]
