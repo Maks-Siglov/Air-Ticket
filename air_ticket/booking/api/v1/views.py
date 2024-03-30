@@ -31,10 +31,15 @@ class TicketAPI(APIView):
                 ticket_data = ticket_serializer.validated_data
                 ticket_data["passenger"] = passenger
                 ticket_data["cart"] = cart
-                ticket = Ticket.objects.create(**ticket_data)
+                Ticket.objects.create(**ticket_data)
 
                 return Response(
-                    {"message": "Ticket successfully created"}, status=201
+                    {
+                        "message": "Ticket successfully created",
+                        "passenger": passenger_serializer.data,
+                        "ticket": ticket_serializer.data,
+                    },
+                    status=201,
                 )
 
         return Response({"error": "Provided data not valid"}, status=400)
@@ -58,7 +63,12 @@ class TicketAPI(APIView):
                 passenger_serializer.save()
 
             return Response(
-                {"message": "Ticket successfully updated"}, status=200
+                {
+                    "message": "Ticket successfully updated",
+                    "passenger": passenger_serializer.data,
+                    "ticket": ticket_serializer.data,
+                },
+                status=200,
             )
 
         return Response({"Error": "Provided data not valid"}, status=400)
@@ -77,7 +87,13 @@ class ContactAPI(APIView):
             cart.contact = contact
             cart.save()
 
-            return Response({"success": "Contact created"}, status=201)
+            return Response(
+                {
+                    "success": "Contact created",
+                    "contact": contact_serializer.data,
+                },
+                status=201,
+            )
         return Response({"error": "Provided data not valid"}, status=400)
 
     def put(self, request: HttpRequest, contact_pk: int) -> Response:
@@ -92,6 +108,12 @@ class ContactAPI(APIView):
         if contact_serializer.is_valid():
             contact_serializer.save()
 
-            return Response({"success": "Contact updated"}, status=200)
+            return Response(
+                {
+                    "success": "Contact updated",
+                    "contact": contact_serializer.data,
+                },
+                status=200,
+            )
 
         return Response({"Error": contact_serializer.errors}, status=400)
