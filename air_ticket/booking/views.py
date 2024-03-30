@@ -14,10 +14,11 @@ from django.shortcuts import redirect, render
 from booking.forms import TicketForm
 from booking.models import TicketCart
 from booking.selectors import (
-    get_cart,
     get_cart_tickets,
     get_cart_total_price,
     get_ticket,
+    get_cart_with_flight,
+    get_cart,
 )
 from customer.forms import PassengerForm
 from customer.forms.contact import ContactForm
@@ -57,12 +58,12 @@ def create_cart(request: HttpRequest, flight_pk: int) -> HttpResponseRedirect:
 
 def book(request: HttpRequest, cart_pk: int) -> HttpResponse:
     try:
-        cart = get_cart(cart_pk)
+        cart = get_cart_with_flight(cart_pk)
     except ObjectDoesNotExist:
         messages.error(request, "Cart does not exist")
         return redirect("main:index")
 
-    flight = get_flight_with_seats(cart.flight.pk)
+    flight = get_flight_with_seats(cart.flight_id)
     tickets = get_cart_tickets(cart)
     total_price = get_cart_total_price(cart)
 
@@ -91,7 +92,7 @@ def create_ticket(request: HttpRequest, cart_pk: int) -> JsonResponse:
         try:
             cart = get_cart(cart_pk)
         except ObjectDoesNotExist:
-            return JsonResponse({"error": "Flight does not exits"}, status=404)
+            return JsonResponse({"error": "Cart does not exits"}, status=404)
 
         passenger_form = PassengerForm(request.POST)
         ticket_form = TicketForm(request.POST)

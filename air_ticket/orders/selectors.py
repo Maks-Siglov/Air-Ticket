@@ -29,8 +29,6 @@ def get_order_tickets_without_seat(order: Order) -> QuerySet[OrderTicket]:
 
 
 def get_selected_seat_ids(order: Order) -> QuerySet[OrderTicket]:
-    return (
-        OrderTicket.objects
-        .filter(order=order, seat__isnull=False)
-        .values_list("seat_id", flat=True)
-    )
+    return OrderTicket.objects.filter(
+        order=order, seat__isnull=False
+    ).values_list("seat_id", flat=True)

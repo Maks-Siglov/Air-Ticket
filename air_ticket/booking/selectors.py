@@ -10,6 +10,10 @@ def get_ticket(ticket_pk: int) -> Ticket:
 
 
 def get_cart(cart_pk: int) -> TicketCart:
+    return TicketCart.objects.get(pk=cart_pk)
+
+
+def get_cart_with_flight(cart_pk: int) -> TicketCart:
     return TicketCart.objects.select_related("flight").get(pk=cart_pk)
 
 

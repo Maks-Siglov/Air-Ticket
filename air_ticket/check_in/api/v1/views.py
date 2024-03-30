@@ -53,7 +53,7 @@ class DeclineSeatView(APIView):
         except ObjectDoesNotExist:
             return Response(
                 {"error": f"Seat {seat_pk} don't assigned to order's ticket"},
-                status=404
+                status=404,
             )
         order_ticket.seat = None
         order_ticket.save()

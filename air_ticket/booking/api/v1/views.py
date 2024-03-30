@@ -10,7 +10,7 @@ from booking.api.v1.serializers import (
     TicketSerializer,
     ContactSerializer,
 )
-from booking.models import Ticket, TicketCart
+from booking.models import Ticket
 from booking.selectors import get_cart, get_ticket
 from customer.sellectors import get_contact
 
@@ -67,7 +67,7 @@ class TicketAPI(APIView):
 class ContactAPI(APIView):
     def post(self, request: HttpRequest, cart_pk: int) -> Response:
         try:
-            cart = TicketCart.objects.get(pk=cart_pk)
+            cart = get_cart(cart_pk)
         except ObjectDoesNotExist:
             return Response({"error": "Cart does not exist"}, status=400)
 

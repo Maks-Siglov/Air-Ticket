@@ -33,6 +33,6 @@ def check_in(request: HttpRequest, order_pk: int) -> HttpResponse:
             "flight_pk": flight_pk,
             "tickets_amount": tickets.count(),
             "ticket_ids": ticket_ids,
-            "selected_seat_ids": selected_seat_ids
+            "selected_seat_ids": selected_seat_ids,
         },
     )

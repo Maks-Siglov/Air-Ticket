@@ -49,7 +49,10 @@ def checkout(
     return render(
         request,
         "orders/stripe/checkout.html",
-        {"order_pk": order.pk, "stripe_public_key": settings.STRIPE_PUBLIC_KEY}
+        {
+            "order_pk": order.pk,
+            "stripe_public_key": settings.STRIPE_PUBLIC_KEY,
+        },
     )
 
 
