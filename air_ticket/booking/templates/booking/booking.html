@@ -35,8 +35,15 @@
                     <div class="card-header">Contact Data</div>
                     <div class="card-body">
 
-                        <form id="contactForm" method="post"
-                        {% if contact %}action="{% url 'booking:update_contact' contact.pk %}" {% else %}action="{% url 'booking:create_contact' cart_pk%}"{% endif %}>
+                        <form id="contactForm"
+                        {% if contact %}action="{% url 'api-booking:update_contact' contact.pk %}"
+                        {% else %}action="{% url 'api-booking:create_contact' cart_pk%}"
+                        {% endif %}>
+
+                        {% if contact %}
+                                <input type="hidden" name="_method" value="PUT">
+                        {% endif %}
+
                         {% csrf_token %}
 
                          <div class="form-group mt-1 mb-1">
@@ -77,8 +84,15 @@
                         <div class="card-header">Ticket №{{ num }}</div>
                         <div class="card-body">
 
-                            <form id="ticketForm" method="post"
-                            {% if ticket %}action="{% url 'booking:update_ticket' ticket.pk %}" {% else %}action="{% url 'booking:create_ticket' cart_pk %}"{% endif %}>
+                            <form id="ticketForm"
+                                {% if ticket %}action="{% url 'api-booking:update_ticket' ticket.pk %}"
+                                {% else %}action="{% url 'api-booking:create_ticket' cart_pk %}"
+                            {% endif %}>
+
+                            {% if ticket %}
+                                <input type="hidden" name="_method" value="PUT">
+                            {% endif %}
+
                                 {% csrf_token %}
                                 <div class="row">
                                     <div class="form-group col-8">

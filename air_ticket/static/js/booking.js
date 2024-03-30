@@ -5,10 +5,13 @@ document.addEventListener('DOMContentLoaded', function() {
         form.addEventListener('submit', function(event) {
             event.preventDefault();
 
+            const methodInput = form.querySelector('input[name="_method"]');
+            const method = methodInput ? methodInput.value : 'POST';
+
             const formData = new FormData(this);
 
             const xhr = new XMLHttpRequest();
-            xhr.open('POST', form.action);
+            xhr.open(method, form.action);
             xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));
             xhr.onload = function() {
