@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block content %}
-<div class="container container-form">
+<div class="container container-form" id="container-search-form">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
                     <h3>Find Your Tickets</h3>
                     <hr>
-                    <form action="{% url 'flight:search' %}" method="POST">
+                    <form action="{% url 'flight:search' %}" method="POST" id="search-form">
                         {% csrf_token %}
                         <div class="form-group m-2">
                             <label for="departure">Departure:</label>
@@ -36,4 +38,7 @@
     </div>
 </div>
 
+    <div class="container mt-3" id="flights-container"></div>
+
+{#    <script src="{% static 'js/search_flight.js' %}"></script>#}
 {% endblock %}
