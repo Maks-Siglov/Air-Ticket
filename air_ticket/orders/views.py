@@ -69,6 +69,7 @@ def create_checkout_session(request: HttpRequest, order_pk) -> JsonResponse:
                     "unit_amount": ticket.unit_amount,
                     "product_data": {
                         "name": (
+                            f" Passenger"
                             f"{ticket.passenger.first_name} "
                             f"{ticket.passenger.last_name} "
                         )

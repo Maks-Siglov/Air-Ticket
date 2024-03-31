@@ -2,21 +2,17 @@ import pytest
 
 from booking.models import Ticket, TicketCart
 from customer.models import Contact, Passenger
-from flight.models import Airplane, Airport, Flight, Seat
+from flight.models import Airplane, Airport, Flight
 
 
 @pytest.fixture
 def test_airplane_with_seats(db):
-    test_airplane = Airplane.objects.create(name="Cirrus King Air-4660")
-    economy_seat = Seat.objects.create(type="Economy", airplane=test_airplane)
-    business_seat = Seat.objects.create(
-        type="Business", airplane=test_airplane
+    test_airplane = Airplane.objects.create(
+        name="Cirrus King Air-4660", seats_amount=20
     )
 
     yield test_airplane
 
-    economy_seat.delete()
-    business_seat.delete()
     test_airplane.delete()
 
 

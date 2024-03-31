@@ -55,6 +55,7 @@ function selectSeat(seat, seatId) {
 
     selectSeatButton.addEventListener('click', function () {
         const ticketId = getFirstTicketId();
+        console.log(ticketId)
         fetch('/api/v1/check-in/select-seat/' + seatId, {
             method: 'POST',
             body: JSON.stringify({ticketId: ticketId}),
@@ -64,6 +65,7 @@ function selectSeat(seat, seatId) {
             }
         })
             .then(response => {
+                console.log(response)
                 if (response.ok) {
                     window.location.reload();
                 } else {

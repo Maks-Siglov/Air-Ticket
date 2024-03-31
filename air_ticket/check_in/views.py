@@ -9,6 +9,7 @@ from orders.selectors import (
     get_order,
     get_order_tickets_without_seat,
     get_selected_seat_ids,
+    get_selected_user_seat_ids,
 )
 
 
@@ -23,8 +24,9 @@ def check_in(request: HttpRequest, order_pk: int) -> HttpResponse:
     flight_pk = order.flight_id
     flight = get_flight(flight_pk)
     tickets = get_order_tickets_without_seat(order)
-    ticket_ids = list(tickets.values_list("ticket_id", flat=True))
-    selected_seat_ids = list(get_selected_seat_ids(order))
+    ticket_ids = list(tickets.values_list("id", flat=True))
+    user_seat_ids = list(get_selected_user_seat_ids(order))
+    selected_seat_ids = list(get_selected_seat_ids(flight_pk))
     return render(
         request,
         "check_in/check_in.html",
@@ -33,6 +35,7 @@ def check_in(request: HttpRequest, order_pk: int) -> HttpResponse:
             "flight_pk": flight_pk,
             "tickets_amount": tickets.count(),
             "ticket_ids": ticket_ids,
+            "user_seat_ids": user_seat_ids,
             "selected_seat_ids": selected_seat_ids,
         },
     )

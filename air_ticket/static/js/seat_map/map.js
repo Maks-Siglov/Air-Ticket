@@ -4,7 +4,7 @@ import {handleCancelSeat} from "./cancel_seat.js";
 const seatMapContainer = document.getElementById('seat-map-container');
 const seatImageUrl = '/static/images/seat.png';
 
-const seatsPerPage = 10;
+const seatsPerPage = 80;
 let currentPage = 1;
 
 
@@ -22,7 +22,7 @@ function generateSeatMap() {
             const startIndex = (currentPage - 1) * seatsPerPage;
             const endIndex = Math.min(startIndex + seatsPerPage, seatsAmount);
 
-            const rows = 3;
+            const rows = 4;
             const columns =  Math.ceil(seatsPerPage / rows);
 
             for (let row = 0; row < rows; row++) {
@@ -42,13 +42,13 @@ function generateSeatMap() {
 
                 seatMapContainer.appendChild(rowElement);
             }
+            displaySelectedSeats();
             displaySelectedUserSeat();
 
             generatePagination(currentPage, totalPages);
         })
         .catch(error => console.error(error));
 }
-
 
 function generatePagination(currentPage, totalPages){
     const paginationContainer = document.getElementById('pagination-container');
@@ -99,12 +99,9 @@ function createSeatElement(seat) {
     imgElement.src = seatImageUrl;
     imgElement.alt = 'Seat';
 
-    if (!seat.is_available) {
-        seatElement.classList.add('unavailable', `seat-${seatId}`, 'm-1');
-    } else {
-        seatElement.classList.add(`seat-${seatId}`, 'm-1');
-        imgElement.classList.add('seat-image');
-    }
+    seatElement.classList.add(`seat-${seatId}`, 'm-1');
+    imgElement.classList.add('seat-image');
+
 
     seatElement.appendChild(imgElement);
 
@@ -117,14 +114,27 @@ function createRowElement(row){
     return rowElement
 }
 
+function displaySelectedSeats(flightPk) {
+     if (selectedSeatIds.length) {
+        selectedSeatIds.forEach(seatId => {
+            const seatElement = document.querySelector(`.seat-${seatId}`);
+            if (seatElement) {
+                seatElement.classList.add('unavailable', `seat-${seatId}`, 'm-1');
+                const imgElement = seatElement.querySelector('img')
+                imgElement.classList.remove('seat-image');
+                seatElement.removeEventListener('click', handleSeatSelection)
+            }
+        });
+    }
+}
+
 function displaySelectedUserSeat() {
-    if (approvedSelectedSeatsIDs.length) {
-        approvedSelectedSeatsIDs.forEach(seatId => {
+    if (userSeatIds.length) {
+        userSeatIds.forEach(seatId => {
             const seatElement = document.querySelector(`.seat-${seatId}`);
             if (seatElement) {
                 seatElement.classList.remove('unavailable')
                 seatElement.classList.add('selected')
-                seatElement.removeEventListener('click', handleSeatSelection)
                 seatElement.addEventListener('click', handleCancelSeat)
             }
         });

@@ -5,27 +5,29 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from check_in.api.v1.serializers import SeatSerializer
-from flight.models import Seat
+from flight.models import Seat, Flight
 from orders.models import OrderTicket
 
 
 class SeatsView(APIView):
-    def get(
-        self, request: HttpRequest, flight_pk: int, format=None
-    ) -> Response:
-        seats = Seat.objects.filter(airplane__flight__pk=flight_pk)
+    def get(self, request: HttpRequest, flight_pk: int) -> Response:
+        flight = Flight.objects.select_related("airplane").get(pk=flight_pk)
+        seats = Seat.objects.all().order_by("id")[
+            : flight.airplane.seats_amount
+        ]
         serializer = SeatSerializer(seats, many=True)
         return Response(serializer.data)
 
 
 class SelectSeatView(APIView):
     def post(self, request: HttpRequest, seat_pk: int) -> Response:
-        ticket_pk = request.data["ticketId"]
+        order_ticket_pk = request.data["ticketId"]
         try:
-            order_ticket = OrderTicket.objects.get(pk=ticket_pk)
+            order_ticket = OrderTicket.objects.get(pk=order_ticket_pk)
         except ObjectDoesNotExist:
             return Response(
-                {"error": f"Ticket with id {ticket_pk} not found"}, status=404
+                {"error": f"Ticket with id {order_ticket_pk} not found"},
+                status=404,
             )
         try:
             seat = Seat.objects.get(pk=seat_pk)
@@ -33,8 +35,7 @@ class SelectSeatView(APIView):
             return Response(
                 {"error": f"Seat with id {seat_pk} not found"}, status=404
             )
-        seat.is_available = False
-        seat.save()
+
         order_ticket.seat = seat
         order_ticket.save()
         return Response(status=200)
