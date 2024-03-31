@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from django.db.models import Count, F, Q, QuerySet
 from django.utils import timezone
 
-from flight.models import Airplane, Flight, Seat
+from flight.models import Airplane, Flight, Seat, Airport
 from orders.models import Order
 from users.models import User
 
@@ -127,3 +127,7 @@ def get_user_flights(user: User, status: str) -> QuerySet[Flight]:
 
 def get_airplane_seats(airplane: Airplane) -> QuerySet[Seat]:
     return Seat.objects.filter(airplane=airplane, type="Economy")
+
+
+def get_suggestion_airports(value: str) -> QuerySet[Airport]:
+    return Airport.objects.filter(name__icontains=value)[:10]

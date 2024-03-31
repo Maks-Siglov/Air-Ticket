@@ -15,10 +15,12 @@
                         <div class="form-group m-2">
                             <label for="departure">Departure:</label>
                             <input type="text" class="form-control" id="departure" name="departure_airport" placeholder="Where from?" required>
+                            <select id="departure-suggestions" class="form-control" size="5" style="display: none;"></select>
                         </div>
                         <div class="form-group m-2">
-                            <label for="id_arrival_airport">Destination:</label>
-                            <input type="text" class="form-control" id="id_arrival_airport" name="arrival_airport" placeholder="Where to?" required>
+                            <label for="arrival">Destination:</label>
+                            <input type="text" class="form-control" id="arrival" name="arrival_airport" placeholder="Where to?" required>
+                            <select id="arrival-suggestions" class="form-control" size="5" style="display: none;"></select>
                         </div>
                         <div class="form-group m-2">
                             <label for="departure_date">Destination Date:</label>
@@ -39,6 +41,6 @@
 </div>
 
     <div class="container mt-3" id="flights-container"></div>
-
+    <script src="{% static 'js/suggestions.js' %}"></script>
 {#    <script src="{% static 'js/search_flight.js' %}"></script>#}
 {% endblock %}

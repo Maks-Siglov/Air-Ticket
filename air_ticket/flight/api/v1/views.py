@@ -1,14 +1,16 @@
+from django.http import HttpRequest
+
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from flight.api.v1.serializers import FlightSerializer
+from flight.api.v1.serializers import AirportSerializer, FlightSerializer
 from flight.forms import FlightForm
-from flight.selectors import get_searched_flights
+from flight.selectors import get_searched_flights, get_suggestion_airports
 
 
 class SearchFlightsAPIView(APIView):
-    def post(self, request, *args, **kwargs):
+    def post(self, request: HttpRequest, *args, **kwargs) -> Response:
         form = FlightForm(request.data)
         if form.is_valid():
             departure_city = form.cleaned_data["departure_airport"]
@@ -33,3 +35,14 @@ class SearchFlightsAPIView(APIView):
             return Response(response)
 
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class SuggestAirportAPIView(APIView):
+    def get(self, request: HttpRequest, value: str) -> Response:
+        airports = get_suggestion_airports(value)
+
+        if not airports.exists():
+            return Response(status=204)
+
+        serializer = AirportSerializer(airports, many=True)
+        return Response(serializer.data, status=200)
