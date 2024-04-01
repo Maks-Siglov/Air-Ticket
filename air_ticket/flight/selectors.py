@@ -68,9 +68,5 @@ def get_user_flights(user: User, status: str) -> QuerySet[Flight]:
     )
 
 
-def get_airplane_seats(airplane: Airplane) -> QuerySet[Seat]:
-    return Seat.objects.filter(airplane=airplane, type="Economy")
-
-
 def get_suggestion_airports(value: str) -> QuerySet[Airport]:
     return Airport.objects.filter(name__icontains=value)[:10]

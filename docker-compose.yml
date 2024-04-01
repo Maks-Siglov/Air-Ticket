@@ -23,6 +23,8 @@ services:
   database:
     image: postgres:16.2
     container_name: postgres_air_ticket
+    env_file:
+      - .env.docker
     environment:
       - DB_HOST=postgres_air_ticket
       - POSTGRES_DB=air_ticket
