@@ -1,11 +1,10 @@
 import pytest
-from django.core import mail
 
+from django.core import mail
 from django.test import Client
 from django.urls import reverse
 
 from booking.models import TicketCart
-
 from orders.models import Order, OrderTicket
 from users.models import User
 

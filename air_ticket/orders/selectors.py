@@ -2,7 +2,6 @@ from django.db.models import QuerySet
 
 from orders.models import Order
 from orders.models.order_ticket import OrderTicket
-
 from users.models import User
 
 

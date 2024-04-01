@@ -1,17 +1,16 @@
 import pytest
 
-from booking.models import TicketCart, Ticket
+from booking.models import Ticket, TicketCart
+from booking.tests.conftest import (
+    test_airplane_with_seats,
+    test_cart,
+    test_contact,
+    test_flight,
+)
 from flight.models import Flight
+from orders.models import Order
 from orders.models.order_ticket import OrderTicket
 from users.tests.conftest import test_user
-from booking.tests.conftest import (
-    test_cart,
-    test_flight,
-    test_contact,
-    test_airplane_with_seats,
-)
-
-from orders.models import Order
 
 
 @pytest.fixture

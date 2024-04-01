@@ -2,16 +2,17 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
 from django.http import HttpRequest
 
-from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from booking.api.v1.serializers import (
+    ContactSerializer,
     PassengerSerializer,
     TicketSerializer,
-    ContactSerializer,
 )
 from booking.models import Ticket
 from booking.selectors import get_cart, get_ticket
+
 from customer.sellectors import get_contact
 
 

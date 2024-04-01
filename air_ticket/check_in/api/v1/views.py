@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from check_in.api.v1.serializers import SeatSerializer
-from flight.models import Seat, Flight
+from flight.models import Flight, Seat
 from orders.models import OrderTicket
 
 
