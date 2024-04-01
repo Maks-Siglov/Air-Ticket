@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 
-from django.db.models import Q, QuerySet
+from django.db.models import Q, QuerySet, Count, F
 from django.utils import timezone
 
 from flight.models import Airplane, Flight, Seat, Airport
@@ -27,6 +27,15 @@ def get_searched_flights(
         )
         .select_related("airplane", "departure_airport", "arrival_airport")
         .order_by("departure_scheduled")
+        .annotate(
+            available_seats=F("airplane__seats_amount") - Count(
+                "order__orderticket",
+                filter=Q(
+                    order__flight_id=F("pk"),
+                    order__orderticket__seat__isnull=False,
+                ),
+            ),
+        )
     )
 
 
