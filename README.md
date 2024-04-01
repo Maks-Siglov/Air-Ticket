@@ -60,7 +60,7 @@ cd task_19_air_crm/
     ```
 
 4. Load Dumpdata:
-    - **Right now Dumpdata provides only flights on 3 march into Berlin. Example for search in main page from Vienna to Berlin in 3 march**
+    - **Right now Dumpdata provides only flights on 3 march into Berlin. Example for search in main page from Vienna to Berlin in 1 april**
     ```bash
     python manage.py loaddata fixtures/*
     ```

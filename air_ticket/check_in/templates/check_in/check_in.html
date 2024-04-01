@@ -8,9 +8,31 @@
     <link rel="stylesheet" href="{% static 'css/seat.css' %}">
 
     <div class="container mt-4">
-        <h2>From {{ flight.departure_airport }} To {{ flight.arrival_airport }}</h2>
-        <p>Departure Date: {{ flight.departure_scheduled }} T/Z: {{ flight.departure_airport.timezone }}</p>
-        <p>Arrival Date: {{ flight.arrival_scheduled }} T/Z: {{ flight.arrival_airport.timezone }}</p>
+        <div class="row mb-2">
+            <div class="col-md-6">
+                <h2>From {{ flight.departure_airport }} To {{ flight.arrival_airport }}</h2>
+                <p>Departure Date: {{ flight.departure_scheduled }} T/Z: {{ flight.departure_airport.timezone }}</p>
+                <p>Arrival Date: {{ flight.arrival_scheduled }} T/Z: {{ flight.arrival_airport.timezone }}</p>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h5 class="card-title">My Seats</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        {% if user_seat_ids %}
+                            {% for seat_id in user_seat_ids %}
+                                <span>Seat №: {{ seat_id }}</span>
+                            {% endfor %}
+                        {% else %}
+                            <p>No seats selected</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <div class="card">
             <div class="card-header text-center">
