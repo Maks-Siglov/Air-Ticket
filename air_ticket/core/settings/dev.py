@@ -2,12 +2,6 @@ import os
 
 from core.settings.base import *
 
-DEBUG = True
-
-ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(",")
-
-DOMAIN = os.environ["DOMAIN"]
-
 INSTALLED_APPS += [
     "debug_toolbar",
 ]

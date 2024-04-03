@@ -22,7 +22,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
 
+DEBUG = int(os.environ["DEBUG"])
 
+ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(",")
+
+DOMAIN = os.environ["DOMAIN"]
 # Application definition
 
 INSTALLED_APPS = [
@@ -56,12 +60,6 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-
-REST_FRAMEWORK = {
-    "DEFAULT_PERMISSION_CLASSES": [
-        # "rest_framework.permissions.IsAuthenticatedOrReadOnly"
-    ]
-}
 
 ROOT_URLCONF = "core.urls"
 
@@ -134,11 +132,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STORAGES = {
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 STATIC_URL = "/static/"
 STATIC_ROOT = f"{BASE_DIR}/staticfiles"

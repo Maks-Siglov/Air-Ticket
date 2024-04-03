@@ -1,10 +1,11 @@
 services:
-  air-ticket:
+  app:
     build: .
     user: ${CURRENT_UID}
     container_name: air_ticket
+    restart: always
     ports:
-      - "8000:8000"
+      - "127.0.0.1:9080:8000"
     volumes:
       - ./air_ticket:/app
     env_file:
@@ -16,15 +17,16 @@ services:
       python manage.py runserver 0.0.0.0:8000"
     ]
     depends_on:
-      - database
+      - db
     networks:
       - mynetwork
 
-  database:
+  db:
     image: postgres:16.2
     container_name: postgres_air_ticket
+    restart: always
     env_file:
-      - .env.docker
+      - .env.docker_db
     environment:
       - DB_HOST=postgres_air_ticket
       - POSTGRES_DB=air_ticket
@@ -40,14 +42,15 @@ services:
   nginx:
     image: nginx:latest
     container_name: nginx_air_ticket
+    restart: always
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/site.conf:/etc/nginx/conf.d/site.conf
       - ./nginx/logs:/var/log/nginx
     ports:
-      - "80:1370"
+      - "8080:1370"
     depends_on:
-      - air-ticket
+      - app
     networks:
       - mynetwork
 
