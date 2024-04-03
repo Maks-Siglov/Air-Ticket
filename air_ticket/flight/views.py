@@ -28,8 +28,6 @@ def search_flights(request: HttpRequest) -> HttpResponse:
 
             paginator = Paginator(flights, settings.ITEMS_PER_PAGE)
             current_page = paginator.page(int(page))
-            for flight in current_page:
-                print(flight.available_seats)
             return render(
                 request,
                 "flight/flight_list.html",

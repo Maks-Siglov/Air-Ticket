@@ -2,9 +2,11 @@ from django.contrib import auth, messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 
+from customer.models import Contact
 from users.forms import RegisterForm, UserForm
 
 
@@ -73,6 +75,15 @@ def change_contact(
         form = UserForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
+
+            try:
+                contact = Contact.objects.get(email=user.email)
+            except ObjectDoesNotExist:
+                pass
+            else:
+                contact.phone_number = form.cleaned_data["phone_number"]
+                contact.save()
+
             messages.success(request, "You successfully update contacts.")
             return redirect("customer:profile")
     else:
