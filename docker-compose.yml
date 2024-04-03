@@ -46,6 +46,7 @@ services:
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/site.conf:/etc/nginx/conf.d/site.conf
+      - ./air_ticket/staticfiles:/var/www/html/static
       - ./nginx/logs:/var/log/nginx
     ports:
       - "8080:1370"
