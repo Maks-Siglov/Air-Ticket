@@ -25,6 +25,7 @@ SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
 DEBUG = int(os.environ["DEBUG"])
 
 ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(",")
+CSRF_TRUSTED_ORIGINS = os.environ["TRUSTED_ORIGINS"].split(",")
 
 DOMAIN = os.environ["DOMAIN"]
 # Application definition
