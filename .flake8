@@ -4,4 +4,4 @@ exclude =
     */settings/*
 per-file-ignores =
     */__init__.py: F401
-    orders/tests/conftest.py: F401, F811
+    **/conftest.py: F401, F811

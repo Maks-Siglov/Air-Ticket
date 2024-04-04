@@ -3,7 +3,7 @@
 
 
   {% block title %}Thanks for your order!{% endblock %}
-
+    <script>const domain = {{ domain }};</script>
     <script src="{% static 'js/stripe/return.js' %}" defer></script>
 {% block content %}
     <div class="container">

@@ -50,6 +50,7 @@ def checkout(
         "orders/stripe/checkout.html",
         {
             "order_pk": order.pk,
+            "domain": settings.DOMAIN,
             "stripe_public_key": settings.STRIPE_PUBLIC_KEY,
         },
     )
@@ -122,6 +123,7 @@ def order_details(request: HttpRequest, order_pk: int) -> HttpResponse:
         request,
         "orders/stripe/return.html",
         {
+            "domain": settings.DOMAIN,
             "order": order,
             "order_tickets": order_tickets,
             "flight": flight,
