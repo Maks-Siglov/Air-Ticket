@@ -55,6 +55,67 @@ services:
     networks:
       - mynetwork
 
+  redis:
+    image: redis:7.2.4
+    container_name: redis_air_ticket
+    volumes:
+      - redis-db-volume:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - mynetwork
+
+  celery-worker:
+    build: .
+    user: ${CURRENT_UID}
+    container_name: celery_worker
+    env_file:
+      - .env.docker
+    command: celery -A core worker --loglevel=info
+    volumes:
+      - ./air_ticket:/air_ticket
+    depends_on:
+      - weather-reminder
+      - redis
+      - celery-beat
+    networks:
+      - mynetwork
+
+  celery-beat:
+    build: .
+    user: ${CURRENT_UID}
+    container_name: celery_beat
+    environment:
+      - BROKER_CONNECTION_RETRY_ON_STARTUP=True
+    env_file:
+      - .env.docker
+    command: celery -A core beat --loglevel=info --scheduler redbeat.schedulers.RedBeatScheduler
+    volumes:
+      - ./air_ticket:/air_ticket
+    depends_on:
+      - redis
+      - weather-reminder
+    networks:
+      - mynetwork
+
+  flower:
+    build: .
+    user: ${CURRENT_UID}
+    container_name: flower
+    env_file:
+      - .env.docker
+    command: sh -c "celery -A core flower --address=0.0.0.0 --port=5555"
+    volumes:
+      - ./air_ticket:/air_ticket
+    depends_on:
+      - celery-worker
+      - celery-beat
+      - redis
+    ports:
+      - "5555:5555"
+    networks:
+      - mynetwork
+
 networks:
   mynetwork:
     external: True
@@ -62,3 +123,4 @@ networks:
 
 volumes:
   postgres-db-volume:
+  redis-db-volume:
