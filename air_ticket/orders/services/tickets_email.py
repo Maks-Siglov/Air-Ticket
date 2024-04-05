@@ -1,14 +1,14 @@
 from django.conf import settings
-from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 
 from flight.selectors import get_flight
 from orders.models import Order
 from orders.selectors import get_passenger_order_tickets
+from orders.tasks import send_tickets_email
 from users.models import User
 
 
-def send_tickets_email(user: User, order: Order):
+def tickets_email(user: User, order: Order):
 
     order_tickets = get_passenger_order_tickets(order)
     flight = get_flight(order.flight_id)
@@ -25,12 +25,4 @@ def send_tickets_email(user: User, order: Order):
         },
     )
 
-    mail = EmailMultiAlternatives(
-        subject="AirTicket",
-        body=html_content,
-        from_email=settings.DEFAULT_FROM_EMAIL,
-        to=[user.email],
-    )
-    mail.attach_alternative(html_content, "text/html")
-
-    mail.send()
+    send_tickets_email.delay(html_content, user.email)

@@ -19,8 +19,8 @@ from flight.selectors import get_flight
 
 from orders.models import Order, OrderTicket
 from orders.selectors import get_order, get_passenger_order_tickets
-from orders.services.tickets_email import send_tickets_email
-from orders.services.user_creation_email import send_creation_user_email
+from orders.services.tickets_email import tickets_email
+from orders.services.user_creation_email import creation_user_email
 from orders.stripe import stripe
 
 
@@ -112,9 +112,9 @@ def checkout_return(
     order_update_booking(order)
 
     if request.user.is_authenticated:
-        send_tickets_email(request.user, order)
+        tickets_email(request.user, order)
     else:
-        send_creation_user_email(order)
+        creation_user_email(order)
 
     return redirect("orders:detail", order.pk)
 
