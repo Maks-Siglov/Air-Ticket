@@ -5,7 +5,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 
-from booking.models import TicketCart
+from booking.models import Booking, TicketCart
 from booking.selectors import (
     get_cart_tickets,
     get_cart_total_price,
@@ -23,11 +23,16 @@ def create_cart(request: HttpRequest, flight_pk: int) -> HttpResponseRedirect:
         messages.error(request, "Flight does not exist")
         return redirect("main:index")
 
-    passenger_amount = request.GET.get("passenger_amount")
+    passenger_amount = int(request.GET.get("passenger_amount"))
 
     cart = TicketCart.objects.create(
         passenger_amount=passenger_amount, flight=flight
     )
+
+    bookings = [
+        Booking(flight=flight, cart=cart) for _ in range(passenger_amount)
+    ]
+    Booking.objects.bulk_create(bookings)
 
     if request.user.is_authenticated:
         user = request.user

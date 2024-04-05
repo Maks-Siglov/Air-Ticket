@@ -1,8 +1,9 @@
 from datetime import datetime, timedelta
 
-from django.db.models import Count, F, Q, QuerySet
+from django.db.models import F, Q, QuerySet
 from django.utils import timezone
 
+from booking.models import Booking
 from flight.models import Airplane, Airport, Flight, Seat
 from orders.models import Order
 from users.models import User
@@ -14,7 +15,7 @@ def get_searched_flights(
     departure_date_min = departure_date - timedelta(days=3)
     departure_date_max = departure_date + timedelta(days=3)
 
-    return (
+    flights = (
         Flight.objects.filter(
             Q(departure_airport__name__icontains=departure_airport)
             & Q(arrival_airport__name__icontains=arrival_airport)
@@ -27,17 +28,16 @@ def get_searched_flights(
         )
         .select_related("airplane", "departure_airport", "arrival_airport")
         .order_by("departure_scheduled")
-        .annotate(
-            available_seats=F("airplane__seats_amount")
-            - Count(
-                "order__orderticket",
-                filter=Q(
-                    order__flight_id=F("pk"),
-                    order__orderticket__seat__isnull=False,
-                ),
-            ),
-        )
     )
+    booked_places = len(
+        Booking.objects
+        .filter(flight__in=flights)
+    )
+
+    flights = flights.annotate(
+        available_seats=F("airplane__seats_amount") - booked_places
+    )
+    return flights
 
 
 def get_flight_with_seats(flight_pk: int) -> Flight:
