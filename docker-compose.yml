@@ -75,7 +75,7 @@ services:
     volumes:
       - ./air_ticket:/air_ticket
     depends_on:
-      - weather-reminder
+      - app
       - redis
       - celery-beat
     networks:
@@ -94,7 +94,7 @@ services:
       - ./air_ticket:/air_ticket
     depends_on:
       - redis
-      - weather-reminder
+      - app
     networks:
       - mynetwork
 
