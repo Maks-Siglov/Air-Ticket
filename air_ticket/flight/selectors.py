@@ -40,25 +40,6 @@ def get_searched_flights(
     return flights
 
 
-def get_flight_with_seats(flight_pk: int) -> Flight:
-    return Flight.objects.select_related(
-        "airplane", "departure_airport", "arrival_airport"
-    ).get(pk=flight_pk)
-
-
-def get_flight(flight_pk: int) -> Flight:
-    return Flight.objects.select_related(
-        "airplane", "departure_airport", "arrival_airport"
-    ).get(pk=flight_pk)
-
-
-def get_seat(airplane: Airplane, seat_type: str) -> Seat:
-    seat = Seat.objects.filter(
-        airplane=airplane, type=seat_type.title(), is_available=True
-    ).first()
-    return seat
-
-
 def get_user_flights(user: User, status: str) -> QuerySet[Flight]:
     flight_ids = Order.objects.filter(user=user).values_list("flight_id")
     flights = Flight.objects.filter(id__in=flight_ids).order_by(
@@ -78,5 +59,19 @@ def get_user_flights(user: User, status: str) -> QuerySet[Flight]:
     )
 
 
+def get_flight(flight_pk: int) -> Flight:
+    return Flight.objects.select_related(
+        "airplane", "departure_airport", "arrival_airport"
+    ).get(pk=flight_pk)
+
+
+def get_flight_with_airplane(flight_pk: int) -> Flight:
+    return Flight.objects.select_related("airplane").get(pk=flight_pk)
+
+
 def get_suggestion_airports(value: str) -> QuerySet[Airport]:
     return Airport.objects.filter(name__icontains=value)[:10]
+
+
+def get_airplane_seats(airplane: Airplane) -> list[Seat]:
+    return Seat.objects.all().order_by("id")[:airplane.seats_amount]

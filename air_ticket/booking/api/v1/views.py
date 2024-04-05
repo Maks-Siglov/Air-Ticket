@@ -10,8 +10,8 @@ from booking.api.v1.serializers import (
     PassengerSerializer,
     TicketSerializer,
 )
-from booking.models import Ticket, Booking
-from booking.selectors import get_cart, get_ticket
+from booking.models import Ticket
+from booking.selectors import get_cart, get_ticket, get_first_booking
 
 from customer.sellectors import get_contact
 
@@ -22,9 +22,9 @@ class TicketAPI(APIView):
             cart = get_cart(cart_pk)
         except ObjectDoesNotExist:
             return Response({"error": "Cart does not exits"}, status=404)
-        try:
-            booking = Booking.objects.filter(cart=cart, ticket=None).first()
-        except ObjectDoesNotExist:
+
+        booking = get_first_booking(cart)
+        if booking is None:
             return Response({"error": "Booking does not exists"}, status=404)
 
         passenger_serializer = PassengerSerializer(data=request.data)

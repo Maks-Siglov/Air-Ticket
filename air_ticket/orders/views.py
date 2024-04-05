@@ -10,7 +10,8 @@ from django.http import (
 from django.shortcuts import redirect, render
 
 from booking.models import TicketCart, Booking
-from booking.selectors import get_cart_tickets, get_cart_total_price
+from booking.selectors import get_cart_tickets, get_cart_total_price, \
+    order_update_booking
 
 from flight.selectors import get_flight
 
@@ -106,14 +107,7 @@ def checkout_return(
     order = get_order(order_pk)
     order.status = "Completed"
     order.save()
-    order_tickets_ids = list(
-        OrderTicket.objects
-        .filter(order=order)
-        .values_list("ticket__id", flat=True)
-    )
-    Booking.objects.filter(ticket__id__in=order_tickets_ids).update(
-        is_ordered=True
-    )
+    order_update_booking(order)
 
     if request.user.is_authenticated:
         send_tickets_email(request.user, order)

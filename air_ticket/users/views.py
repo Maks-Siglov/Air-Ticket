@@ -76,11 +76,8 @@ def change_contact(
         if form.is_valid():
             form.save()
 
-            try:
-                contact = Contact.objects.get(email=user.email)
-            except ObjectDoesNotExist:
-                pass
-            else:
+            contact = Contact.objects.filter(email=user.email).first()
+            if contact is not None:
                 contact.phone_number = form.cleaned_data["phone_number"]
                 contact.save()
 

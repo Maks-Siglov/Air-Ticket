@@ -1,5 +1,6 @@
 from django.db.models import QuerySet
 
+from flight.models import Seat
 from orders.models import Order
 from orders.models.order_ticket import OrderTicket
 from users.models import User
@@ -40,3 +41,11 @@ def get_selected_seat_ids(flight_pk: int) -> QuerySet[OrderTicket]:
     return OrderTicket.objects.filter(
         order_id__in=order_ids, seat_id__isnull=False
     ).values_list("seat_id", flat=True)
+
+
+def get_order_ticket(order_ticket_pk: int) -> OrderTicket:
+    return OrderTicket.objects.get(pk=order_ticket_pk)
+
+
+def get_order_ticket_by_seat(seat: Seat) -> Order:
+    return OrderTicket.objects.get(seat=seat)

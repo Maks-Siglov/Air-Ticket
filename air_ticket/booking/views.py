@@ -13,7 +13,7 @@ from booking.selectors import (
 )
 from customer.models import Contact
 from flight.models import Flight
-from flight.selectors import get_flight_with_seats
+from flight.selectors import get_flight
 
 
 def create_cart(request: HttpRequest, flight_pk: int) -> HttpResponseRedirect:
@@ -56,7 +56,7 @@ def book(request: HttpRequest, cart_pk: int) -> HttpResponse:
         messages.error(request, "Cart does not exist")
         return redirect("main:index")
 
-    flight = get_flight_with_seats(cart.flight_id)
+    flight = get_flight(cart.flight_id)
     tickets = get_cart_tickets(cart)
     total_price = get_cart_total_price(cart)
 
