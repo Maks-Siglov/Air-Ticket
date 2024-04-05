@@ -1,6 +1,6 @@
 import pytest
 
-from booking.models import Ticket, TicketCart
+from booking.models import Ticket, TicketCart, Booking
 from customer.models import Contact, Passenger
 from flight.models import Airplane, Airport, Flight
 
@@ -77,8 +77,11 @@ def test_cart(db, test_flight: Flight, test_contact: Contact) -> TicketCart:
         luggage=False,
     )
 
+    booking = Booking.objects.create(flight=test_flight, cart=cart)
+
     yield cart
 
+    booking.delete()
     passenger.delete()
     ticket.delete()
     cart.delete()
@@ -87,7 +90,9 @@ def test_cart(db, test_flight: Flight, test_contact: Contact) -> TicketCart:
 @pytest.fixture
 def test_empty_cart(db, test_flight: Flight):
     cart = TicketCart.objects.create(flight=test_flight, passenger_amount=1)
+    booking = Booking.objects.create(flight=test_flight, cart=cart)
 
     yield cart
 
+    booking.delete()
     cart.delete()
