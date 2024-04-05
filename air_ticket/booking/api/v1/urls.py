@@ -25,4 +25,9 @@ urlpatterns = [
         views.ContactAPI.as_view(),
         name="update_contact",
     ),
+    path(
+        "delete-expired-bookings/",
+        views.DeleteExpiredBookingAPI.as_view(),
+        name="delete_expired_bookings",
+    ),
 ]

@@ -12,3 +12,5 @@ class Booking(models.Model):
         Ticket, on_delete=models.CASCADE, null=True, blank=True
     )
     is_ordered = models.BooleanField(default=False)
+
+    created_at = models.DateTimeField(auto_now_add=True)

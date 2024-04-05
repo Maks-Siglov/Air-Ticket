@@ -1,6 +1,10 @@
+from datetime import timedelta
+
 from django.core.exceptions import ObjectDoesNotExist
+from django.conf import settings
 from django.db import transaction
 from django.http import HttpRequest
+from django.utils import timezone
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -10,7 +14,7 @@ from booking.api.v1.serializers import (
     PassengerSerializer,
     TicketSerializer,
 )
-from booking.models import Ticket
+from booking.models import Ticket, Booking
 from booking.selectors import get_cart, get_first_booking, get_ticket
 
 from customer.sellectors import get_contact
@@ -125,3 +129,19 @@ class ContactAPI(APIView):
             )
 
         return Response({"Error": contact_serializer.errors}, status=400)
+
+
+class DeleteExpiredBookingAPI(APIView):
+    def post(self, request: HttpRequest) -> Response:
+        threshold_time = timezone.now() - timedelta(
+            minutes=settings.BOOKING_MINUTES_LIFETIME
+        )
+
+        expired_bookings = Booking.objects.filter(
+            ticket=None, created_at__lte=threshold_time
+        )
+        if expired_bookings.exists():
+            expired_bookings.delete()
+            return Response("Expired bookings have been deleted.", status=204)
+
+        return Response("There is no Expired bookings", status=200)

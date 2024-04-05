@@ -174,6 +174,9 @@ STRIPE_SECRET_KEY = os.environ["STRIPE_SECRET_KEY"]
 DEFAULT_PAGE = 1
 ITEMS_PER_PAGE = 10
 
+# Booking settings
+BOOKING_MINUTES_LIFETIME = 20
+
 # Celery settings
 
 CELERY_BROKER_URL = (
