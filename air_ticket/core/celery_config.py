@@ -11,7 +11,7 @@ app = Celery("air_ticket")
 app.config_from_object("django.conf:settings", namespace="CELERY")
 
 app.conf.broker_url = settings.CELERY_BROKER_URL
-app.conf.result_backend = settings.CELERY_RESULT_BACKEND
+app.conf.result_backend = settings.CELERY_BROKER_URL
 
 app.conf.redbeat_redis_url = settings.REDBEAT_REDIS_URL
 
@@ -19,3 +19,10 @@ app.conf.task_send_sent_event = True
 
 
 app.autodiscover_tasks()
+
+app.conf.beat_schedule = {
+    "delete_expired_bookings": {
+        "task": "booking.tasks.delete_expired_bookings",
+        "schedule": crontab(minute="*/1"),
+    }
+}
