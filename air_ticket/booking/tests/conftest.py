@@ -96,3 +96,15 @@ def test_empty_cart(db, test_flight: Flight):
 
     booking.delete()
     cart.delete()
+
+
+@pytest.fixture
+def test_bookings(db, test_flight):
+    cart = TicketCart.objects.create(flight=test_flight, passenger_amount=1)
+    booking = Booking.objects.create(flight=test_flight, cart=cart)
+    Booking.objects.create(flight=test_flight, cart=cart)
+
+    yield
+
+    booking.delete()
+    cart.delete()

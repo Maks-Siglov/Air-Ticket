@@ -1,9 +1,13 @@
+from datetime import timedelta
+
 import pytest
+from django.conf import settings
 
 from django.test import Client
 from django.urls import reverse
+from django.utils import timezone
 
-from booking.models import Ticket, TicketCart
+from booking.models import Ticket, TicketCart, Booking
 from customer.models import Contact
 
 
@@ -112,3 +116,21 @@ def test_update_contact(client: Client, test_contact: Contact):
 
     assert contact.phone_number == update_post_data["phone_number"]
     assert contact.email == update_post_data["email"]
+
+
+@pytest.mark.django_db
+def test_delete_expired_booking(client: Client, test_bookings):
+    bookings = Booking.objects.all().order_by("id")
+    assert len(bookings) == 2
+
+    expired_booking = bookings[1]
+    expired_booking.created_at = timezone.now() - timedelta(
+        minutes=settings.BOOKING_MINUTES_LIFETIME
+    )
+    expired_booking.save()
+
+    response = client.post(reverse("api-booking:delete_expired_bookings"))
+    assert response.status_code == 204
+
+    bookings = Booking.objects.all()
+    assert len(bookings) == 1
