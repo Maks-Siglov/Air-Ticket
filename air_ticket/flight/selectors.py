@@ -29,10 +29,7 @@ def get_searched_flights(
         .select_related("airplane", "departure_airport", "arrival_airport")
         .order_by("departure_scheduled")
     )
-    booked_places = len(
-        Booking.objects
-        .filter(flight__in=flights)
-    )
+    booked_places = len(Booking.objects.filter(flight__in=flights))
 
     flights = flights.annotate(
         available_seats=F("airplane__seats_amount") - booked_places
@@ -74,4 +71,4 @@ def get_suggestion_airports(value: str) -> QuerySet[Airport]:
 
 
 def get_airplane_seats(airplane: Airplane) -> list[Seat]:
-    return Seat.objects.all().order_by("id")[:airplane.seats_amount]
+    return Seat.objects.all().order_by("id")[: airplane.seats_amount]

@@ -1,6 +1,6 @@
 import pytest
 
-from booking.models import Ticket, TicketCart, Booking
+from booking.models import Booking, Ticket, TicketCart
 from customer.models import Contact, Passenger
 from flight.models import Airplane, Airport, Flight
 

@@ -9,10 +9,12 @@ from django.http import (
 )
 from django.shortcuts import redirect, render
 
-from booking.models import TicketCart, Booking
-from booking.selectors import get_cart_tickets, get_cart_total_price, \
-    order_update_booking
-
+from booking.models import TicketCart
+from booking.selectors import (
+    get_cart_tickets,
+    get_cart_total_price,
+    order_update_booking,
+)
 from flight.selectors import get_flight
 
 from orders.models import Order, OrderTicket

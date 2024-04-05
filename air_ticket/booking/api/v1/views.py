@@ -11,7 +11,7 @@ from booking.api.v1.serializers import (
     TicketSerializer,
 )
 from booking.models import Ticket
-from booking.selectors import get_cart, get_ticket, get_first_booking
+from booking.selectors import get_cart, get_first_booking, get_ticket
 
 from customer.sellectors import get_contact
 

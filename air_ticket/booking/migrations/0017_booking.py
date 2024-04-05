@@ -8,7 +8,10 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ("booking", "0016_remove_ticket_seat"),
-        ("flight", "0010_remove_seat_airplane_remove_seat_is_available_and_more"),
+        (
+            "flight",
+            "0010_remove_seat_airplane_remove_seat_is_available_and_more",
+        ),
     ]
 
     operations = [
@@ -35,7 +38,8 @@ class Migration(migrations.Migration):
                 (
                     "flight",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="flight.flight"
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="flight.flight",
                     ),
                 ),
                 (
