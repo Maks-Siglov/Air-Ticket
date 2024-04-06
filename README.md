@@ -26,12 +26,17 @@ cd task_19_air_crm/
       docker network create mynetwork  
      ```
 
-3. Start services 
+3. Build app 
+    ```bash
+      docker compose build  
+     ```
+
+4. Start services 
     ```bash
       docker compose up  
      ```
 
-4. See Enable Extended Functionality for enable sending email notification
+5. See Enable Extended Functionality for enable sending email notification
 
 
 ## Run Locally
@@ -76,11 +81,17 @@ cd task_19_air_crm/
 ## Enable Extended Functionality
 
 1. Project use email for sending message with user credentials and order details. For using this feature add your email data in .env.local file
-    - **Replace data in .env.local file**
+    - **Replace data in .env.local / .env.docker  file**
      ```bash
     EMAIL_HOST='smtp.gmail.com /or another smtp'
     EMAIL_PORT=587
     EMAIL_HOST_USER='Replace with your email'
     EMAIL_HOST_PASSWORD='Replace with your app password'    
     ```
-   
+
+2. For providing payment functionality you need the stripe API keys
+    - **Replace data in .env files**
+     ```bash
+    STRIPE_PUBLIC_KEY='Place your stripe public key here'
+    STRIPE_SECRET_KEY='Place your stripe secret key here'
+    ```
