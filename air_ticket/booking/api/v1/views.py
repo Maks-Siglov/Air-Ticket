@@ -5,21 +5,29 @@ from django.db import IntegrityError, transaction
 from django.utils import timezone
 
 from rest_framework import status
+from rest_framework.exceptions import NotFound, ValidationError
 from rest_framework.generics import CreateAPIView, UpdateAPIView
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.exceptions import ValidationError, NotFound
 
 from booking.api.v1.serializers import (
     ContactSerializer,
     PassengerSerializer,
-    TicketSerializer,
+    TicketSerializer
 )
-from booking.models import Booking, Ticket, TicketCart
-from booking.selectors import get_cart, get_first_booking, get_ticket
+from booking.crud import (
+    get_cart,
+    get_first_booking,
+    get_ticket
+)
+from booking.models import (
+    Booking,
+    Ticket,
+    TicketCart
+)
+from customer.crud import get_contact
 from customer.models import Contact
-from customer.sellectors import get_contact
 
 
 class CreateTicketCartAPI(CreateAPIView):

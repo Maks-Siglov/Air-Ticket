@@ -1,19 +1,10 @@
 from datetime import datetime, timedelta
 
-from django.db.models import (
-    F,
-    Q,
-    QuerySet
-)
+from django.db.models import F, Q, QuerySet
 from django.utils import timezone
 
 from booking.models import Booking
-from flight.models import (
-    Airplane,
-    Airport,
-    Flight,
-    Seat
-)
+from flight.models import Airplane, Airport, Flight, Seat
 from orders.models import Order
 from users.models import User
 
@@ -65,14 +56,10 @@ def get_user_flights(user: User, status: str) -> QuerySet[Flight]:
     )
 
 
-def get_flight(flight_pk: int) -> Flight:
-    return Flight.objects.select_related(
-        "airplane", "departure_airport", "arrival_airport"
-    ).get(pk=flight_pk)
-
-
-def get_flight_with_airplane(flight_pk: int) -> Flight:
-    return Flight.objects.select_related("airplane").get(pk=flight_pk)
+def get_flight_with_airplane(flight_pk: int) -> Flight | None:
+    return (
+        Flight.objects.select_related("airplane").filter(pk=flight_pk).first()
+    )
 
 
 def get_suggestion_airports(value: str) -> QuerySet[Airport]:

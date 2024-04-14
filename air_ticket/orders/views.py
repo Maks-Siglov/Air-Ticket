@@ -5,19 +5,22 @@ from django.http import (
     HttpRequest,
     HttpResponse,
     HttpResponseRedirect,
-    JsonResponse
+    JsonResponse,
 )
 from django.shortcuts import redirect, render
 
-from booking.models import TicketCart
-from booking.selectors import (
+from booking.crud import (
     get_cart_tickets,
     get_cart_total_price,
-    order_update_booking
+    order_update_booking,
 )
-from flight.selectors import get_flight
+from booking.models import TicketCart
 from orders.models import Order, OrderTicket
-from orders.selectors import get_order, get_passenger_order_tickets
+from orders.crud import (
+    get_order,
+    get_order_with_flight,
+    get_passenger_order_tickets,
+)
 from orders.services.tickets_email import tickets_email
 from orders.services.user_creation_email import creation_user_email
 from orders.stripe import stripe
@@ -105,7 +108,7 @@ def session_status(request: HttpRequest):
 def checkout_return(
     request: HttpRequest, order_pk: int
 ) -> HttpResponseRedirect:
-    order = get_order(order_pk)
+    order = get_order_with_flight(order_pk)
     order.status = "Completed"
     order.save()
     order_update_booking(order)
@@ -119,9 +122,8 @@ def checkout_return(
 
 
 def order_details(request: HttpRequest, order_pk: int) -> HttpResponse:
-    order = get_order(order_pk)
+    order = get_order_with_flight(order_pk)
     order_tickets = get_passenger_order_tickets(order)
-    flight = get_flight(order.flight_id)
     return render(
         request,
         "orders/stripe/return.html",
@@ -129,7 +131,7 @@ def order_details(request: HttpRequest, order_pk: int) -> HttpResponse:
             "domain": settings.DOMAIN,
             "order": order,
             "order_tickets": order_tickets,
-            "flight": flight,
+            "flight": order.flight,
             "total_price": order.total_price,
         },
     )

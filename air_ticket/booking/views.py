@@ -11,12 +11,12 @@ from django.http import (
 )
 from django.shortcuts import redirect, render
 
-from booking.models import Booking, TicketCart
-from booking.selectors import (
+from booking.crud import (
     get_cart_tickets,
     get_cart_total_price,
     get_cart_with_flight
 )
+from booking.models import Booking, TicketCart
 from customer.models import Contact
 from flight.models import Flight
 from users.models import User

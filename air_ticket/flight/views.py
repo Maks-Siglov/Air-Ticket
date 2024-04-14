@@ -6,9 +6,9 @@ from django.core.paginator import Paginator
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 
+from flight.crud import get_searched_flights
 from flight.forms import FlightForm
 from flight.models import Flight
-from flight.selectors import get_searched_flights
 
 
 def search_flights(request: HttpRequest) -> HttpResponse:

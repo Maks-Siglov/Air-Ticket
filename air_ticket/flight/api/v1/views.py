@@ -5,8 +5,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from flight.api.v1.serializers import AirportSerializer, FlightSerializer
+from flight.crud import get_searched_flights, get_suggestion_airports
 from flight.forms import FlightForm
-from flight.selectors import get_searched_flights, get_suggestion_airports
 
 
 class SearchFlightsAPIView(APIView):

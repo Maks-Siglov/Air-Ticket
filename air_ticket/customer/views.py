@@ -4,8 +4,8 @@ from django.core.paginator import Paginator
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 
-from flight.selectors import get_user_flights
-from orders.selectors import get_user_orders
+from flight.crud import get_user_flights
+from orders.crud import get_user_orders
 
 
 @login_required(login_url="users:login")
