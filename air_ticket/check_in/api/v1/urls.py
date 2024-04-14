@@ -7,7 +7,7 @@ app_name = "api-check-in"
 urlpatterns = [
     path("<int:flight_pk>", views.SeatsView.as_view(), name="get_seats"),
     path(
-        "select-seat/<int:seat_pk>",
+        "select-seat/<int:seat_pk>/<int:order_ticket_pk>",
         views.SelectSeatView.as_view(),
         name="select_seat",
     ),

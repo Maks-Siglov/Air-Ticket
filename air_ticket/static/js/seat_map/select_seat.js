@@ -56,9 +56,8 @@ function selectSeat(seat, seatId) {
     selectSeatButton.addEventListener('click', function () {
         const ticketId = getFirstTicketId();
         console.log(ticketId)
-        fetch('/api/v1/check-in/select-seat/' + seatId, {
+        fetch(`/api/v1/check-in/select-seat/${seatId}/${ticketId}`, {
             method: 'POST',
-            body: JSON.stringify({ticketId: ticketId}),
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': getCookie('csrftoken')

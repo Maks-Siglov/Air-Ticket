@@ -58,5 +58,5 @@ def get_order_ticket(order_ticket_pk: int) -> OrderTicket:
     return OrderTicket.objects.filter(pk=order_ticket_pk).first()
 
 
-def get_order_ticket_by_seat(seat: Seat) -> Order:
+def get_order_ticket_by_seat(seat: Seat) -> OrderTicket:
     return OrderTicket.objects.filter(seat=seat).first()
