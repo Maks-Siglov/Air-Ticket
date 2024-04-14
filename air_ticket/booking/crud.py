@@ -2,11 +2,7 @@ from decimal import Decimal
 
 from django.db.models import QuerySet, Sum
 
-from booking.models import (
-    Booking,
-    Ticket,
-    TicketCart
-)
+from booking.models import Booking, Ticket, TicketCart
 from orders.models import Order, OrderTicket
 
 
@@ -55,4 +51,10 @@ def order_update_booking(order: Order) -> None:
     )
     Booking.objects.filter(ticket__id__in=order_tickets_ids).update(
         is_ordered=True
+    )
+
+
+def get_cart_with_contact(cart_pk: int) -> TicketCart | None:
+    return (
+        TicketCart.objects.select_related("contact").filter(pk=cart_pk).first()
     )

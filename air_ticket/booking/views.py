@@ -3,20 +3,16 @@ from decimal import Decimal
 from itertools import zip_longest
 
 from django.contrib import messages
-from django.core.exceptions import ObjectDoesNotExist
-from django.http import (
-    HttpRequest,
-    HttpResponse,
-    HttpResponseRedirect
-)
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 
 from booking.crud import (
     get_cart_tickets,
     get_cart_total_price,
-    get_cart_with_flight
+    get_cart_with_flight,
 )
 from booking.models import Booking, TicketCart
+from customer.crud import get_contact_by_email
 from customer.models import Contact
 from flight.models import Flight
 from users.models import User
@@ -44,9 +40,8 @@ def create_cart(request: HttpRequest, flight_pk: int) -> HttpResponseRedirect:
 
     if request.user.is_authenticated:
         user = t.cast(User, request.user)
-        try:
-            contact = Contact.objects.get(email=user.email)
-        except ObjectDoesNotExist:
+
+        if (contact := get_contact_by_email(user.email)) is None:
             contact = Contact.objects.create(
                 phone_number=user.phone_number,
                 email=user.email,

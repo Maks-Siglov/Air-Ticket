@@ -1,14 +1,12 @@
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 
-from flight.crud import get_searched_flights
+from flight.crud import get_searched_flights, get_flight_with_airports
 from flight.forms import FlightForm
-from flight.models import Flight
 
 
 def search_flights(request: HttpRequest) -> HttpResponse:
@@ -25,9 +23,6 @@ def search_flights(request: HttpRequest) -> HttpResponse:
             flights = get_searched_flights(
                 departure_airport, arrival_airport, departure_date
             )
-            print(flights)
-            for flight in flights:
-                print(flight.__dict__)
 
             paginator = Paginator(flights, settings.ITEMS_PER_PAGE)
             current_page = paginator.page(int(page))
@@ -49,9 +44,7 @@ def search_flights(request: HttpRequest) -> HttpResponse:
 
 @login_required(login_url="users:login")
 def flight_detail(request: HttpRequest, flight_pk: int):
-    try:
-        flight = Flight.objects.get(pk=flight_pk)
-    except ObjectDoesNotExist:
+    if (flight := get_flight_with_airports(flight_pk)) is None:
         messages.warning(request, "Flight does not exist")
         return redirect(request.META.get("HTTP_REFERER"))
 

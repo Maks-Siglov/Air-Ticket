@@ -1,24 +1,24 @@
 from django.conf import settings
 from django.contrib import messages
-from django.core.exceptions import ObjectDoesNotExist
 from django.http import (
     HttpRequest,
     HttpResponse,
     HttpResponseRedirect,
-    JsonResponse
+    JsonResponse,
 )
 from django.shortcuts import redirect, render
 
 from booking.crud import (
     get_cart_tickets,
     get_cart_total_price,
-    order_update_booking
+    order_update_booking,
+    get_cart_with_contact,
 )
-from booking.models import TicketCart
+
 from orders.crud import (
     get_order,
     get_order_with_flight,
-    get_passenger_order_tickets
+    get_passenger_order_tickets,
 )
 from orders.models import Order, OrderTicket
 from orders.services.tickets_email import tickets_email
@@ -29,9 +29,7 @@ from orders.stripe import stripe
 def checkout(
     request: HttpRequest, cart_pk: int
 ) -> HttpResponse | HttpResponseRedirect:
-    try:
-        cart = TicketCart.objects.select_related("contact").get(pk=cart_pk)
-    except ObjectDoesNotExist:
+    if (cart := get_cart_with_contact(cart_pk)) is None:
         messages.warning(request, "Cart does not exist")
         return redirect(request.META.get("HTTP_REFERER"))
 

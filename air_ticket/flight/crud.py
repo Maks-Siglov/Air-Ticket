@@ -62,6 +62,16 @@ def get_flight_with_airplane(flight_pk: int) -> Flight | None:
     )
 
 
+def get_flight_with_airports(flight_pk: int) -> Flight | None:
+    return (
+        Flight.objects.select_related(
+            "airplane", "arrival_airport", "departure_airport"
+        )
+        .filter(pk=flight_pk)
+        .first()
+    )
+
+
 def get_suggestion_airports(value: str) -> QuerySet[Airport]:
     return Airport.objects.filter(name__icontains=value)[:10]
 
