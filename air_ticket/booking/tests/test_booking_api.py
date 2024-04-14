@@ -6,11 +6,7 @@ from django.urls import reverse
 from django.utils import timezone
 
 import pytest
-from booking.models import (
-    Booking,
-    Ticket,
-    TicketCart
-)
+from booking.models import Booking, Ticket, TicketCart
 from customer.models import Contact
 
 
@@ -64,7 +60,7 @@ def test_update_ticket(client: Client, test_cart: TicketCart):
         url, update_post_data, content_type="application/json"
     )
 
-    assert response.status_code == 200
+    assert response.status_code == 201
 
     ticket = Ticket.objects.first()
     assert ticket is not None
@@ -112,7 +108,7 @@ def test_update_contact(client: Client, test_contact: Contact):
         url, update_post_data, content_type="application/json"
     )
 
-    assert response.status_code == 200
+    assert response.status_code == 201
 
     contact = Contact.objects.first()
     assert contact is not None
