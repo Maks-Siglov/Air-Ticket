@@ -1,6 +1,6 @@
-import requests
-
 from django.conf import settings
+
+import requests
 from celery import shared_task
 
 

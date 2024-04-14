@@ -1,8 +1,7 @@
-import pytest
-
 from django.test import Client
 from django.urls import reverse
 
+import pytest
 from users.models import User
 
 

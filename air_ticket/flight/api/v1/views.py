@@ -1,12 +1,11 @@
 from django.http import HttpRequest
 
-from rest_framework import status
-from rest_framework.response import Response
-from rest_framework.views import APIView
-
 from flight.api.v1.serializers import AirportSerializer, FlightSerializer
 from flight.forms import FlightForm
 from flight.selectors import get_searched_flights, get_suggestion_airports
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 
 class SearchFlightsAPIView(APIView):

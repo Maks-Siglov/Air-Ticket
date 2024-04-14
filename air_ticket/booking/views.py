@@ -2,14 +2,18 @@ from itertools import zip_longest
 
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.http import (
+    HttpRequest,
+    HttpResponse,
+    HttpResponseRedirect
+)
 from django.shortcuts import redirect, render
 
 from booking.models import Booking, TicketCart
 from booking.selectors import (
     get_cart_tickets,
     get_cart_total_price,
-    get_cart_with_flight,
+    get_cart_with_flight
 )
 from customer.models import Contact
 from flight.models import Flight

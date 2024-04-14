@@ -1,9 +1,9 @@
 import os
 
+from django.conf import settings
+
 from celery import Celery
 from celery.schedules import crontab
-
-from django.conf import settings
 from orders.tasks import send_tickets_email
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings.dev")

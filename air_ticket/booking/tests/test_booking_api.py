@@ -1,13 +1,16 @@
 from datetime import timedelta
 
-import pytest
 from django.conf import settings
-
 from django.test import Client
 from django.urls import reverse
 from django.utils import timezone
 
-from booking.models import Ticket, TicketCart, Booking
+import pytest
+from booking.models import (
+    Booking,
+    Ticket,
+    TicketCart
+)
 from customer.models import Contact
 
 

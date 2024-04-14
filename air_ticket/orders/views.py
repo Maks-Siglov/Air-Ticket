@@ -5,7 +5,7 @@ from django.http import (
     HttpRequest,
     HttpResponse,
     HttpResponseRedirect,
-    JsonResponse,
+    JsonResponse
 )
 from django.shortcuts import redirect, render
 
@@ -13,10 +13,9 @@ from booking.models import TicketCart
 from booking.selectors import (
     get_cart_tickets,
     get_cart_total_price,
-    order_update_booking,
+    order_update_booking
 )
 from flight.selectors import get_flight
-
 from orders.models import Order, OrderTicket
 from orders.selectors import get_order, get_passenger_order_tickets
 from orders.services.tickets_email import tickets_email

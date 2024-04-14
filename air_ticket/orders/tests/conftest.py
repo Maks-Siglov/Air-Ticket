@@ -1,11 +1,10 @@
 import pytest
-
 from booking.models import Ticket, TicketCart
 from booking.tests.conftest import (
     test_airplane_with_seats,
     test_cart,
     test_contact,
-    test_flight,
+    test_flight
 )
 from flight.models import Flight
 from orders.models import Order

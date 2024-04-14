@@ -1,8 +1,7 @@
-import pytest
-
 from django.test import Client
 from django.urls import reverse
 
+import pytest
 from booking.models import TicketCart
 from flight.models import Flight
 

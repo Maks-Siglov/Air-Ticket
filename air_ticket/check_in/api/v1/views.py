@@ -1,12 +1,12 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpRequest
-from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from check_in.api.v1.serializers import SeatSerializer
 from flight.models import Seat
 from flight.selectors import get_airplane_seats, get_flight_with_airplane
 from orders.selectors import get_order_ticket, get_order_ticket_by_seat
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 
 class SeatsView(APIView):

@@ -9,7 +9,7 @@ from orders.selectors import (
     get_order,
     get_order_tickets_without_seat,
     get_selected_seat_ids,
-    get_selected_user_seat_ids,
+    get_selected_user_seat_ids
 )
 
 

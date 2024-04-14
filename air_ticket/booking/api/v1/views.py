@@ -1,23 +1,25 @@
 from datetime import timedelta
 
-from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
 from django.http import HttpRequest
 from django.utils import timezone
 
-from rest_framework.response import Response
-from rest_framework.views import APIView
-
 from booking.api.v1.serializers import (
     ContactSerializer,
     PassengerSerializer,
-    TicketSerializer,
+    TicketSerializer
 )
-from booking.models import Ticket, Booking
-from booking.selectors import get_cart, get_first_booking, get_ticket
-
+from booking.models import Booking, Ticket
+from booking.selectors import (
+    get_cart,
+    get_first_booking,
+    get_ticket
+)
 from customer.sellectors import get_contact
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 
 class TicketAPI(APIView):
