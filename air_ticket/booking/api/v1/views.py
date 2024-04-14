@@ -2,42 +2,47 @@ from datetime import timedelta
 
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
-from django.db import transaction
-from django.http import HttpRequest
+from django.db import IntegrityError, transaction
 from django.utils import timezone
 
+from rest_framework import status
+from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from booking.api.v1.serializers import (
     ContactSerializer,
     PassengerSerializer,
-    TicketSerializer
+    TicketSerializer,
 )
 from booking.models import Booking, Ticket
-from booking.selectors import (
-    get_cart,
-    get_first_booking,
-    get_ticket
-)
+from booking.selectors import get_cart, get_first_booking, get_ticket
 from customer.sellectors import get_contact
 
 
-class TicketAPI(APIView):
-    def post(self, request: HttpRequest, cart_pk: int) -> Response:
-        try:
-            cart = get_cart(cart_pk)
-        except ObjectDoesNotExist:
-            return Response({"error": "Cart does not exits"}, status=404)
+class CreateTicketCartAPI(APIView):
+    def post(self, request: Request, cart_pk: int) -> Response:
+        if (cart := get_cart(cart_pk)) is None:
+            return Response(
+                {"error": "Cart does not exits"}, status.HTTP_404_NOT_FOUND
+            )
 
-        booking = get_first_booking(cart)
-        if booking is None:
-            return Response({"error": "Booking does not exists"}, status=404)
+        if (booking := get_first_booking(cart)) is None:
+            return Response(
+                {"error": "Booking does not exists"}, status.HTTP_404_NOT_FOUND
+            )
 
         passenger_serializer = PassengerSerializer(data=request.data)
         ticket_serializer = TicketSerializer(data=request.data)
 
-        if passenger_serializer.is_valid() and ticket_serializer.is_valid():
+        if not (
+            passenger_serializer.is_valid() and ticket_serializer.is_valid()
+        ):
+            return Response(
+                {"error": "Provided data not valid"},
+                status.HTTP_400_BAD_REQUEST,
+            )
+        try:
             with transaction.atomic():
                 passenger = passenger_serializer.save()
                 ticket_data = ticket_serializer.validated_data
@@ -47,23 +52,25 @@ class TicketAPI(APIView):
 
                 booking.ticket = ticket
                 booking.save()
+        except IntegrityError:
+            return Response(
+                {"error": "Try again later"}, status.HTTP_409_CONFLICT
+            )
 
-                return Response(
-                    {
-                        "message": "Ticket successfully created",
-                        "passenger": passenger_serializer.data,
-                        "ticket": ticket_serializer.data,
-                    },
-                    status=201,
-                )
+        return Response(
+            {
+                "message": "Ticket successfully created",
+                "passenger": passenger_serializer.data,
+                "ticket": ticket_serializer.data,
+            },
+            status.HTTP_201_CREATED,
+        )
 
-        return Response({"error": "Provided data not valid"}, status=400)
 
-    def put(self, request: HttpRequest, ticket_pk: int) -> Response:
-        try:
-            ticket = get_ticket(ticket_pk)
-        except ObjectDoesNotExist:
-            return Response("Ticket does not exist", status=404)
+class TicketUpdateAPI(APIView):
+    def put(self, request: Request, ticket_pk: int) -> Response:
+        if (ticket := get_ticket(ticket_pk)) is None:
+            return Response("Ticket does not exist", status.HTTP_404_NOT_FOUND)
 
         passenger = ticket.passenger
         ticket_serializer = TicketSerializer(
@@ -72,29 +79,40 @@ class TicketAPI(APIView):
         passenger_serializer = PassengerSerializer(
             data=request.data, instance=passenger
         )
-        if passenger_serializer.is_valid() and ticket_serializer.is_valid():
+
+        if not (
+            passenger_serializer.is_valid() and ticket_serializer.is_valid()
+        ):
+            return Response(
+                {"Error": "Provided data not valid"},
+                status.HTTP_400_BAD_REQUEST,
+            )
+
+        try:
             with transaction.atomic():
                 ticket_serializer.save()
                 passenger_serializer.save()
-
+        except IntegrityError:
             return Response(
-                {
-                    "message": "Ticket successfully updated",
-                    "passenger": passenger_serializer.data,
-                    "ticket": ticket_serializer.data,
-                },
-                status=200,
+                {"error": "Try again later"}, status.HTTP_409_CONFLICT
             )
 
-        return Response({"Error": "Provided data not valid"}, status=400)
+        return Response(
+            {
+                "message": "Ticket successfully updated",
+                "passenger": passenger_serializer.data,
+                "ticket": ticket_serializer.data,
+            },
+            status.HTTP_201_CREATED,
+        )
 
 
 class ContactAPI(APIView):
-    def post(self, request: HttpRequest, cart_pk: int) -> Response:
-        try:
-            cart = get_cart(cart_pk)
-        except ObjectDoesNotExist:
-            return Response({"error": "Cart does not exist"}, status=400)
+    def post(self, request: Request, cart_pk: int) -> Response:
+        if (cart := get_cart(cart_pk)) is None:
+            return Response(
+                {"error": "Cart does not exits"}, status.HTTP_404_NOT_FOUND
+            )
 
         contact_serializer = ContactSerializer(data=request.data)
         if contact_serializer.is_valid():
@@ -107,35 +125,41 @@ class ContactAPI(APIView):
                     "success": "Contact created",
                     "contact": contact_serializer.data,
                 },
-                status=201,
+                status.HTTP_201_CREATED,
             )
-        return Response({"error": "Provided data not valid"}, status=400)
+        return Response(
+            {"error": "Provided data not valid"}, status.HTTP_400_BAD_REQUEST
+        )
 
-    def put(self, request: HttpRequest, contact_pk: int) -> Response:
+    def put(self, request: Request, contact_pk: int) -> Response:
         try:
             contact = get_contact(contact_pk)
         except ObjectDoesNotExist:
-            return Response({"error": "Contact does not exist"}, status=404)
+            return Response(
+                {"error": "Contact does not exist"}, status.HTTP_404_NOT_FOUND
+            )
 
         contact_serializer = ContactSerializer(
             data=request.data, instance=contact
         )
-        if contact_serializer.is_valid():
-            contact_serializer.save()
-
+        if not contact_serializer.is_valid():
             return Response(
-                {
-                    "success": "Contact updated",
-                    "contact": contact_serializer.data,
-                },
-                status=200,
+                {"Error": contact_serializer.errors},
+                status.HTTP_400_BAD_REQUEST,
             )
+        contact_serializer.save()
 
-        return Response({"Error": contact_serializer.errors}, status=400)
+        return Response(
+            {
+                "success": "Contact updated",
+                "contact": contact_serializer.data,
+            },
+            status=status.HTTP_201_CREATED,
+        )
 
 
 class DeleteExpiredBookingAPI(APIView):
-    def post(self, request: HttpRequest) -> Response:
+    def post(self, request: Request) -> Response:
         threshold_time = timezone.now() - timedelta(
             minutes=settings.BOOKING_MINUTES_LIFETIME
         )
@@ -145,6 +169,9 @@ class DeleteExpiredBookingAPI(APIView):
         )
         if expired_bookings.exists():
             expired_bookings.delete()
-            return Response("Expired bookings have been deleted.", status=204)
+            return Response(
+                "Expired bookings have been deleted.",
+                status.HTTP_204_NO_CONTENT,
+            )
 
-        return Response("There is no Expired bookings", status=200)
+        return Response("There is no Expired bookings", status.HTTP_200_OK)

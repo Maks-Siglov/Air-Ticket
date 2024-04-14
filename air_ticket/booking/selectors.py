@@ -10,12 +10,14 @@ from booking.models import (
 from orders.models import Order, OrderTicket
 
 
-def get_ticket(ticket_pk: int) -> Ticket:
-    return Ticket.objects.select_related("passenger").get(pk=ticket_pk)
+def get_ticket(ticket_pk: int) -> Ticket | None:
+    return Ticket.objects.select_related(
+        "passenger"
+    ).filter(pk=ticket_pk).first()
 
 
-def get_cart(cart_pk: int) -> TicketCart:
-    return TicketCart.objects.get(pk=cart_pk)
+def get_cart(cart_pk: int) -> TicketCart | None:
+    return TicketCart.objects.filter(pk=cart_pk).first()
 
 
 def get_cart_with_flight(cart_pk: int) -> TicketCart | None:

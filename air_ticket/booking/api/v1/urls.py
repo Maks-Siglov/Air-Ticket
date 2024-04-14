@@ -7,12 +7,12 @@ app_name = "api-booking"
 urlpatterns = [
     path(
         "create-ticket/<int:cart_pk>/",
-        views.TicketAPI.as_view(),
+        views.CreateTicketCartAPI.as_view(),
         name="create_ticket",
     ),
     path(
         "update-ticket/<int:ticket_pk>/",
-        views.TicketAPI.as_view(),
+        views.TicketUpdateAPI.as_view(),
         name="update_ticket",
     ),
     path(
