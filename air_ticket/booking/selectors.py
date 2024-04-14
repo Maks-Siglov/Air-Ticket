@@ -19,12 +19,16 @@ def get_cart(cart_pk: int) -> TicketCart:
 
 
 def get_cart_with_flight(cart_pk: int) -> TicketCart | None:
-    return TicketCart.objects.select_related(
-        "flight",
-        "flight__airplane",
-        "flight__departure_airport",
-        "flight__arrival_airport",
-    ).filter(pk=cart_pk).first()
+    return (
+        TicketCart.objects.select_related(
+            "flight",
+            "flight__airplane",
+            "flight__departure_airport",
+            "flight__arrival_airport",
+        )
+        .filter(pk=cart_pk)
+        .first()
+    )
 
 
 def get_cart_tickets(cart: TicketCart) -> QuerySet[Ticket]:

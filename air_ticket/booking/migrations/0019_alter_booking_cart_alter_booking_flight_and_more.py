@@ -9,7 +9,10 @@ class Migration(migrations.Migration):
     dependencies = [
         ("booking", "0018_booking_created_at"),
         ("customer", "0008_alter_contact_phone_number"),
-        ("flight", "0010_remove_seat_airplane_remove_seat_is_available_and_more"),
+        (
+            "flight",
+            "0010_remove_seat_airplane_remove_seat_is_available_and_more",
+        ),
     ]
 
     operations = [
@@ -17,14 +20,16 @@ class Migration(migrations.Migration):
             model_name="booking",
             name="cart",
             field=models.ForeignKey(
-                on_delete=django.db.models.deletion.DO_NOTHING, to="booking.ticketcart"
+                on_delete=django.db.models.deletion.DO_NOTHING,
+                to="booking.ticketcart",
             ),
         ),
         migrations.AlterField(
             model_name="booking",
             name="flight",
             field=models.ForeignKey(
-                on_delete=django.db.models.deletion.DO_NOTHING, to="flight.flight"
+                on_delete=django.db.models.deletion.DO_NOTHING,
+                to="flight.flight",
             ),
         ),
         migrations.AlterField(
@@ -51,7 +56,8 @@ class Migration(migrations.Migration):
             model_name="ticketcart",
             name="flight",
             field=models.ForeignKey(
-                on_delete=django.db.models.deletion.DO_NOTHING, to="flight.flight"
+                on_delete=django.db.models.deletion.DO_NOTHING,
+                to="flight.flight",
             ),
         ),
     ]

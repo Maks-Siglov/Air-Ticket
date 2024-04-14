@@ -1,5 +1,6 @@
-from flight.models import Flight
 from rest_framework import serializers
+
+from flight.models import Flight
 
 
 class FlightSerializer(serializers.ModelSerializer):

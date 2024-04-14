@@ -6,6 +6,9 @@ from django.db import transaction
 from django.http import HttpRequest
 from django.utils import timezone
 
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from booking.api.v1.serializers import (
     ContactSerializer,
     PassengerSerializer,
@@ -18,8 +21,6 @@ from booking.selectors import (
     get_ticket
 )
 from customer.sellectors import get_contact
-from rest_framework.response import Response
-from rest_framework.views import APIView
 
 
 class TicketAPI(APIView):

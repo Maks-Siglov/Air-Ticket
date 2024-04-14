@@ -25,6 +25,9 @@ def search_flights(request: HttpRequest) -> HttpResponse:
             flights = get_searched_flights(
                 departure_airport, arrival_airport, departure_date
             )
+            print(flights)
+            for flight in flights:
+                print(flight.__dict__)
 
             paginator = Paginator(flights, settings.ITEMS_PER_PAGE)
             current_page = paginator.page(int(page))

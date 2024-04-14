@@ -1,5 +1,6 @@
-from booking.models import Ticket
 from rest_framework import serializers
+
+from booking.models import Ticket
 
 
 class TicketSerializer(serializers.ModelSerializer):
