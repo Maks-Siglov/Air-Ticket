@@ -9,6 +9,7 @@ from rest_framework.generics import CreateAPIView, UpdateAPIView
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.exceptions import ValidationError, NotFound
 
 from booking.api.v1.serializers import (
     ContactSerializer,
@@ -22,25 +23,15 @@ from customer.sellectors import get_contact
 
 
 class CreateTicketCartAPI(CreateAPIView):
-    def get_object(self) -> TicketCart | Response:
-        cart_pk = self.kwargs.get("cart_pk")
-        if cart_pk is None:
-            return Response(
-                {"error": "Cart ID not provided in URL"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+    def get_object(self, cart_pk: int) -> TicketCart | Response:
         if (cart := get_cart(cart_pk)) is None:
-            return Response(
-                {"error": "Cart does not exits"}, status.HTTP_404_NOT_FOUND
-            )
+            raise NotFound(detail="Cart not found")
         return cart
 
-    def create(self, request: Request, *args, **kwargs) -> Response:
-        cart = self.get_object()
+    def create(self, request: Request, cart_pk: int) -> Response:
+        cart = self.get_object(cart_pk)
         if (booking := get_first_booking(cart)) is None:
-            return Response(
-                {"error": "Booking does not exists"}, status.HTTP_404_NOT_FOUND
-            )
+            raise NotFound(detail="Booking not found")
 
         passenger_serializer = PassengerSerializer(data=request.data)
         ticket_serializer = TicketSerializer(data=request.data)
@@ -48,10 +39,7 @@ class CreateTicketCartAPI(CreateAPIView):
         if not (
             passenger_serializer.is_valid() and ticket_serializer.is_valid()
         ):
-            return Response(
-                {"error": "Provided data not valid"},
-                status.HTTP_400_BAD_REQUEST,
-            )
+            raise ValidationError(detail="Provided data not valid")
         try:
             with transaction.atomic():
                 passenger = passenger_serializer.save()
@@ -78,19 +66,13 @@ class CreateTicketCartAPI(CreateAPIView):
 
 
 class TicketUpdateAPI(UpdateAPIView):
-    def get_object(self) -> Ticket | Response:
-        ticket_pk = self.kwargs.get("ticket_pk")
-        if ticket_pk is None:
-            return Response(
-                {"error": "Ticket ID not provided in URL"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+    def get_object(self, ticket_pk: int) -> Ticket | Response:
         if (ticket := get_ticket(ticket_pk)) is None:
-            return Response("Ticket does not exist", status.HTTP_404_NOT_FOUND)
+            raise NotFound(detail="Ticket not found")
         return ticket
 
-    def update(self, request: Request, *args, **kwargs) -> Response:
-        ticket = self.get_object()
+    def update(self, request: Request, ticket_pk: int) -> Response:
+        ticket = self.get_object(ticket_pk)
         passenger = ticket.passenger
         ticket_serializer = TicketSerializer(
             data=request.data, instance=ticket
@@ -102,10 +84,7 @@ class TicketUpdateAPI(UpdateAPIView):
         if not (
             passenger_serializer.is_valid() and ticket_serializer.is_valid()
         ):
-            return Response(
-                {"Error": "Provided data not valid"},
-                status.HTTP_400_BAD_REQUEST,
-            )
+            raise ValidationError(detail="Provided data not valid")
 
         try:
             with transaction.atomic():
@@ -127,64 +106,43 @@ class TicketUpdateAPI(UpdateAPIView):
 
 
 class CreateContactAPI(CreateAPIView):
-    def get_object(self) -> TicketCart | Response:
-        cart_pk = self.kwargs.get("cart_pk")
-        if cart_pk is None:
-            return Response(
-                {"error": "Cart ID not provided in URL"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+    def get_object(self, cart_pk: int) -> TicketCart | Response:
         if (cart := get_cart(cart_pk)) is None:
-            return Response(
-                {"error": "Cart does not exits"}, status.HTTP_404_NOT_FOUND
-            )
+            raise NotFound(detail="Cart not found")
         return cart
 
-    def create(self, request: Request, *args, **kwargs) -> Response:
-        cart = self.get_object()
+    def create(self, request: Request, cart_pk: int) -> Response:
+        cart = self.get_object(cart_pk)
         contact_serializer = ContactSerializer(data=request.data)
-        if contact_serializer.is_valid():
-            contact = contact_serializer.save()
-            cart.contact = contact
-            cart.save()
+        if not contact_serializer.is_valid():
+            raise ValidationError(detail="Provided data not valid")
+        contact = contact_serializer.save()
+        cart.contact = contact
+        cart.save()
 
-            return Response(
-                {
-                    "success": "Contact created",
-                    "contact": contact_serializer.data,
-                },
-                status.HTTP_201_CREATED,
-            )
         return Response(
-            {"error": "Provided data not valid"}, status.HTTP_400_BAD_REQUEST
+            {
+                "success": "Contact created",
+                "contact": contact_serializer.data,
+            },
+            status.HTTP_201_CREATED,
         )
 
 
 class UpdateContactAPI(UpdateAPIView):
-    def get_object(self) -> Contact | Response:
-        contact_pk = self.kwargs.get("contact_pk")
-        if contact_pk is None:
-            return Response(
-                {"error": "Cart ID not provided in URL"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+    def get_object(self, contact_pk: int) -> Contact | Response:
         if (contact := get_contact(contact_pk=contact_pk)) is None:
-            return Response(
-                {"error": "Contact does not exits"}, status.HTTP_404_NOT_FOUND
-            )
+            raise NotFound(detail="Contact not found")
         return contact
 
-    def update(self, request: Request, *args, **kwargs) -> Response:
+    def update(self, request: Request, contact_pk: int) -> Response:
         contact_serializer = ContactSerializer(
-            data=request.data, instance=self.get_object()
+            data=request.data, instance=self.get_object(contact_pk)
         )
         if not contact_serializer.is_valid():
-            return Response(
-                {"Error": contact_serializer.errors},
-                status.HTTP_400_BAD_REQUEST,
-            )
-        contact_serializer.save()
+            raise ValidationError(detail="Provided data not valid")
 
+        contact_serializer.save()
         return Response(
             {
                 "success": "Contact updated",
