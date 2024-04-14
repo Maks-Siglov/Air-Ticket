@@ -1,7 +1,6 @@
-from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpRequest
-from rest_framework.exceptions import NotFound
 
+from rest_framework.exceptions import NotFound
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -25,12 +24,8 @@ class SelectSeatView(APIView):
         order_ticket_pk = request.data["ticketId"]
         if (order_ticket := get_order_ticket(order_ticket_pk)) is None:
             raise NotFound(detail=f"Ticket {order_ticket_pk} not found")
-        try:
-            seat = Seat.objects.get(pk=seat_pk)
-        except ObjectDoesNotExist:
-            return Response(
-                {"error": f"Seat with id {seat_pk} not found"}, status=404
-            )
+        if (seat := Seat.objects.filter(pk=seat_pk).first) is None:
+            raise NotFound(detail=f"Seat with id {seat_pk} not found")
 
         order_ticket.seat = seat
         order_ticket.save()
@@ -39,12 +34,8 @@ class SelectSeatView(APIView):
 
 class DeclineSeatView(APIView):
     def post(self, request: HttpRequest, seat_pk: int) -> Response:
-        try:
-            seat = Seat.objects.get(pk=seat_pk)
-        except ObjectDoesNotExist:
-            return Response(
-                {"error": f"Seat with id {seat_pk} not found"}, status=404
-            )
+        if (seat := Seat.objects.filter(pk=seat_pk).first) is None:
+            raise NotFound(detail=f"Seat with id {seat_pk} not found")
         if (order_ticket := get_order_ticket_by_seat(seat)) is None:
             raise NotFound(
                 detail=f"Seat {seat_pk} don't assigned to order's ticket"

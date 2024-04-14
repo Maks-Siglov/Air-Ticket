@@ -1,8 +1,8 @@
 from django.conf import settings
 from django.template.loader import render_to_string
 
-from orders.models import Order
 from orders.crud import get_passenger_order_tickets
+from orders.models import Order
 from orders.tasks import send_tickets_email
 from users.models import User
 

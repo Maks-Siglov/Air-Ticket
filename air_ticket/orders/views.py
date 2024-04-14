@@ -5,22 +5,22 @@ from django.http import (
     HttpRequest,
     HttpResponse,
     HttpResponseRedirect,
-    JsonResponse,
+    JsonResponse
 )
 from django.shortcuts import redirect, render
 
 from booking.crud import (
     get_cart_tickets,
     get_cart_total_price,
-    order_update_booking,
+    order_update_booking
 )
 from booking.models import TicketCart
-from orders.models import Order, OrderTicket
 from orders.crud import (
     get_order,
     get_order_with_flight,
-    get_passenger_order_tickets,
+    get_passenger_order_tickets
 )
+from orders.models import Order, OrderTicket
 from orders.services.tickets_email import tickets_email
 from orders.services.user_creation_email import creation_user_email
 from orders.stripe import stripe

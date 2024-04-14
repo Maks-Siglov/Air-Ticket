@@ -7,7 +7,7 @@ from orders.crud import (
     get_order_tickets_without_seat,
     get_order_with_flight,
     get_selected_seat_ids,
-    get_selected_user_seat_ids,
+    get_selected_user_seat_ids
 )
 
 
