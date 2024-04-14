@@ -24,7 +24,7 @@ class SelectSeatView(APIView):
         order_ticket_pk = request.data["ticketId"]
         if (order_ticket := get_order_ticket(order_ticket_pk)) is None:
             raise NotFound(detail=f"Ticket {order_ticket_pk} not found")
-        if (seat := Seat.objects.filter(pk=seat_pk).first) is None:
+        if (seat := Seat.objects.filter(pk=seat_pk).first()) is None:
             raise NotFound(detail=f"Seat with id {seat_pk} not found")
 
         order_ticket.seat = seat
@@ -34,7 +34,7 @@ class SelectSeatView(APIView):
 
 class DeclineSeatView(APIView):
     def post(self, request: HttpRequest, seat_pk: int) -> Response:
-        if (seat := Seat.objects.filter(pk=seat_pk).first) is None:
+        if (seat := Seat.objects.filter(pk=seat_pk).first()) is None:
             raise NotFound(detail=f"Seat with id {seat_pk} not found")
         if (order_ticket := get_order_ticket_by_seat(seat)) is None:
             raise NotFound(

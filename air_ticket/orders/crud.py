@@ -48,11 +48,9 @@ def get_selected_user_seat_ids(order: Order) -> QuerySet[OrderTicket]:
 
 
 def get_selected_seat_ids(flight_pk: int) -> QuerySet[OrderTicket]:
-    order_ids = Order.objects.filter(flight_id=flight_pk).values_list(
-        "id", flat=True
-    )
+    orders = Order.objects.filter(flight_id=flight_pk)
     return OrderTicket.objects.filter(
-        order_id__in=order_ids, seat_id__isnull=False
+        order__in=orders, seat_id__isnull=False
     ).values_list("seat_id", flat=True)
 
 

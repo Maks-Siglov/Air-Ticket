@@ -11,9 +11,9 @@ from orders.models import Order, OrderTicket
 
 
 def get_ticket(ticket_pk: int) -> Ticket | None:
-    return Ticket.objects.select_related(
-        "passenger"
-    ).filter(pk=ticket_pk).first()
+    return (
+        Ticket.objects.select_related("passenger").filter(pk=ticket_pk).first()
+    )
 
 
 def get_cart(cart_pk: int) -> TicketCart | None:

@@ -7,7 +7,7 @@ from orders.crud import (
     get_order_tickets_without_seat,
     get_order_with_flight,
     get_selected_seat_ids,
-    get_selected_user_seat_ids
+    get_selected_user_seat_ids,
 )
 
 
@@ -17,18 +17,18 @@ def check_in(request: HttpRequest, order_pk: int) -> HttpResponse:
         messages.warning(request, "Order for check-in not exit")
         return redirect("customer:profile")
 
-    flight_pk = order.flight_id
     tickets = get_order_tickets_without_seat(order)
     ticket_ids = list(tickets.values_list("id", flat=True))
+
     user_seat_ids = list(get_selected_user_seat_ids(order))
-    selected_seat_ids = list(get_selected_seat_ids(flight_pk))
+    selected_seat_ids = list(get_selected_seat_ids(order.flight.id))
     return render(
         request,
         "check_in/check_in.html",
         {
             "flight": order.flight,
-            "flight_pk": flight_pk,
-            "tickets_amount": tickets.count(),
+            "flight_pk": order.flight_id,
+            "tickets_amount": len(tickets),
             "ticket_ids": ticket_ids,
             "user_seat_ids": user_seat_ids,
             "selected_seat_ids": selected_seat_ids,
