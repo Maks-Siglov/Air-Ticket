@@ -1,3 +1,5 @@
+import typing as t
+from decimal import Decimal
 from itertools import zip_longest
 
 from django.contrib import messages
@@ -17,17 +19,19 @@ from booking.selectors import (
 )
 from customer.models import Contact
 from flight.models import Flight
-from flight.selectors import get_flight
+from users.models import User
 
 
 def create_cart(request: HttpRequest, flight_pk: int) -> HttpResponseRedirect:
-    try:
-        flight = Flight.objects.get(pk=flight_pk)
-    except ObjectDoesNotExist:
+    if (flight := Flight.objects.filter(pk=flight_pk).first()) is None:
         messages.error(request, "Flight does not exist")
         return redirect("main:index")
 
-    passenger_amount = int(request.GET.get("passenger_amount"))
+    passenger_amount = request.GET.get("passenger_amount")
+    if passenger_amount is None or not passenger_amount.isdigit():
+        messages.error(request, "Passenger amount not provided")
+        return redirect("main:index")
+    passenger_amount = int(passenger_amount)
 
     cart = TicketCart.objects.create(
         passenger_amount=passenger_amount, flight=flight
@@ -39,7 +43,7 @@ def create_cart(request: HttpRequest, flight_pk: int) -> HttpResponseRedirect:
     Booking.objects.bulk_create(bookings)
 
     if request.user.is_authenticated:
-        user = request.user
+        user = t.cast(User, request.user)
         try:
             contact = Contact.objects.get(email=user.email)
         except ObjectDoesNotExist:
@@ -54,15 +58,15 @@ def create_cart(request: HttpRequest, flight_pk: int) -> HttpResponseRedirect:
 
 
 def book(request: HttpRequest, cart_pk: int) -> HttpResponse:
-    try:
-        cart = get_cart_with_flight(cart_pk)
-    except ObjectDoesNotExist:
+    if (cart := get_cart_with_flight(cart_pk)) is None:
         messages.error(request, "Cart does not exist")
         return redirect("main:index")
 
-    flight = get_flight(cart.flight_id)
     tickets = get_cart_tickets(cart)
     total_price = get_cart_total_price(cart)
+
+    if total_price is None:
+        total_price = Decimal(0)
 
     passenger_amount = cart.passenger_amount
     passengers = range(1, passenger_amount + 1)
@@ -72,7 +76,7 @@ def book(request: HttpRequest, cart_pk: int) -> HttpResponse:
         request,
         "booking/booking.html",
         {
-            "flight": flight,
+            "flight": cart.flight,
             "passenger_amount": passenger_amount,
             "cart_pk": cart.pk,
             "tickets": tickets,

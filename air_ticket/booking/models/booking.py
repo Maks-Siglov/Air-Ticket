@@ -6,10 +6,10 @@ from flight.models.flight import Flight
 
 
 class Booking(models.Model):
-    flight = models.ForeignKey(Flight, on_delete=models.CASCADE)
-    cart = models.ForeignKey(TicketCart, on_delete=models.CASCADE)
+    flight = models.ForeignKey(Flight, on_delete=models.DO_NOTHING)
+    cart = models.ForeignKey(TicketCart, on_delete=models.DO_NOTHING)
     ticket = models.ForeignKey(
-        Ticket, on_delete=models.CASCADE, null=True, blank=True
+        Ticket, on_delete=models.DO_NOTHING, null=True, blank=True
     )
     is_ordered = models.BooleanField(default=False)
 

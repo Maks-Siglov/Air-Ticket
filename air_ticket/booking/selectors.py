@@ -18,21 +18,26 @@ def get_cart(cart_pk: int) -> TicketCart:
     return TicketCart.objects.get(pk=cart_pk)
 
 
-def get_cart_with_flight(cart_pk: int) -> TicketCart:
-    return TicketCart.objects.select_related("flight").get(pk=cart_pk)
+def get_cart_with_flight(cart_pk: int) -> TicketCart | None:
+    return TicketCart.objects.select_related(
+        "flight",
+        "flight__airplane",
+        "flight__departure_airport",
+        "flight__arrival_airport",
+    ).filter(pk=cart_pk).first()
 
 
 def get_cart_tickets(cart: TicketCart) -> QuerySet[Ticket]:
     return Ticket.objects.filter(cart=cart).select_related("passenger")
 
 
-def get_cart_total_price(cart: TicketCart) -> Decimal:
+def get_cart_total_price(cart: TicketCart) -> Decimal | None:
     return Ticket.objects.filter(cart=cart).aggregate(
         total_price=Sum("price")
-    )["total_price"] or Decimal("0.00")
+    )["total_price"]
 
 
-def get_first_booking(cart: TicketCart) -> Booking:
+def get_first_booking(cart: TicketCart) -> Booking | None:
     return Booking.objects.filter(cart=cart, ticket=None).first()
 
 

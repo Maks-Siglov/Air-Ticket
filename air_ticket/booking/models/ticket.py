@@ -6,7 +6,7 @@ class Ticket(models.Model):
     lunch = models.BooleanField(default=False)
     luggage = models.BooleanField(default=False)
     passenger = models.ForeignKey(
-        "customer.passenger", on_delete=models.CASCADE
+        "customer.Passenger", on_delete=models.CASCADE
     )
     cart = models.ForeignKey("booking.TicketCart", on_delete=models.CASCADE)
 
@@ -14,7 +14,7 @@ class Ticket(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.passenger}, seat: {self.seat}"
+        return f"{self.passenger}"
 
     @property
     def unit_amount(self) -> int:
