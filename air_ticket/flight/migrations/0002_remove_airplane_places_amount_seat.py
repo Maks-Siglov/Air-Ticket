@@ -15,38 +15,4 @@ class Migration(migrations.Migration):
             model_name="airplane",
             name="places_amount",
         ),
-        migrations.CreateModel(
-            name="Seat",
-            fields=[
-                (
-                    "id",
-                    models.BigAutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
-                    ),
-                ),
-                (
-                    "type",
-                    models.CharField(
-                        choices=[
-                            ("Economy", "economy"),
-                            ("Business", "business"),
-                            ("First Class", "first Class"),
-                        ],
-                        max_length=20,
-                    ),
-                ),
-                ("is_available", models.BooleanField(default=True)),
-                (
-                    "airplane",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        related_name="seats",
-                        to="flight.airplane",
-                    ),
-                ),
-            ],
-        ),
     ]

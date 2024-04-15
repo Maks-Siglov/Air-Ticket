@@ -9,17 +9,4 @@ class Migration(migrations.Migration):
         ("flight", "0008_alter_flight_airplane"),
     ]
 
-    operations = [
-        migrations.AlterField(
-            model_name="seat",
-            name="type",
-            field=models.CharField(
-                choices=[
-                    ("Economy", "economy"),
-                    ("Business", "business"),
-                    ("First Class", "first class"),
-                ],
-                max_length=20,
-            ),
-        ),
-    ]
+    operations = []

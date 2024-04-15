@@ -10,10 +10,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name="orderticket",
-            name="seat",
-        ),
         migrations.AddField(
             model_name="orderticket",
             name="seat_number",

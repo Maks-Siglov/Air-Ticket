@@ -26,8 +26,6 @@ class Flight(models.Model):
     ordered_seats = ArrayField(models.IntegerField(), default=list, blank=True)
 
     def save(self, *args, **kwargs):
-        if not self.ordered_seats:
-            self.ordered_seats = []
         if not self.seats:
             self.seats = list(range(1, self.airplane.seats_amount + 1))
         super().save(*args, **kwargs)

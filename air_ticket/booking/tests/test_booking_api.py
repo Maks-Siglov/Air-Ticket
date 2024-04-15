@@ -6,11 +6,7 @@ from django.urls import reverse
 from django.utils import timezone
 
 import pytest
-from booking.models import (
-    Booking,
-    Ticket,
-    TicketCart
-)
+from booking.models import Booking, Ticket, TicketCart
 from customer.models import Contact
 
 
@@ -19,7 +15,6 @@ def test_create_ticket(client: Client, test_empty_cart: TicketCart):
     cart = test_empty_cart
 
     post_data = {
-        "seat_type": "Economy",
         "first_name": "test_name",
         "last_name": "test_last_name",
         "passport_id": "2155835962",
@@ -50,7 +45,6 @@ def test_update_ticket(client: Client, test_cart: TicketCart):
     ticket = Ticket.objects.filter(cart=test_cart).first()
 
     update_post_data = {
-        "seat_type": "Business",
         "first_name": "updated_test_name",
         "last_name": "updated_test_last_name",
         "passport_id": "2155725962",

@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from django.db.models import F, Q, QuerySet, Func, IntegerField
 from django.utils import timezone
 
-from flight.models import Airplane, Airport, Flight, Seat
+from flight.models import Airport, Flight
 from orders.models import Order
 from users.models import User
 

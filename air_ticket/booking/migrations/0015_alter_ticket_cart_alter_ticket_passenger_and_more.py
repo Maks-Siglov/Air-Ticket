@@ -29,11 +29,4 @@ class Migration(migrations.Migration):
                 to="customer.passenger",
             ),
         ),
-        migrations.AlterField(
-            model_name="ticket",
-            name="seat",
-            field=models.ForeignKey(
-                on_delete=django.db.models.deletion.CASCADE, to="flight.seat"
-            ),
-        ),
     ]

@@ -9,7 +9,10 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ("booking", "0020_alter_ticket_cart_alter_ticket_passenger"),
-        ("flight", "0011_alter_flight_airplane_alter_flight_arrival_airport_and_more"),
+        (
+            "flight",
+            "0011_alter_flight_airplane_alter_flight_arrival_airport_and_more",
+        ),
         ("orders", "0005_remove_order_cart_order_flight_orderticket"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
@@ -19,7 +22,8 @@ class Migration(migrations.Migration):
             model_name="order",
             name="flight",
             field=models.ForeignKey(
-                on_delete=django.db.models.deletion.DO_NOTHING, to="flight.flight"
+                on_delete=django.db.models.deletion.DO_NOTHING,
+                to="flight.flight",
             ),
         ),
         migrations.AlterField(
@@ -36,24 +40,16 @@ class Migration(migrations.Migration):
             model_name="orderticket",
             name="order",
             field=models.ForeignKey(
-                on_delete=django.db.models.deletion.DO_NOTHING, to="orders.order"
-            ),
-        ),
-        migrations.AlterField(
-            model_name="orderticket",
-            name="seat",
-            field=models.ForeignKey(
-                blank=True,
-                null=True,
                 on_delete=django.db.models.deletion.DO_NOTHING,
-                to="flight.seat",
+                to="orders.order",
             ),
         ),
         migrations.AlterField(
             model_name="orderticket",
             name="ticket",
             field=models.ForeignKey(
-                on_delete=django.db.models.deletion.DO_NOTHING, to="booking.ticket"
+                on_delete=django.db.models.deletion.DO_NOTHING,
+                to="booking.ticket",
             ),
         ),
     ]

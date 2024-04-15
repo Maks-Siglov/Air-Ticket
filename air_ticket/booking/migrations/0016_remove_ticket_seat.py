@@ -9,9 +9,4 @@ class Migration(migrations.Migration):
         ("booking", "0015_alter_ticket_cart_alter_ticket_passenger_and_more"),
     ]
 
-    operations = [
-        migrations.RemoveField(
-            model_name="ticket",
-            name="seat",
-        ),
-    ]
+    operations = []

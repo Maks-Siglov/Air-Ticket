@@ -46,15 +46,6 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    "seat",
-                    models.ForeignKey(
-                        blank=True,
-                        null=True,
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to="flight.seat",
-                    ),
-                ),
-                (
                     "ticket",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,

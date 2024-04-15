@@ -10,18 +10,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name="seat",
-            name="airplane",
-        ),
-        migrations.RemoveField(
-            model_name="seat",
-            name="is_available",
-        ),
-        migrations.RemoveField(
-            model_name="seat",
-            name="type",
-        ),
         migrations.AddField(
             model_name="airplane",
             name="seats_amount",
