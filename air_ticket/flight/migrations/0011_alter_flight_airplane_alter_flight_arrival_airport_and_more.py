@@ -7,7 +7,10 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("flight", "0010_remove_seat_airplane_remove_seat_is_available_and_more"),
+        (
+            "flight",
+            "0010_remove_seat_airplane_remove_seat_is_available_and_more",
+        ),
     ]
 
     operations = [

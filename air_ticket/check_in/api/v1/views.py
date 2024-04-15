@@ -1,4 +1,4 @@
-from django.db import transaction, IntegrityError
+from django.db import IntegrityError, transaction
 
 from rest_framework import status
 from rest_framework.exceptions import NotFound

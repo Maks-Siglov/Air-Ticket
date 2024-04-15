@@ -15,14 +15,20 @@ class Migration(migrations.Migration):
             model_name="flight",
             name="ordered_seats",
             field=django.contrib.postgres.fields.ArrayField(
-                base_field=models.IntegerField(), blank=True, null=True, size=None
+                base_field=models.IntegerField(),
+                blank=True,
+                null=True,
+                size=None,
             ),
         ),
         migrations.AlterField(
             model_name="flight",
             name="seats",
             field=django.contrib.postgres.fields.ArrayField(
-                base_field=models.IntegerField(), blank=True, null=True, size=None
+                base_field=models.IntegerField(),
+                blank=True,
+                null=True,
+                size=None,
             ),
         ),
     ]
