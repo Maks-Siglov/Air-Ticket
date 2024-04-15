@@ -9,45 +9,39 @@ let currentPage = 1;
 
 
 function generateSeatMap() {
-    seatMapContainer.textContent = 'Loading seat map data...';
+    const seatsData = allSeats
+    const seatsAmount = seatsData.length;
 
-    fetch('/api/v1/check-in/' + flightPk)
-        .then(response => response.json())
-        .then(seatsData => {
-            seatMapContainer.textContent = '';
+    const totalPages = Math.ceil(seatsAmount / seatsPerPage);
 
-            const seatsAmount = seatsData.length;
-            const totalPages = Math.ceil(seatsAmount / seatsPerPage);
+    const startIndex = (currentPage - 1) * seatsPerPage;
+    const endIndex = Math.min(startIndex + seatsPerPage, seatsAmount);
 
-            const startIndex = (currentPage - 1) * seatsPerPage;
-            const endIndex = Math.min(startIndex + seatsPerPage, seatsAmount);
+    const rows = 4;
+    const columns = Math.ceil(seatsPerPage / rows);
 
-            const rows = 4;
-            const columns =  Math.ceil(seatsPerPage / rows);
+    for (let row = 0; row < rows; row++) {
+        const rowElement = createRowElement(row)
 
-            for (let row = 0; row < rows; row++) {
-                const rowElement = createRowElement(row)
+        for (let col = 0; col < columns; col++) {
+            const seatIndex = row * columns + col + startIndex;
+            if (seatIndex < endIndex) {
+                const seatId = seatsData[seatIndex];
 
-                for (let col = 0; col < columns; col++) {
-                    const seatIndex = row * columns + col + startIndex;
-                    if (seatIndex < endIndex) {
-                        const seat = seatsData[seatIndex];
-                        const seatElement = createSeatElement(seat)
+                const seatElement = createSeatElement(seatId)
 
-                        seatElement.addEventListener('click', handleSeatSelection);
+                seatElement.addEventListener('click', handleSeatSelection);
 
-                        rowElement.appendChild(seatElement);
-                    }
-                }
-
-                seatMapContainer.appendChild(rowElement);
+                rowElement.appendChild(seatElement);
             }
-            displaySelectedSeats();
-            displaySelectedUserSeat();
+        }
 
-            generatePagination(currentPage, totalPages);
-        })
-        .catch(error => console.error(error));
+        seatMapContainer.appendChild(rowElement);
+    }
+    displaySelectedSeats();
+    displaySelectedUserSeat();
+
+    generatePagination(currentPage, totalPages);
 }
 
 function generatePagination(currentPage, totalPages){
@@ -89,9 +83,8 @@ function previousPage() {
     }
 }
 
-function createSeatElement(seat) {
+function createSeatElement(seatId) {
     const seatElement = document.createElement('div');
-    const seatId = seat.id
     seatElement.dataset.id = seatId
 
     const imgElement = document.createElement('img');
@@ -115,8 +108,9 @@ function createRowElement(row){
 }
 
 function displaySelectedSeats(flightPk) {
-     if (selectedSeatIds.length) {
-        selectedSeatIds.forEach(seatId => {
+    console.log(orderedSeats)
+     if (orderedSeats.length) {
+        orderedSeats.forEach(seatId => {
             const seatElement = document.querySelector(`.seat-${seatId}`);
             if (seatElement) {
                 seatElement.classList.add('unavailable', `seat-${seatId}`, 'm-1');

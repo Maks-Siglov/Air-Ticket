@@ -74,11 +74,12 @@
     </div>
 
     <script>
+        const allSeats = {{ all_seats }}
+        const orderedSeats = {{ ordered_seats }}
         const ticketsAmount = {{ tickets_amount }};
         const userSeatIds = {{ user_seat_ids }};
         const flightPk = {{ flight_pk }};
         const ticketIDs = {{ ticket_ids }};
-        const selectedSeatIds = {{ selected_seat_ids }}
     </script>
     <script type="module" src="{% static 'js/seat_map/select_seat.js' %}"></script>
     <script type="module" src="{% static 'js/seat_map/cancel_seat.js' %}"></script>

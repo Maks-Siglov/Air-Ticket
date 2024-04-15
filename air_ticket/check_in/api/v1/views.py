@@ -1,47 +1,51 @@
+from django.db import transaction, IntegrityError
+
+from rest_framework import status
 from rest_framework.exceptions import NotFound
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from check_in.api.v1.serializers import SeatSerializer
-from flight.crud import get_airplane_seats, get_flight_with_airplane
-from flight.models import Seat
-from orders.crud import get_order_ticket, get_order_ticket_by_seat
-
-
-class SeatsView(APIView):
-    def get(self, request: Request, flight_pk: int) -> Response:
-        if (flight := get_flight_with_airplane(flight_pk)) is None:
-            raise NotFound(detail="Flight not found")
-        if flight.airplane is None:
-            raise NotFound(detail=f"Airplane for flight {flight.id} not found")
-        seats = get_airplane_seats(flight.airplane)
-        serializer = SeatSerializer(seats, many=True)
-        return Response(serializer.data)
+from orders.crud import get_order_ticket_by_seat, get_order_ticket_with_flight
 
 
 class SelectSeatView(APIView):
     def post(
-        self, request: Request, seat_pk: int, order_ticket_pk: int
+        self, request: Request, seat_number: int, order_ticket_pk: int
     ) -> Response:
-        if (order_ticket := get_order_ticket(order_ticket_pk)) is None:
+        if (
+            order_ticket := get_order_ticket_with_flight(order_ticket_pk)
+        ) is None:
             raise NotFound(detail=f"Ticket {order_ticket_pk} not found")
-        if (seat := Seat.objects.filter(pk=seat_pk).first()) is None:
-            raise NotFound(detail=f"Seat with id {seat_pk} not found")
-
-        order_ticket.seat = seat
-        order_ticket.save()
+        flight = order_ticket.order.flight
+        try:
+            with transaction.atomic():
+                order_ticket.seat_number = seat_number
+                order_ticket.save()
+                flight.ordered_seats.append(seat_number)
+                flight.save()
+        except IntegrityError:
+            return Response(
+                {"error": "Try again later"}, status.HTTP_409_CONFLICT
+            )
         return Response(status=200)
 
 
 class DeclineSeatView(APIView):
-    def post(self, request: Request, seat_pk: int) -> Response:
-        if (seat := Seat.objects.filter(pk=seat_pk).first()) is None:
-            raise NotFound(detail=f"Seat with id {seat_pk} not found")
-        if (order_ticket := get_order_ticket_by_seat(seat)) is None:
+    def post(self, request: Request, seat_number: int) -> Response:
+        if (order_ticket := get_order_ticket_by_seat(seat_number)) is None:
             raise NotFound(
-                detail=f"Seat {seat_pk} don't assigned to order's ticket"
+                detail=f"Seat {seat_number} don't assigned to order's ticket"
             )
-        order_ticket.seat = None
-        order_ticket.save()
+        flight = order_ticket.order.flight
+        try:
+            with transaction.atomic():
+                order_ticket.seat_number = None
+                order_ticket.save()
+                flight.ordered_seats.remove(seat_number)
+                flight.save()
+        except IntegrityError:
+            return Response(
+                {"error": "Try again later"}, status.HTTP_409_CONFLICT
+            )
         return Response(status=200)

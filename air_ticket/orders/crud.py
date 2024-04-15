@@ -38,13 +38,13 @@ def get_passenger_order_tickets(order: Order) -> QuerySet[OrderTicket]:
 
 
 def get_order_tickets_without_seat(order: Order) -> QuerySet[OrderTicket]:
-    return OrderTicket.objects.filter(order=order, seat__isnull=True)
+    return OrderTicket.objects.filter(order=order, seat_number__isnull=True)
 
 
 def get_selected_user_seat_ids(order: Order) -> QuerySet[OrderTicket]:
     return OrderTicket.objects.filter(
-        order=order, seat__isnull=False
-    ).values_list("seat_id", flat=True)
+        order=order, seat_number__isnull=False
+    ).values_list("seat_number", flat=True)
 
 
 def get_selected_seat_ids(flight_pk: int) -> QuerySet[OrderTicket]:
@@ -54,9 +54,17 @@ def get_selected_seat_ids(flight_pk: int) -> QuerySet[OrderTicket]:
     ).values_list("seat_id", flat=True)
 
 
-def get_order_ticket(order_ticket_pk: int) -> OrderTicket:
-    return OrderTicket.objects.filter(pk=order_ticket_pk).first()
+def get_order_ticket_with_flight(order_ticket_pk: int) -> OrderTicket:
+    return (
+        OrderTicket.objects.select_related("order__flight")
+        .filter(pk=order_ticket_pk)
+        .first()
+    )
 
 
-def get_order_ticket_by_seat(seat: Seat) -> OrderTicket:
-    return OrderTicket.objects.filter(seat=seat).first()
+def get_order_ticket_by_seat(seat_number: int) -> OrderTicket:
+    return (
+        OrderTicket.objects.select_related("order__flight")
+        .filter(seat_number=seat_number)
+        .first()
+    )

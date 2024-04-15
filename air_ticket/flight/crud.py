@@ -1,12 +1,15 @@
 from datetime import datetime, timedelta
 
-from django.db.models import F, Q, QuerySet
+from django.db.models import F, Q, QuerySet, Func, IntegerField
 from django.utils import timezone
 
-from booking.models import Booking
 from flight.models import Airplane, Airport, Flight, Seat
 from orders.models import Order
 from users.models import User
+
+
+class ArrayLength(Func):
+    function = "CARDINALITY"
 
 
 def get_searched_flights(
@@ -28,12 +31,14 @@ def get_searched_flights(
         )
         .select_related("airplane", "departure_airport", "arrival_airport")
         .order_by("departure_scheduled")
+        .annotate(
+            available_seats=(
+                ArrayLength(F("seats"), output_field=IntegerField())
+                - ArrayLength(F("ordered_seats"), output_field=IntegerField())
+            )
+        )
     )
-    booked_places = len(Booking.objects.filter(flight__in=flights))
 
-    flights = flights.annotate(
-        available_seats=F("airplane__seats_amount") - booked_places
-    )
     return flights
 
 
@@ -74,7 +79,3 @@ def get_flight_with_airports(flight_pk: int) -> Flight | None:
 
 def get_suggestion_airports(value: str) -> QuerySet[Airport]:
     return Airport.objects.filter(name__icontains=value)[:10]
-
-
-def get_airplane_seats(airplane: Airplane) -> list[Seat]:
-    return list(Seat.objects.all().order_by("id")[: airplane.seats_amount])
