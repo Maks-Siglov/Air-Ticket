@@ -6,16 +6,16 @@ class Flight(models.Model):
     iata = models.CharField()
     icao = models.CharField()
     airplane = models.ForeignKey(
-        "flight.Airplane", on_delete=models.CASCADE, null=True
+        "flight.Airplane", on_delete=models.DO_NOTHING, null=True
     )
     arrival_airport = models.ForeignKey(
         "flight.Airport",
-        on_delete=models.CASCADE,
+        on_delete=models.DO_NOTHING,
         related_name="arrival_flight",
     )
     departure_airport = models.ForeignKey(
         "flight.Airport",
-        on_delete=models.CASCADE,
+        on_delete=models.DO_NOTHING,
         related_name="departure_flight",
     )
     arrival_scheduled = models.DateTimeField()

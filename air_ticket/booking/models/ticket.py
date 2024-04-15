@@ -6,9 +6,9 @@ class Ticket(models.Model):
     lunch = models.BooleanField(default=False)
     luggage = models.BooleanField(default=False)
     passenger = models.ForeignKey(
-        "customer.Passenger", on_delete=models.CASCADE
+        "customer.Passenger", on_delete=models.DO_NOTHING
     )
-    cart = models.ForeignKey("booking.TicketCart", on_delete=models.CASCADE)
+    cart = models.ForeignKey("booking.TicketCart", on_delete=models.DO_NOTHING)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -1,6 +1,5 @@
-from django.http import HttpRequest
-
 from rest_framework import status
+from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -10,7 +9,7 @@ from flight.forms import FlightForm
 
 
 class SearchFlightsAPIView(APIView):
-    def post(self, request: HttpRequest, *args, **kwargs) -> Response:
+    def post(self, request: Request, *args, **kwargs) -> Response:
         form = FlightForm(request.data)
         if form.is_valid():
             departure_city = form.cleaned_data["departure_airport"]
@@ -38,7 +37,7 @@ class SearchFlightsAPIView(APIView):
 
 
 class SuggestAirportAPIView(APIView):
-    def get(self, request: HttpRequest, value: str) -> Response:
+    def get(self, request: Request, value: str) -> Response:
         airports = get_suggestion_airports(value)
 
         if not airports.exists():
