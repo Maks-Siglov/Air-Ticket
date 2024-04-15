@@ -103,7 +103,8 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.BasicAuthentication",
         "rest_framework.authentication.SessionAuthentication",
-    ]
+    ],
+    "EXCEPTION_HANDLER": "air_ticket.booking.api.error_handler.custom_exception_handler",
 }
 
 # Password validation
