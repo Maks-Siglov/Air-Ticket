@@ -14,23 +14,17 @@ from rest_framework.views import APIView
 from booking.api.v1.serializers import (
     ContactSerializer,
     PassengerSerializer,
-    TicketSerializer
+    TicketSerializer,
 )
-from booking.crud import (
-    get_cart,
-    get_first_booking,
-    get_ticket
-)
-from booking.models import (
-    Booking,
-    Ticket,
-    TicketCart
-)
+from booking.crud import get_cart, get_first_booking, get_ticket
+from booking.models import Booking, Ticket, TicketCart
 from customer.crud import get_contact
 from customer.models import Contact
 
 
 class CreateTicketCartAPI(CreateAPIView):
+    http_method_names = ["post"]
+
     def get_object(self, cart_pk: int) -> TicketCart | Response:
         if (cart := get_cart(cart_pk)) is None:
             raise NotFound(detail="Cart not found")
@@ -74,6 +68,8 @@ class CreateTicketCartAPI(CreateAPIView):
 
 
 class TicketUpdateAPI(UpdateAPIView):
+    http_method_names = ["put"]
+
     def get_object(self, ticket_pk: int) -> Ticket | Response:
         if (ticket := get_ticket(ticket_pk)) is None:
             raise NotFound(detail="Ticket not found")
@@ -114,6 +110,9 @@ class TicketUpdateAPI(UpdateAPIView):
 
 
 class CreateContactAPI(CreateAPIView):
+    serializer_class = ContactSerializer
+    http_method_names = ["post"]
+
     def get_object(self, cart_pk: int) -> TicketCart | Response:
         if (cart := get_cart(cart_pk)) is None:
             raise NotFound(detail="Cart not found")
@@ -121,7 +120,7 @@ class CreateContactAPI(CreateAPIView):
 
     def create(self, request: Request, cart_pk: int) -> Response:
         cart = self.get_object(cart_pk)
-        contact_serializer = ContactSerializer(data=request.data)
+        contact_serializer = self.serializer_class(data=request.data)
         if not contact_serializer.is_valid():
             raise ValidationError(detail="Provided data not valid")
         contact = contact_serializer.save()
@@ -138,13 +137,16 @@ class CreateContactAPI(CreateAPIView):
 
 
 class UpdateContactAPI(UpdateAPIView):
+    serializer_class = ContactSerializer
+    http_method_names = ["put"]
+
     def get_object(self, contact_pk: int) -> Contact | Response:
         if (contact := get_contact(contact_pk=contact_pk)) is None:
             raise NotFound(detail="Contact not found")
         return contact
 
     def update(self, request: Request, contact_pk: int) -> Response:
-        contact_serializer = ContactSerializer(
+        contact_serializer = self.serializer_class(
             data=request.data, instance=self.get_object(contact_pk)
         )
         if not contact_serializer.is_valid():

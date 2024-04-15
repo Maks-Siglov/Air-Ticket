@@ -24,7 +24,7 @@ class SearchFlightsAPIView(APIView):
 
             response = {
                 "passenger_amount": passenger_amount,
-                "flights_count": flights.count(),
+                "flights_count": len(flights),
                 "departure_city": departure_city,
                 "arrival_city": arrival_city,
                 "departure_date": departure_date,
