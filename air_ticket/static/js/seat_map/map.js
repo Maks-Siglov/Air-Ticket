@@ -9,6 +9,9 @@ let currentPage = 1;
 
 
 function generateSeatMap() {
+    seatMapContainer.innerHTML = '';
+    console.log(seatMapContainer.innerHTML)
+
     const seatsData = allSeats
     const seatsAmount = seatsData.length;
 
@@ -95,7 +98,6 @@ function createSeatElement(seatId) {
     seatElement.classList.add(`seat-${seatId}`, 'm-1');
     imgElement.classList.add('seat-image');
 
-
     seatElement.appendChild(imgElement);
 
     return seatElement;
@@ -107,8 +109,7 @@ function createRowElement(row){
     return rowElement
 }
 
-function displaySelectedSeats(flightPk) {
-    console.log(orderedSeats)
+function displaySelectedSeats() {
      if (orderedSeats.length) {
         orderedSeats.forEach(seatId => {
             const seatElement = document.querySelector(`.seat-${seatId}`);
