@@ -7,9 +7,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from orders.crud import (
-    get_order_with_flight,
     get_order_ticket_by_order,
     get_order_ticket_with_flight,
+    get_order_with_flight
 )
 
 
