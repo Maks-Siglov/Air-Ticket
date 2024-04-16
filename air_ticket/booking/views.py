@@ -3,17 +3,13 @@ from decimal import Decimal
 from itertools import zip_longest
 
 from django.contrib import messages
-from django.http import (
-    HttpRequest,
-    HttpResponse,
-    HttpResponseRedirect
-)
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 
 from booking.crud import (
     get_cart_tickets,
     get_cart_total_price,
-    get_cart_with_flight
+    get_cart_with_flight,
 )
 from booking.models import Booking, TicketCart
 from customer.crud import get_contact_by_email
@@ -36,7 +32,11 @@ def create_cart(request: HttpRequest, flight_pk: int) -> HttpResponseRedirect:
     cart = TicketCart.objects.create(
         passenger_amount=passenger_amount, flight=flight
     )
-
+    try:
+        flight.book_available_seats(passenger_amount)
+    except ValueError:
+        messages.error(request, "There is no enough available seats")
+        return redirect("main:index")
     bookings = [
         Booking(flight=flight, cart=cart) for _ in range(passenger_amount)
     ]

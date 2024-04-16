@@ -1,12 +1,6 @@
 from datetime import datetime, timedelta
 
-from django.db.models import (
-    F,
-    Func,
-    IntegerField,
-    Q,
-    QuerySet
-)
+from django.db.models import F, Func, IntegerField, Q, QuerySet
 from django.utils import timezone
 
 from flight.models import Airport, Flight
@@ -41,6 +35,7 @@ def get_searched_flights(
             available_seats=(
                 ArrayLength(F("seats"), output_field=IntegerField())
                 - ArrayLength(F("ordered_seats"), output_field=IntegerField())
+                - ArrayLength(F("booked_seats"), output_field=IntegerField())
             )
         )
     )

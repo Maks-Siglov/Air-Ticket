@@ -2,11 +2,7 @@ from decimal import Decimal
 
 from django.db.models import QuerySet, Sum
 
-from booking.models import (
-    Booking,
-    Ticket,
-    TicketCart
-)
+from booking.models import Booking, Ticket, TicketCart
 from orders.models import Order, OrderTicket
 
 

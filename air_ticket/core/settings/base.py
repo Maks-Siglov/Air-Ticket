@@ -171,7 +171,7 @@ STRIPE_PUBLIC_KEY = os.environ["STRIPE_PUBLIC_KEY"]
 STRIPE_SECRET_KEY = os.environ["STRIPE_SECRET_KEY"]
 
 
-# Flight list paginator settings
+# Item list paginator settings
 DEFAULT_PAGE = 1
 ITEMS_PER_PAGE = 10
 
