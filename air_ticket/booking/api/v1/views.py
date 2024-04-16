@@ -16,6 +16,12 @@ from booking.api.v1.serializers import (
     PassengerSerializer,
     TicketSerializer,
 )
+from booking.api.v1.serializers.contact_creation_serializer import (
+    ContactCreationResponseSerializer,
+)
+from booking.api.v1.serializers.ticket_create_response import (
+    TicketCreationResponseSerializer,
+)
 from booking.crud import get_cart, get_first_booking, get_ticket
 from booking.models import Booking, Ticket, TicketCart
 from customer.crud import get_contact
@@ -56,15 +62,15 @@ class CreateTicketCartAPI(CreateAPIView):
             return Response(
                 {"error": "Try again later"}, status.HTTP_409_CONFLICT
             )
-
-        return Response(
-            {
-                "message": "Ticket successfully created",
-                "passenger": passenger_serializer.data,
-                "ticket": ticket_serializer.data,
-            },
-            status.HTTP_201_CREATED,
-        )
+        response_data = {
+            "message": "Ticket successfully created",
+            "passenger_id": passenger.id,
+            "ticket_id": ticket.id,
+        }
+        serializer = TicketCreationResponseSerializer(data=response_data)
+        if not serializer.is_valid():
+            raise ValidationError(detail="Response data not valid")
+        return Response(serializer.data, status.HTTP_201_CREATED)
 
 
 class TicketUpdateAPI(UpdateAPIView):
@@ -98,15 +104,15 @@ class TicketUpdateAPI(UpdateAPIView):
             return Response(
                 {"error": "Try again later"}, status.HTTP_409_CONFLICT
             )
-
-        return Response(
-            {
-                "message": "Ticket successfully updated",
-                "passenger": passenger_serializer.data,
-                "ticket": ticket_serializer.data,
-            },
-            status.HTTP_201_CREATED,
-        )
+        response_data = {
+            "message": "Ticket successfully updated",
+            "passenger_id": passenger.id,
+            "ticket_id": ticket.id,
+        }
+        serializer = TicketCreationResponseSerializer(data=response_data)
+        if not serializer.is_valid():
+            raise ValidationError(detail="Response data not valid")
+        return Response(serializer.data, status.HTTP_201_CREATED)
 
 
 class CreateContactAPI(CreateAPIView):
@@ -127,13 +133,14 @@ class CreateContactAPI(CreateAPIView):
         cart.contact = contact
         cart.save()
 
-        return Response(
-            {
-                "success": "Contact created",
-                "contact": contact_serializer.data,
-            },
-            status.HTTP_201_CREATED,
-        )
+        response_data = {
+            "success": "Contact created",
+            "contact_id": contact.id,
+        }
+        serializer = ContactCreationResponseSerializer(data=response_data)
+        if not serializer.is_valid():
+            raise ValidationError(detail="Response data not valid")
+        return Response(serializer.data, status.HTTP_201_CREATED)
 
 
 class UpdateContactAPI(UpdateAPIView):
@@ -151,8 +158,15 @@ class UpdateContactAPI(UpdateAPIView):
         )
         if not contact_serializer.is_valid():
             raise ValidationError(detail="Provided data not valid")
+        contact = contact_serializer.save()
 
-        contact_serializer.save()
+        response_data = {
+            "success": "Contact updated",
+            "contact_id": contact.id,
+        }
+        serializer = ContactCreationResponseSerializer(data=response_data)
+        if not serializer.is_valid():
+            raise ValidationError(detail="Response data not valid")
         return Response(
             {
                 "success": "Contact updated",
