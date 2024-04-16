@@ -1,12 +1,7 @@
 from datetime import datetime, timedelta
 
-from django.db.models import (
-    F,
-    Func,
-    IntegerField,
-    Q,
-    QuerySet
-)
+from django.conf import settings
+from django.db.models import F, Func, IntegerField, Q, QuerySet
 from django.utils import timezone
 
 from flight.models import Airport, Flight
@@ -54,11 +49,11 @@ def get_user_flights(user: User, status: str) -> QuerySet[Flight]:
     flights = Flight.objects.filter(id__in=flight_ids).order_by(
         "departure_scheduled"
     )
-    if status == "Future":
+    if status == settings.FUTURE_STATUS:
         flights = flights.objects.filter(
             departure_scheduled__gte=timezone.now()
         )
-    elif status == "Past":
+    elif status == settings.PAST_STATUS:
         flights = flights.objects.filter(
             departure_scheduled__lte=timezone.now()
         )

@@ -175,6 +175,10 @@ STRIPE_SECRET_KEY = os.environ["STRIPE_SECRET_KEY"]
 DEFAULT_PAGE = 1
 ITEMS_PER_PAGE = 10
 
+# Flight statuses
+FUTURE_STATUS = "Future"
+PAST_STATUS = "Past"
+
 # Booking settings
 BOOKING_MINUTES_LIFETIME = 20
 
