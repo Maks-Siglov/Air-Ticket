@@ -4,7 +4,6 @@ from django.conf import settings
 
 from celery import Celery
 from celery.schedules import crontab
-from orders.tasks import send_tickets_email
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings.dev")
 
@@ -23,7 +22,7 @@ app.autodiscover_tasks()
 
 app.conf.beat_schedule = {
     "delete_expired_bookings": {
-        "task": "booking.tasks.delete_expired_bookings",
+        "task": "booking.tasks.deactivate_expired_bookings",
         "schedule": crontab(minute="*/20"),
     }
 }

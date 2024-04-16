@@ -26,8 +26,8 @@ urlpatterns = [
         name="update_contact",
     ),
     path(
-        "delete-expired-bookings/",
-        views.DeleteExpiredBookingAPI.as_view(),
+        "deactivate-expired-bookings/",
+        views.DeactivateExpiredBookingAPI.as_view(),
         name="delete_expired_bookings",
     ),
 ]

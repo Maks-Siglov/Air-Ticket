@@ -1,16 +1,19 @@
 from django.db import models
 
-from booking.models.ticket import Ticket
-from booking.models.ticket_cart import TicketCart
-from flight.models.flight import Flight
-
 
 class Booking(models.Model):
-    flight = models.ForeignKey(Flight, on_delete=models.DO_NOTHING)
-    cart = models.ForeignKey(TicketCart, on_delete=models.DO_NOTHING)
+    flight = models.ForeignKey("flight.Flight", on_delete=models.DO_NOTHING)
+    cart = models.ForeignKey("booking.TicketCart", on_delete=models.DO_NOTHING)
     ticket = models.ForeignKey(
-        Ticket, on_delete=models.DO_NOTHING, null=True, blank=True
+        "booking.Ticket", on_delete=models.DO_NOTHING, null=True, blank=True
     )
     is_ordered = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return (
+            f"Flight: {self.flight}, Ticket: {self.ticket}, "
+            f"Ordered: {self.is_ordered}, Active: {self.is_active}"
+        )

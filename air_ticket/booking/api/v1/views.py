@@ -162,7 +162,7 @@ class UpdateContactAPI(UpdateAPIView):
         )
 
 
-class DeleteExpiredBookingAPI(APIView):
+class DeactivateExpiredBookingAPI(APIView):
     def post(self, request: Request) -> Response:
         threshold_time = timezone.now() - timedelta(
             minutes=settings.BOOKING_MINUTES_LIFETIME
@@ -171,11 +171,12 @@ class DeleteExpiredBookingAPI(APIView):
         expired_bookings = Booking.objects.filter(
             ticket=None, created_at__lte=threshold_time
         )
-        if expired_bookings.exists():
-            expired_bookings.delete()
-            return Response(
-                "Expired bookings have been deleted.",
-                status.HTTP_204_NO_CONTENT,
-            )
+        if not expired_bookings.exists():
+            return Response("There is no Expired bookings", status.HTTP_200_OK)
 
-        return Response("There is no Expired bookings", status.HTTP_200_OK)
+        expired_bookings.update(is_active=False)
+
+        return Response(
+            "Expired bookings have been deactivated.",
+            status.HTTP_204_NO_CONTENT,
+        )

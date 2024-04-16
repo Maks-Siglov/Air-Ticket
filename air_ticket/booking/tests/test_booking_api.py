@@ -6,11 +6,7 @@ from django.urls import reverse
 from django.utils import timezone
 
 import pytest
-from booking.models import (
-    Booking,
-    Ticket,
-    TicketCart
-)
+from booking.models import Booking, Ticket, TicketCart
 from customer.models import Contact
 
 
@@ -133,5 +129,6 @@ def test_delete_expired_booking(client: Client, test_bookings):
     response = client.post(reverse("api-booking:delete_expired_bookings"))
     assert response.status_code == 204
 
-    bookings = Booking.objects.all()
-    assert len(bookings) == 1
+    bookings = Booking.objects.all().order_by("id")
+    assert bookings[1].is_active is False
+    assert bookings[0].is_active is True
