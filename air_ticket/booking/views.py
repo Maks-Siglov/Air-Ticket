@@ -3,17 +3,13 @@ from decimal import Decimal
 from itertools import zip_longest
 
 from django.contrib import messages
-from django.http import (
-    HttpRequest,
-    HttpResponse,
-    HttpResponseRedirect
-)
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 
 from booking.crud import (
     get_cart_tickets,
     get_cart_total_price,
-    get_cart_with_flight_data
+    get_cart_with_flight_data,
 )
 from booking.models import Booking, TicketCart
 from customer.crud import get_contact_by_email
@@ -64,6 +60,7 @@ def book(request: HttpRequest, cart_pk: int) -> HttpResponse:
     if (cart := get_cart_with_flight_data(cart_pk)) is None:
         messages.error(request, "Cart does not exist")
         return redirect("main:index")
+    flight = cart.flight
 
     tickets = get_cart_tickets(cart)
     total_price = get_cart_total_price(cart)
@@ -79,7 +76,10 @@ def book(request: HttpRequest, cart_pk: int) -> HttpResponse:
         request,
         "booking/booking.html",
         {
-            "flight": cart.flight,
+            "flight": flight,
+            "price": flight.price,
+            "luggage_price": flight.luggage_price,
+            "lunch_price": flight.lunch_price,
             "passenger_amount": passenger_amount,
             "cart_pk": cart.pk,
             "tickets": tickets,

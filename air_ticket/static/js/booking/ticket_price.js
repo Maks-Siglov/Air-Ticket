@@ -5,10 +5,10 @@ document.addEventListener("DOMContentLoaded", function () {
         const luggageCheckbox = form.querySelector('#luggageOption');
 
         function updatePrice() {
-            let price = 0;
+            let price = flightPrice;
 
-            if (lunchCheckbox.checked) price += 10;
-            if (luggageCheckbox.checked) price += 30;
+            if (lunchCheckbox.checked) price += lunchPrice;
+            if (luggageCheckbox.checked) price += luggagePrice;
 
             priceInput.value = price;
         }

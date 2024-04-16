@@ -8,6 +8,13 @@ class Flight(models.Model):
     number = models.CharField()
     iata = models.CharField()
     icao = models.CharField()
+    price = models.DecimalField(max_digits=8, decimal_places=2, default=120)
+    lunch_price = models.DecimalField(
+        max_digits=8, decimal_places=2, default=15
+    )
+    luggage_price = models.DecimalField(
+        max_digits=8, decimal_places=2, default=50
+    )
     airplane = models.ForeignKey(
         "flight.Airplane", on_delete=models.DO_NOTHING
     )
