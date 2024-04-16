@@ -4,7 +4,7 @@ from django.http import (
     HttpRequest,
     HttpResponse,
     HttpResponseRedirect,
-    JsonResponse
+    JsonResponse,
 )
 from django.shortcuts import redirect, render
 
@@ -12,12 +12,12 @@ from booking.crud import (
     get_cart_tickets,
     get_cart_total_price,
     get_cart_with_contact,
-    order_update_booking
+    order_update_booking,
 )
 from orders.crud import (
     get_order,
-    get_order_with_flight,
-    get_passenger_order_tickets
+    get_order_with_flight_data,
+    get_passenger_order_tickets,
 )
 from orders.models import Order, OrderTicket
 from orders.services.tickets_email import tickets_email
@@ -58,9 +58,14 @@ def checkout(
     )
 
 
-def create_checkout_session(request: HttpRequest, order_pk) -> JsonResponse:
+def create_checkout_session(
+    request: HttpRequest, order_pk
+) -> JsonResponse | HttpResponseRedirect:
     if request.method == "POST":
-        order = get_order(order_pk)
+        if (order := get_order(order_pk)) is None:
+            messages.warning(request, "Order does not exist")
+            return redirect("main:index")
+
         tickets = get_passenger_order_tickets(order)
         line_items = []
         for order_ticket in tickets:
@@ -105,7 +110,7 @@ def session_status(request: HttpRequest):
 def checkout_return(
     request: HttpRequest, order_pk: int
 ) -> HttpResponseRedirect:
-    order = get_order_with_flight(order_pk)
+    order = get_order_with_flight_data(order_pk)
     order.status = "Completed"
     order.save()
     order_update_booking(order)
@@ -119,7 +124,7 @@ def checkout_return(
 
 
 def order_details(request: HttpRequest, order_pk: int) -> HttpResponse:
-    order = get_order_with_flight(order_pk)
+    order = get_order_with_flight_data(order_pk)
     order_tickets = get_passenger_order_tickets(order)
     return render(
         request,

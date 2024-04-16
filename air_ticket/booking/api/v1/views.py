@@ -14,21 +14,25 @@ from rest_framework.views import APIView
 from booking.api.v1.serializers import (
     ContactSerializer,
     PassengerSerializer,
-    TicketSerializer,
+    TicketSerializer
 )
 from booking.api.v1.serializers.contact_creation_serializer import (
-    ContactCreationResponseSerializer,
+    ContactCreationResponseSerializer
 )
 from booking.api.v1.serializers.ticket_create_response import (
-    TicketCreationResponseSerializer,
+    TicketCreationResponseSerializer
 )
 from booking.crud import (
     get_cart,
     get_cart_with_flight,
     get_first_booking,
-    get_ticket,
+    get_ticket
 )
-from booking.models import Booking, Ticket, TicketCart
+from booking.models import (
+    Booking,
+    Ticket,
+    TicketCart
+)
 from customer.crud import get_contact
 from customer.models import Contact
 

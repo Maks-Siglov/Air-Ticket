@@ -5,14 +5,14 @@ from django.shortcuts import redirect, render
 
 from orders.crud import (
     get_order_tickets_without_seat,
-    get_order_with_flight,
-    get_selected_user_seat_ids
+    get_order_with_flight_data,
+    get_selected_user_seat_ids,
 )
 
 
 @login_required(login_url="users:login")
 def check_in(request: HttpRequest, order_pk: int) -> HttpResponse:
-    if (order := get_order_with_flight(order_pk)) is None:
+    if (order := get_order_with_flight_data(order_pk)) is None:
         messages.warning(request, "Order for check-in not exit")
         return redirect("customer:profile")
     flight = order.flight
@@ -28,6 +28,7 @@ def check_in(request: HttpRequest, order_pk: int) -> HttpResponse:
             "all_seats": flight.seats,
             "ordered_seats": flight.ordered_seats,
             "flight": flight,
+            "order_pk": order.id,
             "flight_pk": order.flight_id,
             "tickets_amount": len(tickets),
             "ticket_ids": ticket_ids,

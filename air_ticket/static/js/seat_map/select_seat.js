@@ -1,37 +1,36 @@
 const seatSelectionCard = document.getElementById('seat-selection-card');
 const selectSeatButton = document.getElementById('select-seat-button');
 
-let selectedSeats = []
+let selectedSeatId = null;
 
 export function handleSeatSelection(event) {
     const seat = event.currentTarget;
     const seatId = seat.dataset.id;
 
-    if (selectedSeats.includes(seatId)) {
-        removeSelectedSeat(seat, seatId);
+    if (selectedSeatId === seatId) {
+        removeSelectedSeat(seatId);
+        selectedSeatId = null;
         return;
     }
-    if (selectedSeats.length >= ticketsAmount) {
-        console.warn(`Maximum seat selection reached (${ticketsAmount})`);
-        return;
+    if (selectedSeatId) {
+        removeSelectedSeat(selectedSeatId);
+        selectedSeatId = null
     }
 
+    selectedSeatId = seatId;
     addSelectedSeat(seat, seatId);
 }
 
-function removeSelectedSeat(seat, seatId) {
-    const seatIndex = selectedSeats.indexOf(seatId);
-    selectedSeats.splice(seatIndex, 1);
-
+function removeSelectedSeat(seatId) {
     const seatElement = document.querySelector(`.seat-${seatId}`);
     const seatImg = seatElement.querySelector('img');
     seatImg.style.backgroundColor = '';
 
-    seat.classList.remove('selected');
-    seat.disabled = false;
+    seatElement.classList.remove('selected');
+    seatElement.disabled = false;
 
     updateSelectedSeatsCount();
-    if (selectedSeats.length === 0) {
+    if (selectedSeatId === null) {
         seatSelectionCard.classList.add('d-none');
     } else {
         showSelectedSeats();
@@ -39,42 +38,43 @@ function removeSelectedSeat(seat, seatId) {
 }
 
 function addSelectedSeat(seat, seatId) {
-    selectedSeats.push(seatId);
-
     const seatElement = document.querySelector(`.seat-${seatId}`);
     const seatImg = seatElement.querySelector('img');
     seatImg.style.backgroundColor = 'green';
 
     updateSelectedSeatsCount();
 
-    selectSeat(seat, seatId);
+    selectSeat();
 }
 
-function selectSeat(seat, seatId) {
+function selectSeat() {
     showSelectedSeats();
 
     selectSeatButton.addEventListener('click', function () {
-        const ticketId = getFirstTicketId();
-        console.log(ticketId)
-        fetch(`/api/v1/check-in/select-seat/${seatId}/${ticketId}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': getCookie('csrftoken')
-            }
-        })
-            .then(response => {
-                console.log(response)
-                if (response.ok) {
-                    window.location.reload();
-                } else {
-                    console.error('Error selecting seat:', response.statusText);
+        if (selectedSeatId) {
+            const ticketId = getFirstTicketId();
+            fetch(`/api/v1/check-in/select-seat/${selectedSeatId}/ticket/${ticketId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
                 }
             })
-            .catch(error => console.error('Error:', error));
+                .then(response => {
+                    console.log(response)
+                    if (response.ok) {
+                        window.location.reload();
+                    } else {
+                        console.error('Error selecting seat:', response.statusText);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
 
-        selectSeatButton.removeEventListener('click', this);
+            selectedSeatId = null;
+            selectSeatButton.removeEventListener('click', this);
+        }
     });
+
 }
 
 function getFirstTicketId() {
@@ -85,12 +85,12 @@ function getFirstTicketId() {
 }
 
 function showSelectedSeats() {
-    document.getElementById('selected-seat-id').textContent = selectedSeats;
+    document.getElementById('selected-seat-id').textContent = selectedSeatId;
     seatSelectionCard.classList.remove('d-none');
 }
 
 function updateSelectedSeatsCount() {
-    document.getElementById('selected-seat-count').textContent = selectedSeats.length;
+    document.getElementById('selected-seat-count').textContent = 1;
 }
 
 function getCookie(name) {

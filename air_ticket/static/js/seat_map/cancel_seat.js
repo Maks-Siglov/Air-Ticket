@@ -1,72 +1,84 @@
-const seatDeclineSelectionCard = document.getElementById('seat-decline-card')
-const declineSeatButton = document.getElementById('decline-seat-button')
+const seatDeclineSelectionCard = document.getElementById('seat-decline-card');
+const declineSeatButton = document.getElementById('decline-seat-button');
 
-let canceledSeats = []
-
+let canceledSeatId = null;
 
 export function handleCancelSeat(event) {
     const seat = event.currentTarget;
     const seatId = seat.dataset.id;
 
-    if (canceledSeats.includes(seatId)) {
-        removeCancelSeat(seat, seatId);
+    if (canceledSeatId === seatId) {
+        removeCancelSeat(seat);
+        canceledSeatId = null;
         return;
     }
+    if (canceledSeatId){
+        removePreviousCancelSeat();
+        canceledSeatId = null;
+    }
 
+    canceledSeatId = seatId;
     cancelSeat(seat, seatId);
-
     showCancelSeats();
 }
 
-function cancelSeat(seat, seatID) {
-    canceledSeats.push(seatID)
+function cancelSeat(seat, seatId) {
+    canceledSeatId = seatId;
 
     seat.classList.remove('selected');
-    seat.classList.add('declined')
+    seat.classList.add('declined');
 
-    declineSeat(seat, seatID)
+    declineSeat();
 }
 
-function removeCancelSeat(seat, seatID) {
-    const seatIndex = canceledSeats.indexOf(seatID);
-    canceledSeats.splice(seatIndex, 1);
+function removeCancelSeat(seat) {
+    const seatElement = document.querySelector(`.seat-${canceledSeatId}`);
 
     seat.classList.remove('declined');
-    seat.classList.add('selected')
+    seat.classList.add('selected');
+    
+    seatDeclineSelectionCard.classList.add('d-none');
 
-    if (canceledSeats.length === 0) {
-        seatDeclineSelectionCard.classList.add('d-none');
-    } else {
-        showCancelSeats();
-    }
 }
 
-function declineSeat(seat, seatID) {
-    showCancelSeats()
+function removePreviousCancelSeat(){
+    const seatElement = document.querySelector(`.seat-${canceledSeatId}`);
+
+    seatElement.classList.remove('declined');
+    seatElement.classList.add('selected');
+
+    seatDeclineSelectionCard.classList.add('d-none');
+}
+
+function declineSeat() {
+    showCancelSeats();
 
     declineSeatButton.addEventListener('click', function () {
-        fetch('/api/v1/check-in/decline-seat/' + seatID, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': getCookie('csrftoken')
-            }
-        })
-            .then(response => {
-                if (response.ok) {
-                    window.location.reload();
-                } else {
-                    console.error('Error selecting seat:', response.statusText);
+        if (canceledSeatId) {
+            fetch(`/api/v1/check-in/decline-seat/${canceledSeatId}/order/${orderId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
                 }
             })
-            .catch(error => console.error('Error:', error));
+                .then(response => {
+                    if (response.ok) {
+                        window.location.reload();
+                    } else {
+                        console.error('Error selecting seat:', response.statusText);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
 
-        declineSeatButton.removeEventListener('click', this);
+            canceledSeatId = null;
+            declineSeatButton.removeEventListener('click', this);
+        }
     });
 }
 
 function showCancelSeats() {
-    document.getElementById('decline-seat-id').textContent = canceledSeats;
+    document.getElementById('decline-seat-id').textContent = canceledSeatId;
     seatDeclineSelectionCard.classList.remove('d-none');
 }
 

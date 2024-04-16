@@ -6,7 +6,11 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from orders.crud import get_order_ticket_by_seat, get_order_ticket_with_flight
+from orders.crud import (
+    get_order_with_flight,
+    get_order_ticket_by_order,
+    get_order_ticket_with_flight,
+)
 
 
 class SelectSeatView(APIView):
@@ -22,6 +26,7 @@ class SelectSeatView(APIView):
             with transaction.atomic():
                 order_ticket.seat_number = seat_number
                 order_ticket.save()
+                print(seat_number)
                 flight.ordered_seats.append(seat_number)
                 flight.save()
         except IntegrityError:
@@ -32,12 +37,20 @@ class SelectSeatView(APIView):
 
 
 class DeclineSeatView(APIView):
-    def post(self, request: Request, seat_number: int) -> Response:
-        if (order_ticket := get_order_ticket_by_seat(seat_number)) is None:
+    def post(
+        self, request: Request, seat_number: int, order_pk: int
+    ) -> Response:
+        if (order := get_order_with_flight(order_pk)) is None:
+            raise NotFound(detail=f"Order {order_pk} not found")
+
+        if (
+            order_ticket := get_order_ticket_by_order(order, seat_number)
+        ) is None:
             raise NotFound(
                 detail=f"Seat {seat_number} don't assigned to order's ticket"
             )
-        flight = order_ticket.order.flight
+
+        flight = order.flight
         try:
             with transaction.atomic():
                 order_ticket.seat_number = None

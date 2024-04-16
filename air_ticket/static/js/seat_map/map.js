@@ -10,7 +10,6 @@ let currentPage = 1;
 
 function generateSeatMap() {
     seatMapContainer.innerHTML = '';
-    console.log(seatMapContainer.innerHTML)
 
     const seatsData = allSeats
     const seatsAmount = seatsData.length;
