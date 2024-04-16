@@ -13,7 +13,7 @@ from django.shortcuts import redirect, render
 from booking.crud import (
     get_cart_tickets,
     get_cart_total_price,
-    get_cart_with_flight
+    get_cart_with_flight_data
 )
 from booking.models import Booking, TicketCart
 from customer.crud import get_contact_by_email
@@ -61,7 +61,7 @@ def create_cart(request: HttpRequest, flight_pk: int) -> HttpResponseRedirect:
 
 
 def book(request: HttpRequest, cart_pk: int) -> HttpResponse:
-    if (cart := get_cart_with_flight(cart_pk)) is None:
+    if (cart := get_cart_with_flight_data(cart_pk)) is None:
         messages.error(request, "Cart does not exist")
         return redirect("main:index")
 

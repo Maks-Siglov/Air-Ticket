@@ -1,7 +1,13 @@
 from datetime import datetime, timedelta
 
 from django.conf import settings
-from django.db.models import F, Func, IntegerField, Q, QuerySet
+from django.db.models import (
+    F,
+    Func,
+    IntegerField,
+    Q,
+    QuerySet
+)
 from django.utils import timezone
 
 from flight.models import Airport, Flight

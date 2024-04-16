@@ -22,6 +22,12 @@ def get_cart(cart_pk: int) -> TicketCart | None:
 
 def get_cart_with_flight(cart_pk: int) -> TicketCart | None:
     return (
+        TicketCart.objects.select_related("flight").filter(pk=cart_pk).first()
+    )
+
+
+def get_cart_with_flight_data(cart_pk: int) -> TicketCart | None:
+    return (
         TicketCart.objects.select_related(
             "flight",
             "flight__airplane",

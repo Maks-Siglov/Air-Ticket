@@ -22,7 +22,12 @@ from booking.api.v1.serializers.contact_creation_serializer import (
 from booking.api.v1.serializers.ticket_create_response import (
     TicketCreationResponseSerializer,
 )
-from booking.crud import get_cart, get_first_booking, get_ticket
+from booking.crud import (
+    get_cart,
+    get_cart_with_flight,
+    get_first_booking,
+    get_ticket,
+)
 from booking.models import Booking, Ticket, TicketCart
 from customer.crud import get_contact
 from customer.models import Contact
@@ -32,7 +37,7 @@ class CreateTicketCartAPI(CreateAPIView):
     http_method_names = ["post"]
 
     def get_object(self, cart_pk: int) -> TicketCart | Response:
-        if (cart := get_cart(cart_pk)) is None:
+        if (cart := get_cart_with_flight(cart_pk)) is None:
             raise NotFound(detail="Cart not found")
         return cart
 
@@ -54,6 +59,7 @@ class CreateTicketCartAPI(CreateAPIView):
                 ticket_data = ticket_serializer.validated_data
                 ticket_data["passenger"] = passenger
                 ticket_data["cart"] = cart
+                ticket_data["flight"] = cart.flight
                 ticket = Ticket.objects.create(**ticket_data)
 
                 booking.ticket = ticket
@@ -134,7 +140,7 @@ class CreateContactAPI(CreateAPIView):
         cart.save()
 
         response_data = {
-            "success": "Contact created",
+            "message": "Contact created",
             "contact_id": contact.id,
         }
         serializer = ContactCreationResponseSerializer(data=response_data)
@@ -161,7 +167,7 @@ class UpdateContactAPI(UpdateAPIView):
         contact = contact_serializer.save()
 
         response_data = {
-            "success": "Contact updated",
+            "message": "Contact updated",
             "contact_id": contact.id,
         }
         serializer = ContactCreationResponseSerializer(data=response_data)
