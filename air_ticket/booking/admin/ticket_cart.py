@@ -1,10 +1,10 @@
 from django.contrib import admin
 from django.db.models import QuerySet
 from django.urls import reverse
-from django.utils.safestring import mark_safe
+from django.utils.safestring import SafeString, mark_safe
 
 from booking.models import TicketCart
-from flight.admin.inlines import TicketInline, BookingInline
+from flight.admin.inlines import BookingInline, TicketInline
 
 
 @admin.register(TicketCart)
@@ -25,7 +25,7 @@ class TicketCartAdmin(admin.ModelAdmin):
         qs = super().get_queryset(request)
         return qs.select_related("contact", "flight")
 
-    def contact_link(self, obj):
+    def contact_link(self, obj: TicketCart) -> SafeString | str:
         contact = obj.contact
         if contact:
             url = reverse("admin:customer_contact_change", args=(contact.id,))
@@ -34,7 +34,7 @@ class TicketCartAdmin(admin.ModelAdmin):
         else:
             return "-"
 
-    def flight_link(self, obj):
+    def flight_link(self, obj: TicketCart) -> SafeString | str:
         flight = obj.flight
         if flight:
             url = reverse("admin:flight_flight_change", args=(flight.id,))

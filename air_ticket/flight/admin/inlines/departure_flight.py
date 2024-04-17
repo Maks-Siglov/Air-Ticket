@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.db.models import QuerySet
 from django.urls import reverse
-from django.utils.safestring import mark_safe
+from django.utils.safestring import SafeString, mark_safe
 
 from flight.models import Flight
 
@@ -35,7 +35,7 @@ class DepartureFlightInline(admin.TabularInline):
     def has_delete_permission(self, request, obj=None) -> bool:
         return False
 
-    def arrival_airport_link(self, obj):
+    def arrival_airport_link(self, obj: Flight) -> SafeString | str:
         arrival_airport = obj.arrival_airport
         if arrival_airport:
             url = reverse(

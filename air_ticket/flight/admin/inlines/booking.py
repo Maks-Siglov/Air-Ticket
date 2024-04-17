@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.db.models import QuerySet
 from django.urls import reverse
-from django.utils.safestring import mark_safe
+from django.utils.safestring import SafeString, mark_safe
 
 from booking.models import Booking
 
@@ -25,7 +25,7 @@ class BookingInline(admin.TabularInline):
     def has_delete_permission(self, request, obj=None) -> bool:
         return False
 
-    def cart_link(self, obj):
+    def cart_link(self, obj: Booking) -> SafeString | str:
         cart = obj.cart
         if cart:
             url = reverse("admin:booking_ticketcart_change", args=(cart.id,))
@@ -34,7 +34,7 @@ class BookingInline(admin.TabularInline):
         else:
             return "-"
 
-    def ticket_link(self, obj):
+    def ticket_link(self, obj: Booking) -> SafeString | str:
         ticket = obj.ticket
         if ticket:
             url = reverse("admin:booking_ticket_change", args=(ticket.id,))

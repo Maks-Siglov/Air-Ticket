@@ -1,9 +1,13 @@
 from django.contrib import admin
 from django.db.models import QuerySet
 from django.urls import reverse
-from django.utils.safestring import mark_safe
+from django.utils.safestring import SafeString, mark_safe
 
-from flight.admin.inlines import BookingInline, CartInline, TicketInline
+from flight.admin.inlines import (
+    BookingInline,
+    CartInline,
+    TicketInline
+)
 from flight.models import Flight
 
 
@@ -38,16 +42,17 @@ class FlightAdmin(admin.ModelAdmin):
             "airplane", "arrival_airport", "departure_airport"
         )
 
-    def airplane_link(self, obj):
+    def airplane_link(self, obj: Flight) -> SafeString | str:
         airplane = obj.airplane
         if airplane:
             url = reverse("admin:flight_airplane_change", args=(airplane.id,))
             link = f'<a href="{url}">{airplane.name}</a>'
-            return mark_safe(link)
+            a = mark_safe(link)
+            return a
         else:
             return "-"
 
-    def departure_airport_link(self, obj):
+    def departure_airport_link(self, obj: Flight) -> SafeString | str:
         airport = obj.departure_airport
         if airport:
             url = reverse("admin:flight_airport_change", args=(airport.id,))
@@ -56,7 +61,7 @@ class FlightAdmin(admin.ModelAdmin):
         else:
             return "-"
 
-    def arrival_airport_link(self, obj):
+    def arrival_airport_link(self, obj: Flight) -> SafeString | str:
         airport = obj.arrival_airport
         if airport:
             url = reverse("admin:flight_airport_change", args=(airport.id,))

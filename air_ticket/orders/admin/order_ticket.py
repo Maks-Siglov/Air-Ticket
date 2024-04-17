@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.db.models import QuerySet
 from django.urls import reverse
-from django.utils.safestring import mark_safe
+from django.utils.safestring import SafeString, mark_safe
 
 from orders.models import OrderTicket
 
@@ -15,7 +15,7 @@ class OrderTicketAdmin(admin.ModelAdmin):
         qs = super().get_queryset(request)
         return qs.select_related("order", "ticket")
 
-    def ticket_link(self, obj):
+    def ticket_link(self, obj: OrderTicket) -> SafeString | str:
         ticket = obj.ticket
         if ticket:
             url = reverse("admin:booking_ticket_change", args=(ticket.id,))
@@ -24,7 +24,7 @@ class OrderTicketAdmin(admin.ModelAdmin):
         else:
             return "-"
 
-    def order_link(self, obj):
+    def order_link(self, obj: OrderTicket) -> SafeString | str:
         order = obj.order
         if order:
             url = reverse("admin:orders_order_change", args=(order.id,))

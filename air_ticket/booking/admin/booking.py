@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.db.models import QuerySet
 from django.urls import reverse
-from django.utils.safestring import mark_safe
+from django.utils.safestring import SafeString, mark_safe
 
 from booking.models import Booking
 
@@ -24,7 +24,7 @@ class BookingAdmin(admin.ModelAdmin):
         qs = super().get_queryset(request)
         return qs.select_related("cart", "flight", "ticket")
 
-    def flight_link(self, obj):
+    def flight_link(self, obj: Booking) -> SafeString | str:
         flight = obj.flight
         if flight:
             url = reverse("admin:flight_flight_change", args=(flight.id,))
@@ -33,7 +33,7 @@ class BookingAdmin(admin.ModelAdmin):
         else:
             return "-"
 
-    def cart_link(self, obj):
+    def cart_link(self, obj: Booking) -> SafeString | str:
         cart = obj.cart
         if cart:
             url = reverse("admin:booking_ticketcart_change", args=(cart.id,))
@@ -42,7 +42,7 @@ class BookingAdmin(admin.ModelAdmin):
         else:
             return "-"
 
-    def ticket_link(self, obj):
+    def ticket_link(self, obj: Booking) -> SafeString | str:
         ticket = obj.ticket
         if ticket:
             url = reverse("admin:booking_ticket_change", args=(ticket.id,))
