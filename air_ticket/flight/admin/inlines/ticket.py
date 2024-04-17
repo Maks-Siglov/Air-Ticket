@@ -17,7 +17,6 @@ class TicketInline(admin.TabularInline):
     fields = (
         "passenger_first_name_link",
         "passenger_last_name_link",
-        "passenger",
         "cart_link",
         "price",
         "lunch",
