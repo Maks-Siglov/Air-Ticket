@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import reverse
-from django.utils.html import format_html
+from django.utils.safestring import mark_safe
 
 from booking.models import Ticket
 
@@ -34,9 +34,8 @@ class TicketInline(admin.TabularInline):
             url = reverse(
                 "admin:customer_passenger_change", args=(passenger.id,)
             )
-            return format_html(
-                '<a href="{}">{}</a>', url, passenger.first_name
-            )
+            link = f'<a href="{url}">{passenger.first_name}</a>'
+            return mark_safe(link)
         else:
             return "-"
 
@@ -46,7 +45,8 @@ class TicketInline(admin.TabularInline):
             url = reverse(
                 "admin:customer_passenger_change", args=(passenger.id,)
             )
-            return format_html('<a href="{}">{}</a>', url, passenger.last_name)
+            link = f'<a href="{url}">{passenger.last_name}</a>'
+            return mark_safe(link)
         else:
             return "-"
 
@@ -54,7 +54,8 @@ class TicketInline(admin.TabularInline):
         cart = obj.cart
         if cart:
             url = reverse("admin:booking_ticketcart_change", args=(cart.id,))
-            return format_html('<a href="{}">{}</a>', url, cart)
+            link = f'<a href="{url}">{cart}</a>'
+            return mark_safe(link)
         else:
             return "-"
 

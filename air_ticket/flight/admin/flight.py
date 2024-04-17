@@ -1,12 +1,8 @@
 from django.contrib import admin
 from django.urls import reverse
-from django.utils.html import format_html
+from django.utils.safestring import mark_safe
 
-from flight.admin.inlines import (
-    BookingInline,
-    CartInline,
-    TicketInline
-)
+from flight.admin.inlines import BookingInline, CartInline, TicketInline
 from flight.models import Flight
 
 
@@ -45,7 +41,8 @@ class FlightAdmin(admin.ModelAdmin):
         airplane = obj.airplane
         if airplane:
             url = reverse("admin:flight_airplane_change", args=(airplane.id,))
-            return format_html('<a href="{}">{}</a>', url, airplane.name)
+            link = f'<a href="{url}">{airplane.name}</a>'
+            return mark_safe(link)
         else:
             return "-"
 
@@ -53,7 +50,8 @@ class FlightAdmin(admin.ModelAdmin):
         airport = obj.departure_airport
         if airport:
             url = reverse("admin:flight_airport_change", args=(airport.id,))
-            return format_html('<a href="{}">{}</a>', url, airport.name)
+            link = f'<a href="{url}">{airport.name}</a>'
+            return mark_safe(link)
         else:
             return "-"
 
@@ -61,7 +59,8 @@ class FlightAdmin(admin.ModelAdmin):
         airport = obj.arrival_airport
         if airport:
             url = reverse("admin:flight_airport_change", args=(airport.id,))
-            return format_html('<a href="{}">{}</a>', url, airport.name)
+            link = f'<a href="{url}">{airport.name}</a>'
+            return mark_safe(link)
         else:
             return "-"
 

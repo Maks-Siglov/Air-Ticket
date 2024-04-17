@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import reverse
-from django.utils.html import format_html
+from django.utils.safestring import mark_safe
 
 from flight.models import Flight
 
@@ -40,7 +40,8 @@ class DepartureFlightInline(admin.TabularInline):
             url = reverse(
                 "admin:flight_airport_change", args=(arrival_airport.id,)
             )
-            return format_html('<a href="{}">{}</a>', url, arrival_airport)
+            link = f'<a href="{url}">{arrival_airport}</a>'
+            return mark_safe(link)
         else:
             return "-"
 
