@@ -12,4 +12,4 @@ class TicketCart(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
-        return f"Cart: {self.flight}, passengers {self.passenger_amount}"
+        return f"Cart №{self.id}, {self.passenger_amount} passengers"

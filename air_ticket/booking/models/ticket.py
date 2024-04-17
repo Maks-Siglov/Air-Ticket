@@ -15,7 +15,7 @@ class Ticket(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.passenger} Ticket"
+        return f"Ticket №{self.id}"
 
     @property
     def unit_amount(self) -> int:
