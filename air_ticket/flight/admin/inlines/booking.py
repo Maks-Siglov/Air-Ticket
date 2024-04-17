@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.db.models import QuerySet
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 
@@ -17,7 +18,7 @@ class BookingInline(admin.TabularInline):
         "created_at",
     )
 
-    def get_queryset(self, request):
+    def get_queryset(self, request) -> QuerySet[Booking]:
         queryset = super().get_queryset(request)
         return queryset.select_related("ticket", "cart", "flight")
 

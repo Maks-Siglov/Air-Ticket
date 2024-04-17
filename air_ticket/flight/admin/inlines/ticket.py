@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.db.models import QuerySet
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 
@@ -23,7 +24,7 @@ class TicketInline(admin.TabularInline):
         "luggage",
     )
 
-    def get_queryset(self, request):
+    def get_queryset(self, request) -> QuerySet[Ticket]:
         queryset = super().get_queryset(request)
         return queryset.select_related("passenger", "cart", "flight")
 

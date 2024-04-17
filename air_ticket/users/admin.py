@@ -7,6 +7,7 @@ from users.models import User
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
     list_display = (
+        "id",
         "email",
         "phone_number",
         "created_at",
@@ -15,8 +16,8 @@ class CustomUserAdmin(UserAdmin):
         "is_staff",
         "is_superuser",
     )
-    list_filter = ("is_active", "is_staff", "is_superuser")
-    search_fields = ("email",)
+    list_filter = ("created_at", "is_staff", "is_superuser", "is_active")
+    search_fields = ("email", "phone_number")
     readonly_fields = ("created_at", "updated_at")
     fieldsets = (
         (None, {"fields": ("email", "password")}),

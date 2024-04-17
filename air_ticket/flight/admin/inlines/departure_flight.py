@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.db.models import QuerySet
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 
@@ -25,7 +26,7 @@ class DepartureFlightInline(admin.TabularInline):
     )
     verbose_name = "Departure Flight"
 
-    def get_queryset(self, request):
+    def get_queryset(self, request) -> QuerySet[Flight]:
         queryset = super().get_queryset(request)
         return queryset.select_related(
             "arrival_airport",
