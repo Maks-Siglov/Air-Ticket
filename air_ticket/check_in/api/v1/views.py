@@ -26,7 +26,6 @@ class SelectSeatView(APIView):
             with transaction.atomic():
                 order_ticket.seat_number = seat_number
                 order_ticket.save()
-                print(seat_number)
                 flight.ordered_seats.append(seat_number)
                 flight.save()
         except IntegrityError:

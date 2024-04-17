@@ -5,7 +5,7 @@ from customer.models import Contact, Passenger
 
 @admin.register(Passenger)
 class PassengerAdmin(admin.ModelAdmin):
-    list_display = ("passport_id", "first_name", "last_name")
+    list_display = ("first_name", "last_name", "passport_id")
     search_fields = ("passport_id", "first_name", "last_name")
     ordering = ("passport_id",)
 
