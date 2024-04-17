@@ -35,8 +35,16 @@ cd task_19_air_crm/
     ```bash
       docker compose up  
      ```
+   
+5.  Visit `http://127.0.0.1:8080/`
 
-5. See Enable Extended Functionality for enable sending email notification
+6. Now you can log in as Admin user or continue exploring without login
+   ```bash
+      login: admin@gmail.com
+      password: admin_user22 
+   ```
+
+7. See Enable Extended Functionality for enable sending email notification
 
 
 ## Run Locally

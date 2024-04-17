@@ -13,14 +13,16 @@
         <div class="d-flex mx-5">
             <ul class="navbar-nav me-auto">
                 {% if user.is_authenticated %}
-                    <li class="nav-item">
-                      <a class="nav-link active" href="{% url 'customer:profile' %}">Profile</a>
-                    </li>
+
                     {% if user.is_admin or user.is_staff %}
                         <li class="nav-item">
                             <a class="nav-link active" href="{% url 'admin:index' %}">Admin</a>
                         </li>
                     {% endif %}
+
+                    <li class="nav-item">
+                      <a class="nav-link active" href="{% url 'customer:profile' %}">Profile</a>
+                    </li>
 
                     {% else %}
                     <li class="nav-item">

@@ -1,19 +1,11 @@
 import pytest
-from booking.models import (
-    Booking,
-    Ticket,
-    TicketCart
-)
+from booking.models import Booking, Ticket, TicketCart
 from customer.models import Contact, Passenger
-from flight.models import (
-    Airplane,
-    Airport,
-    Flight
-)
+from flight.models import Airplane, Airport, Flight
 
 
 @pytest.fixture
-def test_airplane_with_seats(db):
+def test_airplane(db):
     test_airplane = Airplane.objects.create(
         name="Cirrus King Air-4660", seats_amount=20
     )
@@ -24,7 +16,7 @@ def test_airplane_with_seats(db):
 
 
 @pytest.fixture
-def test_flight(db, test_airplane_with_seats: Airplane) -> Flight:
+def test_flight(db, test_airplane: Airplane) -> Flight:
     test_departure_airport = Airport.objects.create(
         name="Vienna International",
         timezone="Europe/Vienna",
@@ -41,7 +33,7 @@ def test_flight(db, test_airplane_with_seats: Airplane) -> Flight:
     test_flight = Flight.objects.create(
         departure_airport=test_departure_airport,
         arrival_airport=test_arrival_airport,
-        airplane=test_airplane_with_seats,
+        airplane=test_airplane,
         departure_scheduled="2024-03-03 17:05:00.000000 +00:00",
         arrival_scheduled="2024-03-03 19:55:00.000000 +00:00",
         iata="MH9906",
