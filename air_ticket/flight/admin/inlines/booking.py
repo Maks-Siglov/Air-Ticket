@@ -11,7 +11,6 @@ class BookingInline(admin.TabularInline):
     readonly_fields = ("cart_link", "ticket_link", "created_at")
     fields = (
         "ticket_link",
-        "ticket",
         "cart_link",
         "is_ordered",
         "is_active",

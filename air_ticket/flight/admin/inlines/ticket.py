@@ -19,7 +19,6 @@ class TicketInline(admin.TabularInline):
         "passenger_last_name_link",
         "passenger",
         "cart_link",
-        "cart",
         "price",
         "lunch",
         "luggage",
@@ -61,4 +60,8 @@ class TicketInline(admin.TabularInline):
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
-        return queryset.select_related("passenger", "cart", "flight")
+        return queryset.select_related(
+            "passenger",
+            "cart",
+            "flight",
+        )

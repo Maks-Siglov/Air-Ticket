@@ -2,7 +2,11 @@ from django.contrib import admin
 from django.urls import reverse
 from django.utils.html import format_html
 
-from flight.admin.inlines import BookingInline, CartInline, TicketInline
+from flight.admin.inlines import (
+    BookingInline,
+    CartInline,
+    TicketInline
+)
 from flight.models import Flight
 
 
