@@ -11,6 +11,7 @@ class BookingInline(admin.TabularInline):
     readonly_fields = ("cart_link", "ticket_link", "created_at")
     fields = (
         "ticket_link",
+        "ticket",
         "cart_link",
         "is_ordered",
         "is_active",
@@ -38,4 +39,4 @@ class BookingInline(admin.TabularInline):
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
-        return queryset.select_related("ticket", "cart")
+        return queryset.select_related("ticket", "cart", "flight")

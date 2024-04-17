@@ -7,7 +7,8 @@ from booking.models import Ticket
 
 class TicketInline(admin.TabularInline):
     model = Ticket
-    extra = 0
+    extra = 1
+
     readonly_fields = (
         "passenger_first_name_link",
         "passenger_last_name_link",
@@ -16,15 +17,12 @@ class TicketInline(admin.TabularInline):
     fields = (
         "passenger_first_name_link",
         "passenger_last_name_link",
+        "passenger",
         "cart_link",
+        "cart",
         "price",
         "lunch",
         "luggage",
-    )
-    search_fields = (
-        "passenger__first_name",
-        "passenger__last_name",
-        "passenger__email",
     )
 
     def passenger_first_name_link(self, obj):
@@ -57,10 +55,10 @@ class TicketInline(admin.TabularInline):
         else:
             return "-"
 
-    passenger_first_name_link.short_description = "Passenger First Name"
-    passenger_last_name_link.short_description = "Passenger Last Name"
+    passenger_first_name_link.short_description = "First Name"
+    passenger_last_name_link.short_description = "Last Name"
     cart_link.short_description = "Cart"
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
-        return queryset.select_related("passenger", "cart")
+        return queryset.select_related("passenger", "cart", "flight")
