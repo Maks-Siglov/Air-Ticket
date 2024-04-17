@@ -24,6 +24,10 @@ class TicketInline(admin.TabularInline):
         "luggage",
     )
 
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        return queryset.select_related("passenger", "cart", "flight")
+
     def passenger_first_name_link(self, obj):
         passenger = obj.passenger
         if passenger:
@@ -57,11 +61,3 @@ class TicketInline(admin.TabularInline):
     passenger_first_name_link.short_description = "First Name"
     passenger_last_name_link.short_description = "Last Name"
     cart_link.short_description = "Cart"
-
-    def get_queryset(self, request):
-        queryset = super().get_queryset(request)
-        return queryset.select_related(
-            "passenger",
-            "cart",
-            "flight",
-        )

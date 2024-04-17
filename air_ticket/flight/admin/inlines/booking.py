@@ -17,6 +17,13 @@ class BookingInline(admin.TabularInline):
         "created_at",
     )
 
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        return queryset.select_related("ticket", "cart", "flight")
+
+    def has_delete_permission(self, request, obj=None) -> bool:
+        return False
+
     def cart_link(self, obj):
         cart = obj.cart
         if cart:
@@ -35,7 +42,3 @@ class BookingInline(admin.TabularInline):
 
     cart_link.short_description = "Cart"
     ticket_link.short_description = "Ticket"
-
-    def get_queryset(self, request):
-        queryset = super().get_queryset(request)
-        return queryset.select_related("ticket", "cart", "flight")

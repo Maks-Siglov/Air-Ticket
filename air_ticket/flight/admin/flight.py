@@ -35,6 +35,12 @@ class FlightAdmin(admin.ModelAdmin):
     )
     search_fields = ("number", "iata", "icao")
 
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        return queryset.select_related(
+            "airplane", "arrival_airport", "departure_airport"
+        )
+
     def airplane_link(self, obj):
         airplane = obj.airplane
         if airplane:
@@ -62,9 +68,3 @@ class FlightAdmin(admin.ModelAdmin):
     airplane_link.short_description = "Airplane"
     departure_airport_link.short_description = "Departure Airport"
     arrival_airport_link.short_description = "Arrival Airport"
-
-    def get_queryset(self, request):
-        queryset = super().get_queryset(request)
-        return queryset.select_related(
-            "airplane", "arrival_airport", "departure_airport"
-        )
