@@ -5,7 +5,7 @@ class Ticket(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     lunch = models.BooleanField(default=False)
     luggage = models.BooleanField(default=False)
-    flight = models.ForeignKey("flight.Flight", on_delete=models.DO_NOTHING)
+    flight = models.ForeignKey("flight.Flight", on_delete=models.RESTRICT)
     passenger = models.ForeignKey(
         "customer.Passenger", on_delete=models.DO_NOTHING
     )

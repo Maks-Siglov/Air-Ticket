@@ -8,9 +8,9 @@ class Order(models.Model):
         ("Canceled", "canceled"),
     )
     user = models.ForeignKey(
-        "users.User", on_delete=models.DO_NOTHING, null=True, blank=True
+        "users.User", on_delete=models.RESTRICT, null=True, blank=True
     )
-    flight = models.ForeignKey("flight.Flight", on_delete=models.DO_NOTHING)
+    flight = models.ForeignKey("flight.Flight", on_delete=models.RESTRICT)
     status = models.CharField(
         max_length=20, choices=STATUS_CHOICES, default="Processed"
     )

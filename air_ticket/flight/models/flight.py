@@ -15,17 +15,15 @@ class Flight(models.Model):
     luggage_price = models.DecimalField(
         max_digits=8, decimal_places=2, default=50
     )
-    airplane = models.ForeignKey(
-        "flight.Airplane", on_delete=models.DO_NOTHING
-    )
+    airplane = models.ForeignKey("flight.Airplane", on_delete=models.RESTRICT)
     arrival_airport = models.ForeignKey(
         "flight.Airport",
-        on_delete=models.DO_NOTHING,
+        on_delete=models.RESTRICT,
         related_name="arrival_flight",
     )
     departure_airport = models.ForeignKey(
         "flight.Airport",
-        on_delete=models.DO_NOTHING,
+        on_delete=models.RESTRICT,
         related_name="departure_flight",
     )
     arrival_scheduled = models.DateTimeField()
