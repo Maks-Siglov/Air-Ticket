@@ -2,11 +2,7 @@ from django.contrib import auth, messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
-from django.http import (
-    HttpRequest,
-    HttpResponse,
-    HttpResponseRedirect
-)
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 
 from customer.models import Contact
@@ -26,7 +22,7 @@ def register(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
     return render(request, "users/register.html", {"form": form})
 
 
-def login(request: HttpRequest) -> HttpResponseRedirect:
+def login(request: HttpRequest) -> HttpResponseRedirect | HttpResponse:
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():

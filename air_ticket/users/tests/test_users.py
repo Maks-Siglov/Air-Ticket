@@ -23,7 +23,7 @@ def test_register(client: Client):
     assert user is not None
 
 
-def test_login(client: Client, test_user: User):
+def test_login(client: Client):
     response = client.get(reverse("users:login"))
     assert response.status_code == 200
 

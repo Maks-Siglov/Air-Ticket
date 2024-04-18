@@ -9,5 +9,3 @@ def test_user(db) -> User:
         password="test_password",
     )
     yield user
-
-    user.delete()

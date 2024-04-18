@@ -4,7 +4,7 @@ from booking.tests.conftest import (
     test_airplane,
     test_cart,
     test_contact,
-    test_flight
+    test_flight,
 )
 from flight.models import Flight
 from orders.models import Order
@@ -18,8 +18,6 @@ def test_order(db, test_flight: Flight) -> Order:
 
     yield order
 
-    order.delete()
-
 
 @pytest.fixture
 def test_order_ticket(
@@ -29,5 +27,3 @@ def test_order_ticket(
     order_ticket = OrderTicket.objects.create(order=test_order, ticket=ticket)
 
     yield order_ticket
-
-    order_ticket.delete()

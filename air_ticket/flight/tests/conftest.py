@@ -1,9 +1,5 @@
 import pytest
-from flight.models import (
-    Airplane,
-    Airport,
-    Flight
-)
+from flight.models import Airplane, Airport, Flight
 from users.models import User
 
 
@@ -35,8 +31,3 @@ def test_flight(db) -> User:
     )
 
     yield test_flight
-
-    test_airplane.delete()
-    test_arrival_airport.delete()
-    test_departure_airport.delete()
-    test_flight.delete()

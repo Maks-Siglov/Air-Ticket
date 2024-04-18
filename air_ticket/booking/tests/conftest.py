@@ -1,15 +1,7 @@
 import pytest
-from booking.models import (
-    Booking,
-    Ticket,
-    TicketCart
-)
+from booking.models import Booking, Ticket, TicketCart
 from customer.models import Contact, Passenger
-from flight.models import (
-    Airplane,
-    Airport,
-    Flight
-)
+from flight.models import Airplane, Airport, Flight
 
 
 @pytest.fixture
@@ -19,8 +11,6 @@ def test_airplane(db):
     )
 
     yield test_airplane
-
-    test_airplane.delete()
 
 
 @pytest.fixture
@@ -50,10 +40,6 @@ def test_flight(db, test_airplane: Airplane) -> Flight:
 
     yield test_flight
 
-    test_departure_airport.delete()
-    test_arrival_airport.delete()
-    test_flight.delete()
-
 
 @pytest.fixture
 def test_contact(db) -> Contact:
@@ -62,8 +48,6 @@ def test_contact(db) -> Contact:
     )
 
     yield contact
-
-    contact.delete()
 
 
 @pytest.fixture
@@ -76,7 +60,7 @@ def test_cart(db, test_flight: Flight, test_contact: Contact) -> TicketCart:
         last_name="test_last_name",
         passport_id="331542159",
     )
-    ticket = Ticket.objects.create(
+    Ticket.objects.create(
         cart=cart,
         passenger=passenger,
         flight=test_flight,
@@ -85,34 +69,23 @@ def test_cart(db, test_flight: Flight, test_contact: Contact) -> TicketCart:
         luggage=False,
     )
 
-    booking = Booking.objects.create(flight=test_flight, cart=cart)
+    Booking.objects.create(flight=test_flight, cart=cart)
 
     yield cart
-
-    booking.delete()
-    passenger.delete()
-    ticket.delete()
-    cart.delete()
 
 
 @pytest.fixture
 def test_empty_cart(db, test_flight: Flight):
     cart = TicketCart.objects.create(flight=test_flight, passenger_amount=1)
-    booking = Booking.objects.create(flight=test_flight, cart=cart)
+    Booking.objects.create(flight=test_flight, cart=cart)
 
     yield cart
-
-    booking.delete()
-    cart.delete()
 
 
 @pytest.fixture
 def test_bookings(db, test_flight):
     cart = TicketCart.objects.create(flight=test_flight, passenger_amount=1)
-    booking = Booking.objects.create(flight=test_flight, cart=cart)
+    Booking.objects.create(flight=test_flight, cart=cart)
     Booking.objects.create(flight=test_flight, cart=cart)
 
     yield
-
-    booking.delete()
-    cart.delete()
