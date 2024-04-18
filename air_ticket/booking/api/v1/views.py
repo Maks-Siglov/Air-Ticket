@@ -25,6 +25,7 @@ from booking.api.v1.serializers.ticket_create_response import (
 from booking.crud import (
     get_cart,
     get_cart_with_flight,
+    get_expired_bookings_with_flight,
     get_first_booking,
     get_ticket
 )
@@ -192,11 +193,14 @@ class DeactivateExpiredBookingAPI(APIView):
             minutes=settings.BOOKING_MINUTES_LIFETIME
         )
 
-        expired_bookings = Booking.objects.filter(
-            ticket=None, created_at__lte=threshold_time
-        )
+        expired_bookings = get_expired_bookings_with_flight(threshold_time)
         if not expired_bookings.exists():
             return Response("There is no Expired bookings", status.HTTP_200_OK)
+
+        for booking in expired_bookings:
+            flight = booking.flight
+            flight.booked_seats.remove(booking.booked_seat_number)
+            flight.save()
 
         expired_bookings.update(is_active=False)
 

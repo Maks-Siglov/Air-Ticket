@@ -7,6 +7,8 @@ class Booking(models.Model):
     ticket = models.ForeignKey(
         "booking.Ticket", on_delete=models.DO_NOTHING, null=True, blank=True
     )
+    booked_seat_number = models.IntegerField()
+
     is_ordered = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
 

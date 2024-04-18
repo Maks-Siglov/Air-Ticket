@@ -1,12 +1,9 @@
+from datetime import datetime
 from decimal import Decimal
 
 from django.db.models import QuerySet, Sum
 
-from booking.models import (
-    Booking,
-    Ticket,
-    TicketCart
-)
+from booking.models import Booking, Ticket, TicketCart
 from orders.models import Order, OrderTicket
 
 
@@ -68,3 +65,11 @@ def get_cart_with_contact(cart_pk: int) -> TicketCart | None:
     return (
         TicketCart.objects.select_related("contact").filter(pk=cart_pk).first()
     )
+
+
+def get_expired_bookings_with_flight(
+    threshold_time: datetime,
+) -> QuerySet[Booking]:
+    return Booking.objects.filter(
+        ticket=None, created_at__lte=threshold_time
+    ).select_related("flight")

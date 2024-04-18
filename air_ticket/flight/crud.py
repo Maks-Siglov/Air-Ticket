@@ -1,7 +1,13 @@
 from datetime import datetime, timedelta
 
 from django.conf import settings
-from django.db.models import F, Func, IntegerField, Q, QuerySet
+from django.db.models import (
+    F,
+    Func,
+    IntegerField,
+    Q,
+    QuerySet
+)
 from django.utils import timezone
 
 from flight.models import Airport, Flight
@@ -83,7 +89,7 @@ def get_suggestion_airports(value: str) -> QuerySet[Airport]:
     return Airport.objects.filter(name__icontains=value)[:10]
 
 
-def book_available_seats(flight: Flight, seats_amount: int) -> None:
+def book_available_seats(flight: Flight, seats_amount: int) -> list[int]:
     available_seats = list(
         set(flight.seats)
         - set(flight.booked_seats)
@@ -95,3 +101,5 @@ def book_available_seats(flight: Flight, seats_amount: int) -> None:
     chosen_seats = available_seats[:seats_amount]
     flight.booked_seats.extend(chosen_seats)
     flight.save()
+
+    return chosen_seats

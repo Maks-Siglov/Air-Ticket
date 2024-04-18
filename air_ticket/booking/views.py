@@ -38,12 +38,13 @@ def create_cart(request: HttpRequest, flight_pk: int) -> HttpResponseRedirect:
         passenger_amount=passenger_amount, flight=flight
     )
     try:
-        book_available_seats(flight, passenger_amount)
+        chosen_seats = book_available_seats(flight, passenger_amount)
     except ValueError:
         messages.error(request, "There is no enough available seats")
         return redirect("main:index")
     bookings = [
-        Booking(flight=flight, cart=cart) for _ in range(passenger_amount)
+        Booking(flight=flight, cart=cart, booked_seat_number=seat_number)
+        for seat_number in chosen_seats
     ]
     Booking.objects.bulk_create(bookings)
 

@@ -1,5 +1,9 @@
 import pytest
-from flight.models import Airplane, Airport, Flight
+from flight.models import (
+    Airplane,
+    Airport,
+    Flight
+)
 from users.models import User
 
 

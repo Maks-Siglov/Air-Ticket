@@ -4,7 +4,7 @@ from booking.tests.conftest import (
     test_airplane,
     test_cart,
     test_contact,
-    test_flight,
+    test_flight
 )
 from flight.models import Flight
 from orders.models import Order
