@@ -1,7 +1,15 @@
 import pytest
-from booking.models import Booking, Ticket, TicketCart
+from booking.models import (
+    Booking,
+    Ticket,
+    TicketCart
+)
 from customer.models import Contact, Passenger
-from flight.models import Airplane, Airport, Flight
+from flight.models import (
+    Airplane,
+    Airport,
+    Flight
+)
 
 
 @pytest.fixture

@@ -41,15 +41,4 @@ class Flight(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self) -> str:
-        return self.number
-
-    def book_available_seats(self, seats_amount: int) -> None:
-        available_seats = list(
-            set(self.seats) - set(self.booked_seats) - set(self.ordered_seats)
-        )
-        if len(available_seats) < seats_amount:
-            raise ValueError("Not enough available seats")
-
-        chosen_seats = list(random.sample(list(available_seats), seats_amount))
-        self.booked_seats.extend(chosen_seats)
-        self.save()
+        return str(self.number)

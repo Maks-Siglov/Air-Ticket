@@ -18,6 +18,7 @@ from booking.crud import (
 from booking.models import Booking, TicketCart
 from customer.crud import get_contact_by_email
 from customer.models import Contact
+from flight.crud import book_available_seats
 from flight.models import Flight
 from users.models import User
 
@@ -37,7 +38,7 @@ def create_cart(request: HttpRequest, flight_pk: int) -> HttpResponseRedirect:
         passenger_amount=passenger_amount, flight=flight
     )
     try:
-        flight.book_available_seats(passenger_amount)
+        book_available_seats(flight, passenger_amount)
     except ValueError:
         messages.error(request, "There is no enough available seats")
         return redirect("main:index")
