@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 
 import pytz
 from celery import shared_task
-from db.main import session
+from db.main import get_session
 from sqlalchemy import func
 
 from booking_management.models import Booking
@@ -12,6 +12,8 @@ from booking_management.utils import get_expired_bookings
 
 @shared_task
 def deactivate_booking():
+    session = get_session()
+
     utc_now = datetime.utcnow().replace(tzinfo=pytz.utc)
     threshold_time = utc_now - timedelta(minutes=BOOKING_MINUTES_LIFETIME)
 

@@ -1,16 +1,27 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine, Engine, select
+from sqlalchemy.orm import sessionmaker, Session
 
-from booking_management.settings import (
-    DB_ENGINE,
-    DB_NAME,
-    DB_PASSWORD,
-    DB_USER,
-)
+from booking_management.settings import DB_URL
 
-engine = create_engine(
-    f"{DB_ENGINE}://{DB_USER}:{DB_PASSWORD}"
-    f"@{DB_PASSWORD}:{DB_PASSWORD}/{DB_NAME}"
-)
-Session = sessionmaker(bind=engine)
-session = Session()
+
+class SessionExcept(Exception):
+    pass
+
+
+def get_session() -> Session:
+    engine = create_engine(DB_URL)
+    _check_connection(engine)
+    maker = _create_sessionmaker(engine)
+    return maker()
+
+
+def _check_connection(db_engine: Engine) -> None:
+    try:
+        with db_engine.connect() as conn:
+            conn.execute(select(1))
+    except Exception as e:
+        raise SessionExcept(e)
+
+
+def _create_sessionmaker(db_engine: Engine) -> sessionmaker:
+    return sessionmaker(bind=db_engine, expire_on_commit=False, future=True)
