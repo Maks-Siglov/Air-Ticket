@@ -180,7 +180,7 @@ FUTURE_STATUS = "Future"
 PAST_STATUS = "Past"
 
 # Booking settings
-BOOKING_MINUTES_LIFETIME = 20
+BOOKING_MINUTES_LIFETIME = 10
 
 # Celery settings
 

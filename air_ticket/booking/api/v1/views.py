@@ -29,11 +29,7 @@ from booking.crud import (
     get_first_booking,
     get_ticket
 )
-from booking.models import (
-    Booking,
-    Ticket,
-    TicketCart
-)
+from booking.models import Ticket, TicketCart
 from customer.crud import get_contact
 from customer.models import Contact
 

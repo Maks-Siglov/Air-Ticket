@@ -8,7 +8,10 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ("booking", "0022_ticket_flight"),
-        ("flight", "0018_alter_flight_airplane_alter_flight_arrival_airport_and_more"),
+        (
+            "flight",
+            "0018_alter_flight_airplane_alter_flight_arrival_airport_and_more",
+        ),
     ]
 
     operations = [
@@ -16,7 +19,8 @@ class Migration(migrations.Migration):
             model_name="ticket",
             name="flight",
             field=models.ForeignKey(
-                on_delete=django.db.models.deletion.RESTRICT, to="flight.flight"
+                on_delete=django.db.models.deletion.RESTRICT,
+                to="flight.flight",
             ),
         ),
     ]
