@@ -12,15 +12,11 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from booking.api.v1.serializers import (
+    ContactCreationResponseSerializer,
     ContactSerializer,
     PassengerSerializer,
+    TicketCreationResponseSerializer,
     TicketSerializer
-)
-from booking.api.v1.serializers.contact_creation_serializer import (
-    ContactCreationResponseSerializer
-)
-from booking.api.v1.serializers.ticket_create_response import (
-    TicketCreationResponseSerializer
 )
 from booking.crud import (
     get_cart,
