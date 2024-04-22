@@ -1,6 +1,6 @@
 services:
   app:
-    build: .
+    build: ./air_ticket
     user: ${CURRENT_UID}
     container_name: air_ticket
     restart: always
@@ -12,9 +12,9 @@ services:
       - .env.docker
     command: [
       "sh", "-c", "python manage.py migrate &&
-      python manage.py collectstatic --no-input &&
-      python manage.py loaddata fixtures/*.json &&
-      python manage.py runserver 0.0.0.0:8000"
+        python manage.py collectstatic --no-input &&
+        python manage.py loaddata fixtures/*.json &&
+        python manage.py runserver 0.0.0.0:8000"
     ]
     depends_on:
       - db
@@ -66,14 +66,12 @@ services:
       - mynetwork
 
   celery-worker:
-    build: .
+    build: ./booking_management
     user: ${CURRENT_UID}
     container_name: celery_worker
     env_file:
       - .env.docker
-    command: celery -A core worker --loglevel=info
-    volumes:
-      - ./air_ticket:/air_ticket
+    command: celery -A . worker --loglevel=info
     depends_on:
       - app
       - redis
@@ -82,14 +80,14 @@ services:
       - mynetwork
 
   celery-beat:
-    build: .
+    build: ./booking_management
     user: ${CURRENT_UID}
     container_name: celery_beat
     environment:
       - BROKER_CONNECTION_RETRY_ON_STARTUP=True
     env_file:
       - .env.docker
-    command: celery -A core beat --loglevel=info --scheduler redbeat.schedulers.RedBeatScheduler
+    command: celery -A . beat --loglevel=info --scheduler redbeat.schedulers.RedBeatScheduler
     volumes:
       - ./air_ticket:/air_ticket
     depends_on:
@@ -99,12 +97,12 @@ services:
       - mynetwork
 
   flower:
-    build: .
+    build: ./booking_management
     user: ${CURRENT_UID}
     container_name: flower
     env_file:
       - .env.docker
-    command: sh -c "celery -A core flower --address=0.0.0.0 --port=5555"
+    command: sh -c "celery -A . flower --address=0.0.0.0 --port=5555"
     volumes:
       - ./air_ticket:/air_ticket
     depends_on:

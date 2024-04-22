@@ -11,4 +11,5 @@ RUN pip install --no-cache-dir --upgrade pip setuptools wheel \
 
 RUN rm -rf /var/lib/apt/lists/*
 
-COPY air_ticket .
+COPY air_ticket air_ticket
+COPY booking_management booking_management
