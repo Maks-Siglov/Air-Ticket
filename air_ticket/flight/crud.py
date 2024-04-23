@@ -50,19 +50,15 @@ def get_searched_flights(
     return flights
 
 
-def get_user_flights(user: User, status: str) -> QuerySet[Flight]:
+def get_user_flights(user: User, status: str | None) -> QuerySet[Flight]:
     flight_ids = Order.objects.filter(user=user).values_list("flight_id")
     flights = Flight.objects.filter(id__in=flight_ids).order_by(
         "departure_scheduled"
     )
     if status == settings.FUTURE_STATUS:
-        flights = flights.objects.filter(
-            departure_scheduled__gte=timezone.now()
-        )
+        flights = flights.filter(departure_scheduled__gte=timezone.now())
     elif status == settings.PAST_STATUS:
-        flights = flights.objects.filter(
-            departure_scheduled__lte=timezone.now()
-        )
+        flights = flights.filter(departure_scheduled__lte=timezone.now())
 
     return flights.select_related(
         "airplane", "departure_airport", "arrival_airport"

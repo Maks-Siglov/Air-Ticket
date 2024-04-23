@@ -1,8 +1,13 @@
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
+from django.http import (
+    HttpRequest,
+    HttpResponse,
+    HttpResponseRedirect
+)
+from django.shortcuts import redirect, render
 
 from flight.crud import get_user_flights
 from orders.crud import get_user_orders
@@ -14,10 +19,14 @@ def profile(request: HttpRequest) -> HttpResponse:
 
 
 @login_required(login_url="users:login")
-def customer_orders(request: HttpRequest) -> HttpResponse:
+def customer_orders(
+    request: HttpRequest,
+) -> HttpResponse | HttpResponseRedirect:
     page = request.GET.get("page", settings.DEFAULT_PAGE)
 
-    orders = get_user_orders(request.user)
+    if (orders := get_user_orders(request.user)) is None:
+        messages.warning(request, "No orders found.")
+        return redirect("main:index")
 
     paginator = Paginator(orders, settings.ITEMS_PER_PAGE)
     current_page = paginator.page(int(page))

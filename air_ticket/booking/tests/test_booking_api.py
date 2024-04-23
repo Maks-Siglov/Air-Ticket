@@ -6,7 +6,11 @@ from django.urls import reverse
 from django.utils import timezone
 
 import pytest
-from booking.models import Booking, Ticket, TicketCart
+from booking.models import (
+    Booking,
+    Ticket,
+    TicketCart
+)
 from customer.models import Contact
 
 
