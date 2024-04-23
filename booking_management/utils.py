@@ -1,13 +1,9 @@
 from datetime import datetime
 
-from sqlalchemy import (
-    Sequence,
-    and_,
-    select
-)
+from sqlalchemy import Sequence, and_, select
 from sqlalchemy.orm import Session, selectinload
 
-from booking_management.models import Booking
+from models import Booking
 
 
 def get_expired_bookings(

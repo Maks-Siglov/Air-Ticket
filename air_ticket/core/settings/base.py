@@ -178,23 +178,3 @@ ITEMS_PER_PAGE = 10
 # Flight statuses
 FUTURE_STATUS = "Future"
 PAST_STATUS = "Past"
-
-# Booking settings
-BOOKING_MINUTES_LIFETIME = 10
-
-# Celery settings
-
-CELERY_BROKER_URL = (
-    f"redis://{os.environ['REDIS_HOST']}:{os.environ['REDIS_PORT']}/"
-    f"{os.environ['REDIS_DB']}"
-)
-REDBEAT_REDIS_URL = (
-    f"redis://{os.environ['REDIS_HOST']}:{os.environ['REDIS_PORT']}/"
-    f"{os.environ['REDBEAT_REDIS_DB']}"
-)
-CELERY_TASK_TRACK_STARTED = True
-CELERY_ACCEPT_CONTENT = ("application/json",)
-CELERY_RESULT_SERIALIZER = "json"
-CELERY_TIMEZONE = "Europe/Kiev"
-
-DOMAIN_FOR_CELERY_TASKS = os.environ["DOMAIN_FOR_CELERY_TASKS"]

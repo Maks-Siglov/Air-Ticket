@@ -28,6 +28,7 @@ share/python-wheels/
 MANIFEST
 
 .scripts/
+mem
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

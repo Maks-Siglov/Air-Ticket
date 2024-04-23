@@ -1,6 +1,8 @@
 services:
   app:
-    build: ./air_ticket
+    build:
+      context: .
+      dockerfile: Dockerfile
     user: ${CURRENT_UID}
     container_name: air_ticket
     restart: always
@@ -66,21 +68,23 @@ services:
       - mynetwork
 
   celery-worker:
-    build: ./booking_management
+    build:
+      context: .
+      dockerfile: ./Dockerfile.celery
     user: ${CURRENT_UID}
     container_name: celery_worker
     env_file:
       - .env.docker
-    command: celery -A . worker --loglevel=info
+    command: celery -A booking_management worker --loglevel=info
     depends_on:
-      - app
       - redis
-      - celery-beat
     networks:
       - mynetwork
 
   celery-beat:
-    build: ./booking_management
+    build:
+      context: .
+      dockerfile: ./Dockerfile.celery
     user: ${CURRENT_UID}
     container_name: celery_beat
     environment:
@@ -89,26 +93,24 @@ services:
       - .env.docker
     command: celery -A . beat --loglevel=info --scheduler redbeat.schedulers.RedBeatScheduler
     volumes:
-      - ./air_ticket:/air_ticket
+      - ./booking_management:/app
     depends_on:
       - redis
-      - app
+      - celery-worker
     networks:
       - mynetwork
 
   flower:
-    build: ./booking_management
-    user: ${CURRENT_UID}
+    image: mher/flower
     container_name: flower
+    working_dir: /booking_management
     env_file:
       - .env.docker
-    command: sh -c "celery -A . flower --address=0.0.0.0 --port=5555"
-    volumes:
-      - ./air_ticket:/air_ticket
+    command: celery flower
     depends_on:
+      - redis
       - celery-worker
       - celery-beat
-      - redis
     ports:
       - "5555:5555"
     networks:

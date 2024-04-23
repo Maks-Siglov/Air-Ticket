@@ -3,7 +3,7 @@ from django.template.loader import render_to_string
 
 from orders.crud import get_passenger_order_tickets
 from orders.models import Order
-from orders.tasks import send_tickets_email
+from orders.services.email.send_email import send_tickets_email
 from users.models import User
 
 
@@ -34,4 +34,4 @@ def creation_user_email(order: Order):
         },
     )
 
-    send_tickets_email.delay(html_content, user.email)
+    send_tickets_email(html_content, user.email)
