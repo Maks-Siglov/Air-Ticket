@@ -3,7 +3,7 @@ from datetime import datetime
 from sqlalchemy import Sequence, and_, select
 from sqlalchemy.orm import Session, selectinload
 
-from models import Booking
+from booking_management.models import Booking
 
 
 def get_expired_bookings(

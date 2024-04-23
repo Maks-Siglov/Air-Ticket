@@ -19,9 +19,6 @@ app.conf.task_send_sent_event = True
 
 
 app.autodiscover_tasks()
-from task import deactivate_booking
-
-deactivate_booking.delay()
 
 app.conf.beat_schedule = {
     "delete_expired_bookings": {

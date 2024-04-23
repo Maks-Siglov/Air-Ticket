@@ -2,9 +2,9 @@ from datetime import datetime, timedelta
 
 import pytz
 from celery import shared_task
-from db.main import get_session
 from sqlalchemy import func
 
+from booking_management.db.main import get_session
 from booking_management.models import Booking
 from booking_management.settings import BOOKING_MINUTES_LIFETIME
 from booking_management.utils import get_expired_bookings

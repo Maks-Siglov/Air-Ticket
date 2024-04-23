@@ -91,7 +91,7 @@ services:
       - BROKER_CONNECTION_RETRY_ON_STARTUP=True
     env_file:
       - .env.docker
-    command: celery -A . beat --loglevel=info --scheduler redbeat.schedulers.RedBeatScheduler
+    command: celery -A booking_management beat --loglevel=info --scheduler redbeat.schedulers.RedBeatScheduler
     volumes:
       - ./booking_management:/app
     depends_on:
