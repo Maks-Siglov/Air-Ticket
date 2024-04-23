@@ -104,7 +104,7 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.BasicAuthentication",
         "rest_framework.authentication.SessionAuthentication",
     ],
-    "EXCEPTION_HANDLER": "air_ticket.booking.api.error_handler.custom_exception_handler",
+    "EXCEPTION_HANDLER": "booking.api.error_handler.custom_exception_handler",
 }
 
 # Password validation
@@ -178,3 +178,5 @@ ITEMS_PER_PAGE = 10
 # Flight statuses
 FUTURE_STATUS = "Future"
 PAST_STATUS = "Past"
+
+BOOKING_MINUTES_LIFETIME = 15

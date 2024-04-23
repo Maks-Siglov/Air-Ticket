@@ -1,15 +1,7 @@
 import pytest
-from booking.models import (
-    Booking,
-    Ticket,
-    TicketCart
-)
+from booking.models import Booking, Ticket, TicketCart
 from customer.models import Contact, Passenger
-from flight.models import (
-    Airplane,
-    Airport,
-    Flight
-)
+from flight.models import Airplane, Airport, Flight
 
 
 @pytest.fixture
@@ -44,8 +36,9 @@ def test_flight(db, test_airplane: Airplane) -> Flight:
         arrival_scheduled="2024-03-03 19:55:00.000000 +00:00",
         iata="MH9906",
         icao="MAS9906",
+        seats=[1, 2, 10, 11],
+        booked_seats=[10, 11],
     )
-
     yield test_flight
 
 
@@ -77,7 +70,7 @@ def test_cart(db, test_flight: Flight, test_contact: Contact) -> TicketCart:
         luggage=False,
     )
 
-    Booking.objects.create(flight=test_flight, cart=cart)
+    Booking.objects.create(flight=test_flight, cart=cart, booked_seat_number=1)
 
     yield cart
 
@@ -85,7 +78,7 @@ def test_cart(db, test_flight: Flight, test_contact: Contact) -> TicketCart:
 @pytest.fixture
 def test_empty_cart(db, test_flight: Flight):
     cart = TicketCart.objects.create(flight=test_flight, passenger_amount=1)
-    Booking.objects.create(flight=test_flight, cart=cart)
+    Booking.objects.create(flight=test_flight, cart=cart, booked_seat_number=1)
 
     yield cart
 
@@ -93,7 +86,11 @@ def test_empty_cart(db, test_flight: Flight):
 @pytest.fixture
 def test_bookings(db, test_flight):
     cart = TicketCart.objects.create(flight=test_flight, passenger_amount=1)
-    Booking.objects.create(flight=test_flight, cart=cart)
-    Booking.objects.create(flight=test_flight, cart=cart)
+    Booking.objects.create(
+        flight=test_flight, cart=cart, booked_seat_number=10
+    )
+    Booking.objects.create(
+        flight=test_flight, cart=cart, booked_seat_number=11
+    )
 
     yield
