@@ -5,7 +5,7 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import Session, sessionmaker
 
-from booking_management.settings import DB_URL
+from booking_management.core.settings import DB_URL
 
 
 class SessionExcept(Exception):

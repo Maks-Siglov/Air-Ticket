@@ -75,7 +75,7 @@ services:
     container_name: celery_worker
     env_file:
       - .env.docker
-    command: celery -A booking_management worker --loglevel=info
+    command: celery -A booking_management.core worker --loglevel=info
     depends_on:
       - redis
     networks:
@@ -91,9 +91,7 @@ services:
       - BROKER_CONNECTION_RETRY_ON_STARTUP=True
     env_file:
       - .env.docker
-    command: celery -A booking_management beat --loglevel=info --scheduler redbeat.schedulers.RedBeatScheduler
-    volumes:
-      - ./booking_management:/app
+    command: celery -A booking_management.core beat --loglevel=info --scheduler redbeat.schedulers.RedBeatScheduler
     depends_on:
       - redis
       - celery-worker
