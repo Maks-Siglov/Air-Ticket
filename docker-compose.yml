@@ -92,6 +92,8 @@ services:
     env_file:
       - .env.docker
     command: celery -A booking_management.core beat --loglevel=info --scheduler redbeat.schedulers.RedBeatScheduler
+    volumes:
+      - ./booking_management:/booking_management
     depends_on:
       - redis
       - celery-worker
