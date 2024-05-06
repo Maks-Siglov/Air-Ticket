@@ -1,10 +1,6 @@
-from flask import (
-    Blueprint,
-    jsonify,
-    request
-)
+from flask import Blueprint, jsonify, request
 
-from booking_management.tasks.email_task import send_tickets_email
+from booking_management.task import send_tickets_email
 
 email_bp = Blueprint("email", __name__)
 
