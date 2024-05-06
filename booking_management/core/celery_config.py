@@ -4,8 +4,9 @@ from celery.schedules import crontab
 from booking_management.core.settings import (
     CELERY_BROKER_URL,
     DEACTIVATE_BOOKING_MINUTE_SCHEDULE,
-    REDBEAT_REDIS_URL,
+    REDBEAT_REDIS_URL
 )
+from booking_management.task import deactivate_booking, send_tickets_email
 
 app = Celery("booking_management")
 

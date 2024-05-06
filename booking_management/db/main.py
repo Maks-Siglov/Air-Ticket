@@ -1,5 +1,9 @@
 from sqlalchemy import Engine, create_engine
-from sqlalchemy.orm import Session, scoped_session, sessionmaker
+from sqlalchemy.orm import (
+    Session,
+    scoped_session,
+    sessionmaker
+)
 
 from booking_management.core.settings import DB_URL
 

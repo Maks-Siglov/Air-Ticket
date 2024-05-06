@@ -3,7 +3,7 @@ from datetime import datetime
 from sqlalchemy import (
     Sequence,
     and_,
-    select,
+    select
 )
 from sqlalchemy.orm import Session, selectinload
 

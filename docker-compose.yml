@@ -67,6 +67,19 @@ services:
     networks:
       - mynetwork
 
+  booking_management:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.celery
+    container_name: booking_management
+    ports:
+      - "127.0.0.1:5000:5000"
+    env_file:
+      - .env.docker
+    command: [ "python", "-m", "booking_management.app" ]
+    networks:
+      - mynetwork
+
   celery-worker:
     build:
       context: .
@@ -78,6 +91,7 @@ services:
     command: celery -A booking_management.core worker --loglevel=info
     depends_on:
       - redis
+      - booking_management
     networks:
       - mynetwork
 
