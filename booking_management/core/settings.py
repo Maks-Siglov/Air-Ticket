@@ -1,5 +1,19 @@
 import os
 
+from dotenv import load_dotenv
+
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+if os.getenv("ENV") != "DOCKER":
+    env_path = BASE_DIR.parent.joinpath(".env.local")
+    load_dotenv(env_path)
+
+    assert os.getenv("ENV") == "LOCAL"
+
+
 DB_ENGINE = "postgresql+psycopg2"
 DB_USER = os.environ["DB_USER"]
 DB_PASSWORD = os.environ["DB_PASSWORD"]
