@@ -67,7 +67,7 @@ services:
     networks:
       - mynetwork
 
-  booking_management:
+  flask-app:
     build:
       context: .
       dockerfile: ./Dockerfile.celery
@@ -91,7 +91,7 @@ services:
     command: celery -A booking_management.core worker --loglevel=info
     depends_on:
       - redis
-      - booking_management
+      - flask-app
     networks:
       - mynetwork
 

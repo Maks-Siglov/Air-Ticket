@@ -12,3 +12,5 @@ RUN pip install --no-cache-dir --upgrade pip setuptools wheel \
 RUN rm -rf /var/lib/apt/lists/*
 
 COPY booking_management booking_management
+
+EXPOSE 5000
