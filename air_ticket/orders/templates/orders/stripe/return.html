@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+  {% block title %}Thanks for your order!{% endblock %}
+    <script>const domain = {{ domain }};</script>
+    <script src="{% static 'js/stripe/return.js' %}" defer></script>
+{% block content %}
+    <div class="container">
+        <div class="container mt-5 mb-5">
+            <div class="justify-content-center">
+                <div class="row">
+                    <div class="col-md-6">
+                        <a href="{% url 'main:index' %}"><img src="{% static 'logo/airplane-ticket.png' %}" alt="AirTicket Logo" width="150"></a>
+                        <h4 class="mt-2 mb-3">Thank you for order.</h4>
+                        <span>Your order details below.</span>
+                    </div>
+                    <div class="col-md-6 d-flex flex-column justify-content-end align-items-end">
+                        <p>Airplane: {{ flight.airplane.name }}</p>
+                        <p>Departure Airport: {{ flight.departure_airport.name }}</p>
+                        <p>Departure Date: {{ flight.departure_scheduled }} T/Z: {{ flight.departure_airport.timezone }}</p>
+                        <p>Arrival Airport: {{ flight.arrival_airport.name }}</p>
+                        <p>Arrival Date: {{ flight.arrival_scheduled }} T/Z: {{ flight.arrival_airport.timezone }}</p>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="row">
+                    <div class="col-md-3 text-center">
+                        <span class="d-block">Order №: </span><span class="font-weight-bold">{{ order.pk }}</span>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <span class="d-block">Order Date: </span><span class="font-weight-bold">{{ order.created_at }}</span>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <span class="d-block">Passenger Amount: </span><span class="font-weight-bold">{{ order_tickets.count }}</span>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <span class="d-block">Order status: </span><span class="font-weight-bold">{{ order.status }}</span>
+                    </div>
+                </div>
+                <hr>
+
+                {% for order_ticket in order_tickets %}
+                <div class="card mt-2">
+                    <div class="card-body row">
+                        <div class="col-md-2">
+                            <img src="{% static 'images/ticket.png' %}" alt="Ticket Image" width="80">
+                        </div>
+                        <div class="col-md-8">
+                            <h5 class="card-title">Passenger: {{ order_ticket.ticket.passenger.first_name }} {{ order_ticket.ticket.passenger.last_name }}</h5>
+                            <p class="card-text">Passport id {{ order_ticket.ticket.passenger.passport_id }}</p>
+                        </div>
+                        <div class="col-md-2 d-flex align-items-center">
+                            <p class="card-text">Price: {{ order_ticket.ticket.price }}$</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <hr>
+
+                <div class="row mt-4 text-center">
+                    <ul>
+                        <li style="list-style-type: none; font-weight: 600;">
+                            <span>TOTAL {{ total_price }}$</span>
+                        </li>
+                    </ul>
+                </div>
+                <hr>
+                <div class="row mt-3">
+                    <div class="col-md-6 text-center">
+                        <div>
+                            <span class="d-block font-weight-bold">Thanks for ordering with us.</span>
+                            <span>AirTicket Team</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <span class="d-block mx-3">Need help?</span>
+                        <span class="ml-2">Call  +380 675567558</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

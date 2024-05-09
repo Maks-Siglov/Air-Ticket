@@ -1,0 +1,21 @@
+.seat-image {
+    cursor: pointer;
+}
+
+.seat-image:hover {
+    background-color: royalblue;
+}
+
+.unavailable {
+    background-color: gray;
+}
+
+.selected {
+    background-color: darkgreen;
+    cursor: pointer;
+}
+
+.declined {
+    background-color: red;
+    cursor: pointer;
+}

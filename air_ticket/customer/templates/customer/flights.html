@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load custom_tag %}
+
+{% block title %}My Flights{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                {% include 'customer/includes/sidebar.html' %}
+            </div>
+
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+
+            {% if flights %}
+
+                <div class="dropdown ">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="orderStatusDropdownButton">
+                        <span class="m-3">Flights</span>
+                    </button>
+                    <div class="dropdown-menu text-dark bg-info" id="orderStatusDropdownMenu">
+                        <form method="get">
+                            <div class="form-check mx-3">
+                                <input class="form-check-input" type="radio" name="status" id="flexRadioDefault1" value="default" {% if not request.GET.status or request.GET.status == 'default' %}checked{% endif %}>
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    All
+                                </label>
+                            </div>
+
+                            <div class="form-check mx-3">
+                                <input class="form-check-input" type="radio" name="status" id="flexRadioDefault2" value="Future" {% if request.GET.status == 'Future' %}checked{% endif %}>
+                                <label class="form-check-label" for="flexRadioDefault2">Future</label>
+                            </div>
+                            <div class="form-check mx-3">
+                                <input class="form-check-input" type="radio" name="status" id="flexRadioDefault3" value="Past" {% if request.GET.status == 'Past' %}checked{% endif %}>
+                                <label class="form-check-label" for="flexRadioDefault3">Past</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary mx-3 mt-3">Apply</button>
+                        </form>
+                    </div>
+                </div>
+
+                {% for flight in flights %}
+                <div class="card mt-2">
+                    <div class="card-body row">
+                        <div class="col-md-3">
+                            <p>From {{ flight.departure_airport.name }} to {{ flight.arrival_airport.name }}</p>
+                        </div>
+                        <div class="col-md-7">
+                            <p class="card-title">Departure Date: {{ flight.departure_scheduled }} T/Z: {{ flight.departure_airport.timezone }} </p>
+                            <p class="card-title">Arrival Date: {{ flight.arrival_scheduled }} T/Z: {{ flight.arrival_airport.timezone }}</p>
+                        </div>
+                        <div class="col-md-2 d-flex align-items-center">
+                            <a href="{% url 'flight:detail' flight.pk %}" class="btn btn-primary">Details</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center my-4">
+                        <li class="page-item {% if not flights.has_previous %}disabled{% endif %}">
+                            <a class="page-link" href="{% if flights.has_previous %}?{% change_params page=flights.previous_page_number %}{% else %}#{% endif %}">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+
+                        {% for page in flights.paginator.page_range %}
+                            {% if page >= flights.number|add:-2 and page <= flights.number|add:2 %}
+                                <li class="page-item {% if flights.number == page %}active{% endif %}">
+                                    <a class="page-link" href="?{% change_params page=page %}">{{ page }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+
+                        <li class="page-item {% if not flights.has_next %}disabled{% endif %}">
+                            <a class="page-link" href="{% if flights.has_next %}?{% change_params page=flights.next_page_number %}{% else %}#{% endif %}">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
+            {% else %}
+                <div class="text-center">
+                    <h2>There Is No Flights Yet</h2>
+                </div>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/customer/drop_down_flights.js' %}"></script>
+{% endblock %}

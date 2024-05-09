@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="container container-form" id="container-search-form">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h3>Find Your Tickets</h3>
+                    <hr>
+                    <form action="{% url 'flight:search' %}" method="POST" id="search-form">
+                        {% csrf_token %}
+                        <div class="form-group m-2">
+                            <label for="departure">Departure:</label>
+                            <input type="text" class="form-control" id="departure" name="departure_airport" placeholder="Where from?" required>
+                            <select id="departure-suggestions" class="form-control" size="5" style="display: none;"></select>
+                        </div>
+                        <div class="form-group m-2">
+                            <label for="arrival">Destination:</label>
+                            <input type="text" class="form-control" id="arrival" name="arrival_airport" placeholder="Where to?" required>
+                            <select id="arrival-suggestions" class="form-control" size="5" style="display: none;"></select>
+                        </div>
+                        <div class="form-group m-2">
+                            <label for="departure_date">Destination Date:</label>
+                            <input type="date" class="form-control" id="departure_date" name="departure_date" required>
+                        </div>
+                        <div class="form-group m-2">
+                            <label for="passenger_amount">Passenger Count:</label>
+                            <input type="number" class="form-control" id="passenger_amount" name="passenger_amount" value="1" min="1" max="100" required>
+                        </div>
+                        <div class="text-center mt-3">
+                            <button type="submit" class="btn btn-primary">Search Flights</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="container mt-3" id="flights-container"></div>
+    <script src="{% static 'js/index/suggestions.js' %}"></script>
+{#    <script src="{% static 'js/index/search_flight.js' %}"></script>#}
+{% endblock %}

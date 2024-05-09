@@ -1,0 +1,16 @@
+FROM python:3.11.6-slim as base-celery
+
+RUN apt-get update && apt-get install -y --no-install-recommends build-essential gcc
+
+WORKDIR /app
+
+COPY requirements/celery.txt .
+
+RUN pip install --no-cache-dir --upgrade pip setuptools wheel \
+    && pip install  --no-cache-dir --upgrade -r celery.txt
+
+RUN rm -rf /var/lib/apt/lists/*
+
+COPY booking_management booking_management
+
+EXPOSE 5000
