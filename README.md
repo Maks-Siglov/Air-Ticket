@@ -7,7 +7,7 @@ Welcome to AirTicket, your convenient and reliable platform for booking flights 
 Clone the Repository:
 
 ```bash
-git clone https://git.foxminded.ua/foxstudent105590/task_19_air_crm.git
+git clone https://github.com/Maks-Siglov/Air-Ticket.git
 cd task_19_air_crm/
 ```
 
