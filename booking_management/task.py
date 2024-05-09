@@ -1,7 +1,5 @@
 from datetime import datetime, timedelta
 
-from django.core.mail import EmailMultiAlternatives
-
 import pytz
 from celery import shared_task
 from sqlalchemy import func
@@ -41,17 +39,3 @@ def deactivate_booking():
 
     session.commit()
     return "Expired bookings have been deactivated."
-
-
-@shared_task
-def send_tickets_email(html_content: str, user_email: str) -> None:
-
-    mail = EmailMultiAlternatives(
-        subject="AirTicket",
-        body=html_content,
-        from_email="etqueens22@gmail.com",
-        to=[user_email],
-    )
-    mail.attach_alternative(html_content, "text/html")
-
-    mail.send()

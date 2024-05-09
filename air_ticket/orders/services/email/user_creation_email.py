@@ -4,10 +4,11 @@ from django.template.loader import render_to_string
 import requests
 from orders.crud import get_passenger_order_tickets
 from orders.models import Order
+from orders.services.email.send_email import send_tickets_email
 from users.models import User
 
 
-def creation_user_email(order: Order):
+def creation_user_email(order: Order) -> None:
     order_tickets = get_passenger_order_tickets(order)
 
     order_ticket = order_tickets.first()
@@ -34,7 +35,4 @@ def creation_user_email(order: Order):
         },
     )
 
-    response = requests.post(
-        f"http://{settings.BOOKING_MANAGEMENT_DOMAIN}/send-email/",
-        json={"html_content": html_content, "user_email": user.email},
-    )
+    send_tickets_email(html_content, user.email)

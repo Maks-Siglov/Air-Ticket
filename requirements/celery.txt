@@ -1,7 +1,5 @@
 celery[redis]==5.3.6
 celery-redbeat==2.2.0
-flask==3.0.3
-django==5.0.4
 pathlib==1.0.1
 redis==5.0.3
 flower==1.2.0

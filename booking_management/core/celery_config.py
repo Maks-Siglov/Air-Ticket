@@ -2,7 +2,7 @@ from celery import Celery
 from celery.schedules import crontab
 
 from booking_management.core import settings
-from booking_management.task import deactivate_booking, send_tickets_email
+from booking_management.task import deactivate_booking
 
 app = Celery("booking_management")
 
