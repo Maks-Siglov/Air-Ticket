@@ -14,7 +14,7 @@ cd task_19_air_crm/
 ## Start With Docker
 
 
-1. Establish docker user
+1. Establish user
 
     ```bash
       source env.sh
@@ -26,19 +26,29 @@ cd task_19_air_crm/
       docker network create mynetwork  
      ```
 
-3. Build app 
+3. Create `air_ticket` postgres db.
+    - **Example data in .env.docker_db:**
+    ```bash
+    DB_NAME='air_ticket'
+    DB_USER='admin'
+    DB_PASSWORD='admin'
+    DB_HOST='localhost'
+    DB_PORT=5432
+    ```
+
+4. Build app 
     ```bash
       docker compose build  
      ```
 
-4. Start services 
+5. Start services 
     ```bash
       docker compose up  
      ```
    
-5.  Visit `http://127.0.0.1:8080/`
+6.  Visit `http://127.0.0.1:8080/`
 
-6. Now you can log in as Admin user or continue exploring without login
+7. Now you can log in as Admin user or continue exploring without login
    ```bash
       login: admin@gmail.com
       password: admin_user22 
