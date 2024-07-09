@@ -4,12 +4,22 @@ Welcome to AirTicket, your convenient and reliable platform for booking flights 
 
 ## Getting Started
 
-Clone the Repository:
+1. Clone the Repository:
 
-```bash
-git clone https://github.com/Maks-Siglov/Air-Ticket.git
-cd task_19_air_crm/
-```
+   ```bash
+   git clone https://github.com/Maks-Siglov/Air-Ticket.git
+   cd AirTicket/
+   ```
+
+2. Create `air_ticket` postgres db.
+    - **Example data in .env.docker_db:**
+    ```bash
+    DB_NAME=air_ticket
+    DB_USER=admin
+    DB_PASSWORD=admin
+    DB_HOST=localhost
+    DB_PORT=5432
+    ```. 
 
 ## Start With Docker
 

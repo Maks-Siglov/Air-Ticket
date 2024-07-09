@@ -7,6 +7,7 @@ from django.http import (
     JsonResponse
 )
 from django.shortcuts import redirect, render
+from django.views.decorators.csrf import csrf_exempt
 
 from booking.crud import (
     get_cart_tickets,
@@ -58,6 +59,7 @@ def checkout(
     )
 
 
+@csrf_exempt
 def create_checkout_session(
     request: HttpRequest, order_pk
 ) -> JsonResponse | HttpResponseRedirect | None:
