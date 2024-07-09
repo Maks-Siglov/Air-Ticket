@@ -19,7 +19,7 @@ Welcome to AirTicket, your convenient and reliable platform for booking flights 
     DB_PASSWORD=admin
     DB_HOST=localhost
     DB_PORT=5432
-    ```. 
+    ``` 
 
 ## Start With Docker
 
@@ -113,3 +113,30 @@ Welcome to AirTicket, your convenient and reliable platform for booking flights 
     STRIPE_PUBLIC_KEY='Place your stripe public key here'
     STRIPE_SECRET_KEY='Place your stripe secret key here'
     ```
+
+
+## Using Process
+
+1. First, the user fills out a form with their flight details (from and to locations) and the number of passengers:
+
+   ![Main page](https://github.com/Maks-Siglov/AirTicket/air_ticket/static/images/screenshots/start_page.png)
+
+2. After filling out the form, the user can view available flights:
+
+   ![Flights](https://github.com/Maks-Siglov/AirTicket/air_ticket/static/images/screenshots/searched_flights.png)
+
+3. The user then selects a flight and fills in the ticket and contact information:
+
+   ![Fill ticket data](https://github.com/Maks-Siglov/AirTicket/air_ticket/static/images/screenshots/fill_ticket_data.png)
+
+4. The user is redirected to the Stripe payment system. After successful payment, they receive an email with their login credentials and are redirected to view their ticket information:
+
+   ![Tickets data](https://github.com/Maks-Siglov/AirTicket/air_ticket/static/images/screenshots/tickets.png)
+
+5. The user can go to their profile, where they can change their password, update contact information, search for their orders, flights, and check-in:
+
+    ![Profile](https://github.com/Maks-Siglov/AirTicket/air_ticket/static/images/screenshots/profile.png)
+
+6. The user can check in for their flight and choose their desired seat using an interactive seat map:
+
+   ![Seat map](https://github.com/Maks-Siglov/AirTicket/air_ticket/static/images/screenshots/check_in_seat_map.png)
