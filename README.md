@@ -8,7 +8,7 @@ Welcome to AirTicket, your convenient and reliable platform for booking flights 
 
    ```bash
    git clone https://github.com/Maks-Siglov/Air-Ticket.git
-   cd AirTicket/
+   cd Air-Ticket/
    ```
 
 2. Create `air_ticket` postgres db.
@@ -68,10 +68,10 @@ Welcome to AirTicket, your convenient and reliable platform for booking flights 
 2. Create postgres db and place data to the .env.local file:
     - **Example data in .env.local:**
     ```bash
-    DB_NAME='air_ticket'
-    DB_USER='admin'
-    DB_PASSWORD='admin'
-    DB_HOST='localhost'
+    DB_NAME=air_ticket
+    DB_USER=admin
+    DB_PASSWORD=admin
+    DB_HOST=localhost
     DB_PORT=5432
     ```
 
@@ -101,17 +101,17 @@ Welcome to AirTicket, your convenient and reliable platform for booking flights 
 1. Project use email for sending message with user credentials and order details. For using this feature add your email data in .env.local file
     - **Replace data in .env.local / .env.docker  file**
      ```bash
-    EMAIL_HOST='smtp.gmail.com /or another smtp'
+    EMAIL_HOST=smtp.gmail.com /or another smtp
     EMAIL_PORT=587
-    EMAIL_HOST_USER='Replace with your email'
-    EMAIL_HOST_PASSWORD='Replace with your app password'    
+    EMAIL_HOST_USER=Replace with your email
+    EMAIL_HOST_PASSWORD=Replace with your app password
     ```
 
 2. For providing payment functionality you need the stripe API keys
     - **Replace data in .env files**
      ```bash
-    STRIPE_PUBLIC_KEY='Place your stripe public key here'
-    STRIPE_SECRET_KEY='Place your stripe secret key here'
+    STRIPE_PUBLIC_KEY=Place your stripe public key here
+    STRIPE_SECRET_KEY=Place your stripe secret key here
     ```
 
 
@@ -119,24 +119,24 @@ Welcome to AirTicket, your convenient and reliable platform for booking flights 
 
 1. First, the user fills out a form with their flight details (from and to locations) and the number of passengers:
 
-   ![Main page](https://github.com/Maks-Siglov/AirTicket/air_ticket/static/images/screenshots/start_page.png)
+   ![Main page](https://raw.githubusercontent.com/Maks-Siglov/Air-Ticket/air_ticket/static/images/screenshots/start_page.png)
 
 2. After filling out the form, the user can view available flights:
 
-   ![Flights](https://github.com/Maks-Siglov/AirTicket/air_ticket/static/images/screenshots/searched_flights.png)
+   ![Flights](https://raw.githubusercontent.com/Maks-Siglov/Air-Ticket/air_ticket/static/images/screenshots/searched_flights.png)
 
 3. The user then selects a flight and fills in the ticket and contact information:
 
-   ![Fill ticket data](https://github.com/Maks-Siglov/AirTicket/air_ticket/static/images/screenshots/fill_ticket_data.png)
+   ![Fill ticket data](https://raw.githubusercontent.com/Maks-Siglov/Air-Ticket/air_ticket/static/images/screenshots/fill_ticket_data.png)
 
 4. The user is redirected to the Stripe payment system. After successful payment, they receive an email with their login credentials and are redirected to view their ticket information:
 
-   ![Tickets data](https://github.com/Maks-Siglov/AirTicket/air_ticket/static/images/screenshots/tickets.png)
+   ![Tickets data](https://raw.githubusercontent.com/Maks-Siglov/Air-Ticket/air_ticket/static/images/screenshots/tickets.png)
 
 5. The user can go to their profile, where they can change their password, update contact information, search for their orders, flights, and check-in:
 
-    ![Profile](https://github.com/Maks-Siglov/AirTicket/air_ticket/static/images/screenshots/profile.png)
+    ![Profile](https://raw.githubusercontent.com/Maks-Siglov/Air-Ticket/air_ticket/static/images/screenshots/profile.png)
 
 6. The user can check in for their flight and choose their desired seat using an interactive seat map:
 
-   ![Seat map](https://github.com/Maks-Siglov/AirTicket/air_ticket/static/images/screenshots/check_in_seat_map.png)
+   ![Seat map](https://raw.githubusercontent.com/Maks-Siglov/Air-Ticket/air_ticket/static/images/screenshots/check_in_seat_map.png)
